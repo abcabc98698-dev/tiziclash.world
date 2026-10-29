@@ -2,6 +2,8 @@ export interface SpeedTestNode {
   region: string;
   latency: string;
   download: string;
+  upload?: string;
+  packetLoss?: string;
   status?: 'excellent' | 'good' | 'normal';
 }
 
