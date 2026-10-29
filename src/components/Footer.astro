@@ -7,7 +7,7 @@ const currentYear = new Date().getFullYear();
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo">
-          <span class="logo-mark">TC</span>
+          <img src="/avatar.jpg" alt="梯子网" class="footer-avatar" width="28" height="28" />
           <span class="logo-name">梯子网 · tiziclash.world</span>
         </div>
         <p class="footer-desc">
@@ -88,6 +88,14 @@ const currentYear = new Date().getFullYear();
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
+  }
+
+  .footer-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .logo-mark {

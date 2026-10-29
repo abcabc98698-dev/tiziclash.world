@@ -1,12 +1,17 @@
 {
-  "name": "TiziClash World",
-  "short_name": "TiziClash",
-  "description": "Professional Resume and Portfolio for TiziClash World",
+  "name": "梯子网 · tiziclash.world",
+  "short_name": "梯子网",
+  "description": "2026专业机场推荐与跨境网络可观测性实验室",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dc3522",
   "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
     {
       "src": "/favicon.svg",
       "sizes": "any",
