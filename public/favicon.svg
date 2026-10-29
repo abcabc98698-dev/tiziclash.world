@@ -1,5 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#414141"/>
-  <path d="M14 16h36v6H14zM14 29h36v4H14zM14 39h36v4H14z" fill="#fff"/>
-  <path d="M14 49h22v4H14z" fill="#dc3522"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="tc-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f87171" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#tc-grad)" />
+  <rect x="2" y="2" width="60" height="60" rx="14" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2" />
+  <!-- Minimalist document / monogram design -->
+  <path d="M16 18h32v5H16z" fill="#ffffff" fill-opacity="0.95" rx="2.5" />
+  <path d="M16 28h24v4H16z" fill="#ffffff" fill-opacity="0.75" rx="2" />
+  <path d="M16 37h32v4H16z" fill="#ffffff" fill-opacity="0.75" rx="2" />
+  <path d="M16 46h18v4H16z" fill="url(#accent-grad)" rx="2" />
+  <circle cx="48" cy="48" r="4" fill="url(#accent-grad)" />
 </svg>

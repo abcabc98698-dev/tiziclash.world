@@ -1,16 +1,13 @@
-# Edit this file to update all text rendered by the site.
+# Personal CV Configuration
 name: John Doe
 role: Senior Software Engineer / Platform
 location: Amsterdam, Netherlands
-# Optional. Any CSS color; see README for Awesome-CV presets.
 accent: '#dc3522'
-# Shows a banner that marks this page as the theme demo. Remove this line for your own CV.
-demo: true
 summary: Software engineer with 9+ years building backend systems and developer platforms for e-commerce and fintech. I care about reliable services, fast feedback loops and helping teams ship with confidence.
 contact:
-  email: john.doe@example.com
-  linkedin: https://www.linkedin.com/in/example
-  github: https://github.com/example
+  email: alex@tiziclash.world
+  linkedin: https://www.linkedin.com/in/tiziclash
+  github: https://github.com/tiziclash
 projects:
   - title: Open source feature flag service
     description: Built and maintain a lightweight feature flag service in Go, used by several small teams for gradual rollouts and kill switches.

@@ -1,6 +1,7 @@
 {
-  "name": "astro-awesome-cv",
-  "version": "0.1.0",
+  "name": "tiziclash-world",
+  "version": "1.0.0",
+  "description": "TiziClash World - Professional Portfolio and Curriculum Vitae",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +12,7 @@
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
     "@fontsource/source-sans-3": "^5.2.8",
     "astro": "^7.3.5",
     "yaml": "^2.8.1"

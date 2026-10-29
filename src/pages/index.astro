@@ -3,6 +3,7 @@ import { parse } from 'yaml';
 import cvSource from '../data/cv.yaml?raw';
 import ExperienceEntry from '../components/ExperienceEntry.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import SEOHead from '../components/SEOHead.astro';
 import { cvSchema } from '../types';
 import '../styles/global.css';
 import '@fontsource/source-sans-3/300.css';
@@ -13,58 +14,44 @@ import '@fontsource/source-sans-3/700.css';
 
 const cv = cvSchema.parse(parse(cvSource));
 const [firstName, ...lastNames] = cv.name.split(' ');
-const pageTitle = `${cv.name} | CV`;
-const siteUrl = new URL('/', Astro.site).href;
+const pageTitle = `${cv.name} · ${cv.role} | TiziClash World`;
 const pdfName = `${cv.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-cv.pdf`;
 const inlineStyles = `:root { --accent: ${cv.accent}; } @page { @bottom-center { content: "${cv.name} · Curriculum Vitae · " counter(page); } }`;
 const displayUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const siteUrl = Astro.site?.toString() || 'https://tiziclash.world';
+const currentYear = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#e9eaec" />
-    <meta name="description" content={cv.summary} />
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={cv.summary} />
-    <meta property="og:url" content={siteUrl} />
-    <link rel="canonical" href={siteUrl} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{pageTitle}</title>
+    <SEOHead cv={cv} pageTitle={pageTitle} />
     <style is:inline set:html={inlineStyles}></style>
   </head>
   <body>
-    {cv.demo && (
-      <p class="demo-notice screen-only">
-        Sample CV for the <a href="https://github.com/sht/astro-awesome-cv">astro-awesome-cv</a> Astro theme. Use it for your own CV, it's free and open source.
-      </p>
-    )}
-    <main class="page">
+    <main class="page" id="main-content">
       <header class="cv-header">
         <h1><span class="first-name">{firstName}</span> {lastNames.join(' ')}</h1>
         <p class="position">{cv.role}</p>
-        <ul class="contact">
+        <ul class="contact" aria-label="Contact Information">
           <li>{cv.location}</li>
-          <li><a href={`mailto:${cv.contact.email}`}>{cv.contact.email}</a></li>
-          <li><a href={cv.contact.linkedin}>{displayUrl(cv.contact.linkedin)}</a></li>
-          <li><a href={cv.contact.github}>{displayUrl(cv.contact.github)}</a></li>
+          <li><a href={`mailto:${cv.contact.email}`} aria-label={`Send email to ${cv.contact.email}`}>{cv.contact.email}</a></li>
+          <li><a href={cv.contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">{displayUrl(cv.contact.linkedin)}</a></li>
+          <li><a href={cv.contact.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">{displayUrl(cv.contact.github)}</a></li>
         </ul>
-        <a class="download screen-only" href="/cv.pdf" download={pdfName}>Download PDF</a>
+        <a class="download screen-only" href="/cv.pdf" download={pdfName} aria-label={`Download ${cv.name}'s CV as PDF`}>Download PDF</a>
       </header>
 
-      <section>
+      <section aria-labelledby="section-summary">
         <SectionTitle title="Summary" />
-        <p class="detail">{cv.summary}</p>
+        <p class="detail" id="section-summary">{cv.summary}</p>
       </section>
 
-      <section>
+      <section aria-label="Work Experience">
         <SectionTitle title="Experience" />
         {cv.experience.map((employer) => <ExperienceEntry employer={employer} />)}
       </section>
 
-      <section>
+      <section aria-label="Featured Projects">
         <SectionTitle title="Projects" />
         {cv.projects.map((item) => (
           <div class="project">
@@ -74,14 +61,14 @@ const displayUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').repl
         ))}
       </section>
 
-      <section>
+      <section aria-label="Technical Skills">
         <SectionTitle title="Skills" />
         <dl class="skills">
           {cv.skills.map((group) => <><dt>{group.category}</dt><dd>{group.items}</dd></>)}
         </dl>
       </section>
 
-      <section>
+      <section aria-label="Education">
         <SectionTitle title="Education" />
         {cv.education.map((item) => (
           <div class="entry">
@@ -92,7 +79,7 @@ const displayUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').repl
         ))}
       </section>
 
-      <section class="two-col">
+      <section class="two-col" aria-label="Recognition and Languages">
         <div>
           <SectionTitle title="Recognition" />
           {cv.recognition.map((item) => <div class="entry"><h3>{item.title}</h3><p class="detail">{item.note}</p></div>)}
@@ -103,5 +90,9 @@ const displayUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').repl
         </div>
       </section>
     </main>
+
+    <footer class="site-footer screen-only">
+      <p>© {currentYear} {cv.name} · <a href={siteUrl}>tiziclash.world</a> · All rights reserved.</p>
+    </footer>
   </body>
 </html>

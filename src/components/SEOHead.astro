@@ -1,0 +1,125 @@
+---
+import type { CV } from '../types';
+
+interface Props {
+  cv: CV;
+  pageTitle: string;
+}
+
+const { cv, pageTitle } = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://tiziclash.world';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImage = `${siteUrl}/og-image.svg`;
+const [firstName, ...lastNames] = cv.name.split(' ');
+const lastName = lastNames.join(' ');
+
+// Extract skills as keywords
+const keywords = [
+  cv.name,
+  cv.role,
+  'Curriculum Vitae',
+  'Resume',
+  'Portfolio',
+  'Platform Engineer',
+  'Software Engineer',
+  ...cv.skills.flatMap(s => s.items.split(' · '))
+].join(', ');
+
+// Schema.org JSON-LD structured data for ProfilePage and Person
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      'url': siteUrl,
+      'name': 'TiziClash World',
+      'description': `${cv.name} - ${cv.role}`,
+      'inLanguage': 'en'
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${canonicalUrl}#webpage`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'isPartOf': { '@id': `${siteUrl}/#website` },
+      'about': { '@id': `${siteUrl}/#person` },
+      'mainEntity': { '@id': `${siteUrl}/#person` }
+    },
+    {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      'name': cv.name,
+      'givenName': firstName,
+      'familyName': lastName,
+      'jobTitle': cv.role,
+      'description': cv.summary,
+      'url': siteUrl,
+      'email': `mailto:${cv.contact.email}`,
+      'address': {
+        '@type': 'PostalAddress',
+        'addressLocality': cv.location
+      },
+      'sameAs': [
+        cv.contact.linkedin,
+        cv.contact.github
+      ],
+      'knowsAbout': cv.skills.flatMap(s => s.items.split(' · ')),
+      'alumniOf': cv.education.map(e => ({
+        '@type': 'EducationalOrganization',
+        'name': e.institution
+      })),
+      'worksFor': cv.experience.map(exp => ({
+        '@type': 'Organization',
+        'name': exp.company
+      }))
+    }
+  ]
+};
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta -->
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
+<meta name="description" content={cv.summary} />
+<meta name="author" content={cv.name} />
+<meta name="keywords" content={keywords} />
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content="TiziClash World" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={cv.summary} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${cv.name} - ${cv.role}`} />
+<meta property="og:locale" content="en_US" />
+<meta property="profile:first_name" content={firstName} />
+<meta property="profile:last_name" content={lastName} />
+<meta property="profile:username" content={firstName.toLowerCase()} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={cv.summary} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={`${cv.name} - ${cv.role}`} />
+
+<!-- Icons & Manifest -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />

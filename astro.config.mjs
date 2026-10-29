@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://astro-awesome-cv.sek4.com',
+  site: 'https://tiziclash.world',
   output: 'static',
+  integrations: [sitemap()],
 });
