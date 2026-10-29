@@ -61,13 +61,13 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
 
   <div class="capabilities-bar">
     <div class="cap-group">
-      <span class="cap-title">流媒体支持:</span>
+      <span class="cap-title">流媒体:</span>
       <span class="cap-badge ok">Netflix 4K</span>
       <span class="cap-badge ok">Disney+</span>
       <span class="cap-badge ok">TikTok</span>
     </div>
     <div class="cap-group">
-      <span class="cap-title">AI模型支持:</span>
+      <span class="cap-title">AI模型:</span>
       <span class:list={['cap-badge', brand.aiUnlock.chatgpt === 'supported' ? 'ok' : 'warn']}>
         ChatGPT
       </span>
@@ -117,23 +117,23 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
   .brand-card {
     background: #ffffff;
     border: 1px solid var(--rule, #e5e7eb);
-    border-radius: 10px;
-    padding: 22px 24px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   }
 
   .brand-card:hover {
     border-color: #cbd5e1;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     transform: translateY(-1px);
   }
 
   .brand-card.is-featured {
     border: 2px solid var(--accent, #dc3522);
     background: #fffdfd;
-    box-shadow: 0 4px 24px rgba(220, 53, 34, 0.08);
+    box-shadow: 0 3px 18px rgba(220, 53, 34, 0.07);
   }
 
   .card-top {
@@ -141,14 +141,14 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 6px;
   }
 
   .card-identity {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
@@ -156,10 +156,10 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 4px;
+    padding: 2px 6px;
+    border-radius: 3px;
     background: #f1f5f9;
     color: #475569;
     letter-spacing: -0.02em;
@@ -173,18 +173,18 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
   .rank-badge.top-1 {
     background: var(--accent, #dc3522);
     color: #ffffff;
-    box-shadow: 0 2px 6px rgba(220, 53, 34, 0.3);
+    box-shadow: 0 1px 4px rgba(220, 53, 34, 0.25);
   }
 
   .brand-name-wrap {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
   }
 
   .brand-title {
-    font-size: 1.25rem;
+    font-size: 1.12rem;
     font-weight: 800;
     margin: 0;
     color: var(--dark, #111827);
@@ -200,80 +200,80 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
   }
 
   .founded-tag {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: #64748b;
     background: #f1f5f9;
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 1px 5px;
+    border-radius: 3px;
   }
 
   .latency-tag {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 600;
     color: #0284c7;
     background: #f0f9ff;
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 1px 5px;
+    border-radius: 3px;
     border: 1px solid #e0f2fe;
   }
 
   .price-header-callout {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
 
   .price-lead {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     font-weight: 800;
     color: var(--accent, #dc3522);
     letter-spacing: -0.02em;
   }
 
   .discount-pill {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--accent, #dc3522);
     background: #fef2f2;
-    padding: 2px 8px;
-    border-radius: 12px;
+    padding: 1px 6px;
+    border-radius: 10px;
     border: 1px solid #fecaca;
   }
 
   .brand-tagline {
-    font-size: 0.9rem;
+    font-size: 0.84rem;
     color: var(--gray, #4b5563);
-    margin: 4px 0 14px;
-    line-height: 1.6;
+    margin: 2px 0 8px;
+    line-height: 1.45;
   }
 
   .specs-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 8px;
     background: #f8fafc;
     border: 1px solid #edf2f7;
-    padding: 12px 16px;
-    border-radius: 6px;
-    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 8px;
   }
 
   .spec-cell {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
   }
 
   .spec-label {
-    font-size: 0.7rem;
+    font-size: 0.66rem;
     color: #64748b;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
     font-weight: 600;
   }
 
   .spec-value {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--dark, #1e293b);
   }
@@ -287,31 +287,31 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
   .capabilities-bar {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
-    font-size: 0.78rem;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
+    font-size: 0.74rem;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
     border-bottom: 1px solid #f1f5f9;
   }
 
   .cap-group {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     flex-wrap: wrap;
   }
 
   .cap-title {
     color: #64748b;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 600;
   }
 
   .cap-badge {
-    padding: 1px 6px;
+    padding: 1px 5px;
     border-radius: 3px;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
   }
 
@@ -335,7 +335,7 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 8px;
   }
 
   .coupon-action {
@@ -346,32 +346,32 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
   .coupon-box {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
   }
 
   .coupon-hint {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #64748b;
   }
 
   .no-coupon {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #94a3b8;
   }
 
   .btn-group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
   .btn-detail {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: #334155;
-    padding: 7px 16px;
+    padding: 5px 12px;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
+    border-radius: 5px;
     text-decoration: none;
     transition: all 0.15s ease;
     background: #ffffff;
@@ -383,12 +383,12 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
   }
 
   .btn-register {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: #ffffff;
     background: var(--accent, #dc3522);
-    padding: 7px 18px;
-    border-radius: 6px;
+    padding: 5px 14px;
+    border-radius: 5px;
     text-decoration: none;
     transition: all 0.15s ease;
     box-shadow: 0 1px 4px rgba(220, 53, 34, 0.2);
@@ -396,37 +396,38 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
 
   .btn-register:hover {
     background: #b91c1c;
-    box-shadow: 0 2px 8px rgba(220, 53, 34, 0.35);
+    box-shadow: 0 2px 6px rgba(220, 53, 34, 0.3);
   }
 
   .compliance-note {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     color: #94a3b8;
-    margin-top: 10px;
-    line-height: 1.4;
+    margin-top: 6px;
+    line-height: 1.35;
   }
 
   @media (max-width: 640px) {
     .brand-card {
-      padding: 16px 18px;
+      padding: 12px 14px;
     }
     .specs-grid {
       grid-template-columns: 1fr 1fr;
+      padding: 6px 10px;
     }
     .card-actions {
       flex-direction: column;
       align-items: stretch;
-      gap: 10px;
+      gap: 8px;
     }
     .btn-group {
       width: 100%;
-      gap: 8px;
+      gap: 6px;
     }
     .btn-detail, .btn-register {
       flex: 1;
       text-align: center;
-      padding: 9px 12px;
-      font-size: 0.85rem;
+      padding: 7px 10px;
+      font-size: 0.8rem;
     }
   }
 </style>
