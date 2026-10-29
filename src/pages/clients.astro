@@ -7,6 +7,7 @@ import { CLIENT_DATA } from '../data/clients';
 
 const pageTitle = '2026机场代理客户端大全 · Windows/Mac/iOS/Android/软路由下载与配置教程 | 梯子网';
 const pageDescription = '系统整理2026全平台科学上网代理客户端下载指南。收录Clash Verge Rev、v2rayN、Shadowrocket (小火箭)、Stash、v2rayNG及OpenClash软路由插件，提供官方GitHub项目地址与避坑教程。';
+const canonicalUrl = 'https://tiziclash.world/clients/';
 
 const categories = [
   { key: 'windows', title: 'Windows 电脑客户端', icon: '🖥️' },
@@ -22,7 +23,7 @@ const structuredData = {
   '@type': 'TechArticle',
   'name': pageTitle,
   'description': pageDescription,
-  'url': 'https://tiziclash.world/clients',
+  'url': canonicalUrl,
   'inLanguage': 'zh-CN'
 };
 ---
@@ -33,6 +34,7 @@ const structuredData = {
     <SEOHead
       title={pageTitle}
       description={pageDescription}
+      canonicalUrl={canonicalUrl}
       structuredData={structuredData}
     />
   </head>

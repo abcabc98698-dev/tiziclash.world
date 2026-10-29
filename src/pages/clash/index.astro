@@ -1,0 +1,305 @@
+---
+import '../../styles/global.css';
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+
+const pageTitle = 'Clash 客户端中心 · Clash Verge Rev/Meta 内核下载与规则配置全攻略 | 梯子网';
+const pageDescription = 'Clash 全平台客户端生态中心。提供 Clash Verge Rev、Mihomo (Clash.Meta)、Clash for Android 官方原版下载、订阅导入教程、分流规则配置与 TUN 模式指南。';
+const canonicalUrl = 'https://tiziclash.world/clash/';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#collection`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world/' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Clash中心', 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/clash" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>Clash中心</span>
+      </nav>
+
+      <header class="channel-header">
+        <span class="channel-tag">CLASH & MIHOMO ECOSYSTEM</span>
+        <h1 class="channel-h1">Clash 客户端生态与规则分流配置指南</h1>
+        <p class="channel-lead">
+          Clash 凭借强大的规则路由分流、DNS 劫持防污染与多协议聚合能力，成为全网公认的最佳出海代理工具。本频道为您梳理 2026 最新 Mihomo (Meta) 内核演进、全平台原版客户端下载与安全配置规范。
+        </p>
+      </header>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">内核演进</span>：为什么必须认准 Mihomo (Clash.Meta)？</span></h2>
+        <div class="clash-info-card">
+          <p>
+            2023 年底原版 Clash 核心作者删库停止维护后，全球开源社区基于 Golang 全面演进出了新一代 <strong>Mihomo (曾用名 Clash.Meta)</strong> 内核。Mihomo 成为事实上的唯一标准：
+          </p>
+          <ul class="clash-feat-list">
+            <li><strong>现代前沿协议支持：</strong> 完美支持 <code>VLESS Reality</code>、<code>Hysteria2</code>、<code>TUIC</code> 与 <code>Shadowsocks 2022</code>，传统老版 Clash 无法识别这些新协议；</li>
+            <li><strong>真正的 TUN 虚拟网卡模式：</strong> 系统级接管全部应用网络请求，无需依赖浏览器代理插件；</li>
+            <li><strong>Fake-IP 智能地址池：</strong> 消除 DNS 污染与解析延迟，大幅加快网页首包渲染速度。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">全平台</span>推荐：2026 最优 Clash 客户端阵列</span></h2>
+        <div class="clash-platform-grid">
+          <div class="cp-card">
+            <span class="cp-os">Windows / macOS / Linux</span>
+            <h3>Clash Verge Rev</h3>
+            <p>目前最受欢迎的桌面端 Clash GUI 客户端。界面基于 Tauri 现代框架构建，资源占用极小，内置最新 Mihomo 内核，支持中文语言与一键开启 TUN 模式。</p>
+            <div class="cp-action">
+              <a href="/clients/" class="cp-btn">前往客户端中心获取原版 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="cp-card">
+            <span class="cp-os">跨平台新秀</span>
+            <h3>FlClash</h3>
+            <p>基于 Flutter 开发的跨平台现代代理工具，界面清爽唯美。在 Android 手机与桌面端均有极佳的响应速度与触控交互体验。</p>
+            <div class="cp-action">
+              <a href="/clients/" class="cp-btn">前往客户端中心获取原版 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="cp-card">
+            <span class="cp-os">Android 移动端</span>
+            <h3>Clash Meta for Android (CMFA)</h3>
+            <p>安卓端功能最完善的开源内核客户端。支持分应用代理白名单，可按需指定仅 Telegram、Chrome 或 YouTube 走节点，微信支付宝国内直连。</p>
+            <div class="cp-action">
+              <a href="/clients/" class="cp-btn">前往客户端中心获取原版 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="cp-card">
+            <span class="cp-os">软路由与嵌入式</span>
+            <h3>OpenClash (OpenWrt)</h3>
+            <p>部署在家庭路由器上的全屋透明代理网关。家中所有手机、电视机、iPad、Switch 游戏机无需安装任何软件即可全自动无感出海。</p>
+            <div class="cp-action">
+              <a href="/clients/" class="cp-btn">前往客户端中心获取原版 &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">配置实战</span>：订阅转换与规则配置指南</span></h2>
+        <div class="clash-guide-links">
+          <a href="/topics/free-nodes/#ch5" class="c-guide-item">
+            <strong>🔄 单节点 (vmess/vless) 如何合成 Clash 订阅？</strong>
+            <p>第三方在线 Subconverter 订阅转换工具权威测评与 4 步合成教程 &rarr;</p>
+          </a>
+          <a href="/tutorial/" class="c-guide-item">
+            <strong>📋 Clash Verge Rev 零基础 3 分钟导入图文教程</strong>
+            <p>订阅更新设置、健康自检定时器与分流策略组详细图解 &rarr;</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .channel-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .channel-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #4338ca;
+    background: #e0e7ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .channel-h1 {
+    font-size: clamp(1.45rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .channel-lead {
+    font-size: 0.86rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .channel-section {
+    margin-bottom: 28px;
+  }
+
+  .channel-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 12px;
+  }
+
+  .clash-info-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #3b82f6;
+    border-radius: 6px;
+    padding: 14px 18px;
+  }
+
+  .clash-info-card p {
+    font-size: 0.84rem;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0 0 10px;
+  }
+
+  .clash-feat-list {
+    padding-left: 18px;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .clash-feat-list li + li {
+    margin-top: 4px;
+  }
+
+  .clash-platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .cp-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cp-os {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 3px;
+    align-self: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .cp-card h3 {
+    font-size: 0.98rem;
+    color: #111827;
+    margin: 0 0 6px;
+  }
+
+  .cp-card p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+
+  .cp-btn {
+    font-size: 0.76rem;
+    color: var(--accent, #dc3522);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .cp-btn:hover {
+    text-decoration: underline;
+  }
+
+  .clash-guide-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .c-guide-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .c-guide-item:hover {
+    border-color: var(--accent, #dc3522);
+    background: #ffffff;
+  }
+
+  .c-guide-item strong {
+    font-size: 0.88rem;
+    color: #111827;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .c-guide-item p {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .clash-platform-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

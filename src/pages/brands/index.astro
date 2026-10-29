@@ -8,13 +8,14 @@ import { BRANDS_DATA } from '../../data/brands';
 
 const pageTitle = '42家机场品牌数据库 · 全网IEPL/IPLC专线梯子对比与测速大全 | 梯子网';
 const pageDescription = '收录并持续追踪42家主流科学上网机场品牌。包含光速云、飞猫云、微风网络、暮光加速、大佬云等品牌套餐价格、线路类型(IEPL/IPLC/中转)、协议、优惠码与晚高峰测速，支持快速多维检索。';
+const canonicalUrl = 'https://tiziclash.world/brands/';
 
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   'name': pageTitle,
   'description': pageDescription,
-  'url': 'https://tiziclash.world/brands',
+  'url': canonicalUrl,
   'mainEntity': {
     '@type': 'ItemList',
     'itemListElement': BRANDS_DATA.map((brand, i) => ({
@@ -24,7 +25,7 @@ const structuredData = {
         '@type': 'Product',
         'name': brand.name,
         'description': brand.tagline,
-        'url': `https://tiziclash.world/brands/${brand.slug}`
+        'url': `https://tiziclash.world/brands/${brand.slug}/`
       }
     }))
   }
@@ -37,6 +38,7 @@ const structuredData = {
     <SEOHead
       title={pageTitle}
       description={pageDescription}
+      canonicalUrl={canonicalUrl}
       structuredData={structuredData}
     />
   </head>

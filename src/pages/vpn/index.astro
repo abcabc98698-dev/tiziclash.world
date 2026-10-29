@@ -1,0 +1,363 @@
+---
+import '../../styles/global.css';
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+import { BRANDS_DATA } from '../../data/brands';
+
+const pageTitle = '2026 VPN专线与国际物理通道选型中心 · 跨境网络与企业专线指南 | 梯子网';
+const pageDescription = '梯子网 VPN 频道收录 2026 全球主流企业级跨境专线、IEPL 物理隧道与商用 VPN 技术对比。解析传统 VPN 协议与现代混淆协议的差异，提供防封锁与大带宽选型决策。';
+const canonicalUrl = 'https://tiziclash.world/vpn/';
+
+const vpnBrands = BRANDS_DATA.slice(0, 6);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#collection`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world/' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'VPN专线中心', 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/vpn" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>VPN专线中心</span>
+      </nav>
+
+      <header class="channel-header">
+        <span class="channel-tag">VPN & DEDICATED LINES</span>
+        <h1 class="channel-h1">2026 跨境物理专线与 VPN 技术选型指南</h1>
+        <p class="channel-lead">
+          全面解析传统商业 VPN (OpenVPN / WireGuard) 与现代跨境专线 (IEPL / IPLC / VLESS) 的底层传输差异。为企业出海、外贸跨境电商、远程办公及高负载影音提供真正稳定抗封锁的物理通道选型决策。
+        </p>
+      </header>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">技术演进</span>：传统 VPN 与现代专线机场的本质区别</span></h2>
+        <div class="tech-diff-grid">
+          <div class="tech-diff-card">
+            <span class="diff-icon">🔒</span>
+            <h3>传统商业 VPN (如 ExpressVPN / NordVPN)</h3>
+            <p>
+              基于 OpenVPN 或 IKEv2 协议，虽然具有强加密，但数据包特征极其明显。在中国大陆网络环境下，握手阶段就会被 GFW 深度包检测 (DPI) 毫秒级阻断，公网直连成功率不足 15%，晚高峰断流严重。
+            </p>
+          </div>
+          <div class="tech-diff-card highlight">
+            <span class="diff-icon">⚡</span>
+            <h3>IEPL / IPLC 企业级物理内网专线</h3>
+            <p>
+              流量在国内入口就近汇聚，通过电信运营商铺设的<strong>跨境物理光纤内网（不过公网 GFW 审查出口）</strong>直接抵达香港、新加坡或日本机房。晚高峰丢包率低至 0.0%，4K 拖拽秒开，真正满足生产力要求。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">精选推荐</span>：2026 高分专线品牌矩阵</span></h2>
+        <div class="channel-brands-grid">
+          {vpnBrands.map((b) => (
+            <div class="c-brand-card">
+              <div class="c-brand-header">
+                <h3><a href={`/brands/${b.slug}/`}>{b.name}</a></h3>
+                <span class="c-brand-price">{b.startingPrice}</span>
+              </div>
+              <p class="c-brand-desc">{b.tagline}</p>
+              <div class="c-brand-meta">
+                <span><strong>线路:</strong> {b.lineType}</span>
+                <span><strong>协议:</strong> {b.protocol}</span>
+                <span><strong>评测得分:</strong> {b.featured ? '4.9 分 (首推)' : '4.6 分'}</span>
+              </div>
+              <div class="c-brand-actions">
+                <a href={`/brands/${b.slug}/`} class="btn-detail">查看评测报告 &rarr;</a>
+                <a href={b.url} target="_blank" rel="nofollow sponsored noopener" class="btn-go">直达官网</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">相关专题</span>：深入选型与避坑必读</span></h2>
+        <div class="sub-portal-grid">
+          <a href="/topics/ai-streaming/" class="portal-card">
+            <span class="portal-icon">🤖</span>
+            <div class="portal-text">
+              <strong>AI & 4K 流媒体专线指南</strong>
+              <p>ChatGPT 4o 与 Netflix 原生住宅 IP 纯净度检测及防封避坑</p>
+            </div>
+          </a>
+          <a href="/topics/free-nodes/" class="portal-card">
+            <span class="portal-icon">⚡</span>
+            <div class="portal-text">
+              <strong>免费节点测速与避坑专题</strong>
+              <p>万字实测拆解免费梯子四大安全隐患与 GitHub 聚合池</p>
+            </div>
+          </a>
+          <a href="/observatory/" class="portal-card">
+            <span class="portal-icon">📊</span>
+            <div class="portal-text">
+              <strong>晚高峰网络实测实验室</strong>
+              <p>真实 1000M 光纤高载压测丢包率与下行带宽实时看板</p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .channel-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .channel-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    background: #fef2f2;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .channel-h1 {
+    font-size: clamp(1.45rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .channel-lead {
+    font-size: 0.86rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .channel-section {
+    margin-bottom: 28px;
+  }
+
+  .channel-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 12px;
+  }
+
+  .tech-diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .tech-diff-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .tech-diff-card.highlight {
+    background: #fffefe;
+    border-color: #fca5a5;
+    border-left: 4px solid var(--accent, #dc3522);
+  }
+
+  .diff-icon {
+    font-size: 1.3rem;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .tech-diff-card h3 {
+    font-size: 0.94rem;
+    color: #111827;
+    margin: 0 0 6px;
+  }
+
+  .tech-diff-card p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .channel-brands-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .c-brand-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .c-brand-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .c-brand-header h3 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .c-brand-header a {
+    color: var(--dark, #111827);
+    text-decoration: none;
+  }
+
+  .c-brand-header a:hover {
+    color: var(--accent, #dc3522);
+  }
+
+  .c-brand-price {
+    font-size: 0.8rem;
+    color: var(--accent, #dc3522);
+    font-weight: 700;
+  }
+
+  .c-brand-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0 0 10px;
+    line-height: 1.45;
+  }
+
+  .c-brand-meta {
+    font-size: 0.74rem;
+    color: #475569;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 0;
+    border-top: 1px dashed #f1f5f9;
+    border-bottom: 1px dashed #f1f5f9;
+    margin-bottom: 10px;
+  }
+
+  .c-brand-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .btn-detail {
+    font-size: 0.76rem;
+    color: var(--accent, #dc3522);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn-go {
+    font-size: 0.74rem;
+    background: #1e293b;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-left: auto;
+  }
+
+  .sub-portal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .portal-card {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .portal-card:hover {
+    border-color: var(--accent, #dc3522);
+    background: #ffffff;
+  }
+
+  .portal-icon {
+    font-size: 1.3rem;
+  }
+
+  .portal-text strong {
+    font-size: 0.84rem;
+    color: #111827;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .portal-text p {
+    font-size: 0.74rem;
+    color: #64748b;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .tech-diff-grid, .channel-brands-grid, .sub-portal-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

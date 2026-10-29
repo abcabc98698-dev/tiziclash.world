@@ -5,13 +5,19 @@ interface Props {
 
 const { currentPath = '/' } = Astro.props;
 
+const normalizePath = (p: string) => (p.endsWith('/') ? p : p + '/');
+const currentNorm = normalizePath(currentPath);
+
 const navItems = [
-  { label: '首页精选', href: '/' },
-  { label: '42家品牌库', href: '/brands' },
-  { label: '免费节点专题', href: '/topics/free-nodes' },
-  { label: '客户端中心', href: '/clients' },
-  { label: 'AI & 流媒体', href: '/topics/ai-streaming' },
-  { label: '测速实验室', href: '/observatory' },
+  { label: '首页', href: '/' },
+  { label: '42家品牌库', href: '/brands/' },
+  { label: '机场推荐', href: '/jichang/' },
+  { label: 'VPN专线', href: '/vpn/' },
+  { label: 'Clash配置', href: '/clash/' },
+  { label: '免费节点', href: '/free/' },
+  { label: '全球节点', href: '/nodes/' },
+  { label: '使用教程', href: '/tutorial/' },
+  { label: '梯子科普', href: '/tizi/' },
 ];
 ---
 
@@ -24,7 +30,8 @@ const navItems = [
 
     <nav class="desktop-nav" aria-label="全站主导航">
       {navItems.map((item) => {
-        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        const itemNorm = normalizePath(item.href);
+        const isActive = item.href === '/' ? currentNorm === '/' : currentNorm.startsWith(itemNorm);
         return (
           <a
             href={item.href}

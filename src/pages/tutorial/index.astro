@@ -1,0 +1,592 @@
+---
+import '../../styles/global.css';
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+import { BRANDS_DATA } from '../../data/brands';
+
+const pageTitle = '科学上网与Clash使用教程中心 · Windows/Mac/iOS/Android新手配置与排错指南 | 梯子网';
+const pageDescription = '梯子网出海教程中心收录 2026 全平台科学上网与代理软件实战指南。涵盖 Clash Verge Rev、Shadowrocket (小火箭)、Sing-box 订阅导入配置、规则分流调优与连不上等高频排错方案。';
+const canonicalUrl = 'https://tiziclash.world/tutorial/';
+
+const topBrands = BRANDS_DATA.slice(0, 3);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#collection`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world/' },
+        { '@type': 'ListItem', 'position': 2, 'name': '使用教程中心', 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/tutorial" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>使用教程中心</span>
+      </nav>
+
+      <header class="channel-header">
+        <span class="channel-tag">TUTORIALS & KNOWLEDGE BASE</span>
+        <h1 class="channel-h1">全平台科学上网与代理软件实战配置指南</h1>
+        <p class="channel-lead">
+          为广大跨境电商运营、外贸出海人员、高校科研团队与技术开发者提供标准化、傻瓜式的配置流程。无论使用 Windows、macOS、iOS 还是 Android，只需 3 分钟即可掌握订阅导入、规则分流与高频排错技巧。
+        </p>
+      </header>
+
+      <!-- 4-Step Universal Setup Workflow -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">标准化流程</span>：科学上网配置四步极简工作流</span></h2>
+        <div class="workflow-grid">
+          <div class="wf-card">
+            <span class="wf-num">01</span>
+            <h3>获取专属订阅</h3>
+            <p>在正规专线服务商后台（如<a href="/brands/guangshuyun/">光速云</a>）复制“一键导入”或“Clash订阅链接”，妥善保管个人 Token。</p>
+          </div>
+          <div class="wf-card">
+            <span class="wf-num">02</span>
+            <h3>下载可信客户端</h3>
+            <p>从官方 GitHub Release 页面或苹果 App Store 下载对应系统的开源客户端，杜绝一切未知来历的汉化破解补丁。</p>
+          </div>
+          <div class="wf-card">
+            <span class="wf-num">03</span>
+            <h3>导入订阅与测速</h3>
+            <p>在客户端“配置/订阅 (Profiles)”粘贴链接并下载节点，点击延迟测速，选择香港、新加坡等低延迟专线节点。</p>
+          </div>
+          <div class="wf-card">
+            <span class="wf-num">04</span>
+            <h3>开启系统代理</h3>
+            <p>将出站模式设为<strong>“规则 (Rule)”</strong>，勾选“系统代理 (System Proxy)”，即可无感访问 Google、GitHub 与海外学术库。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- OS Specific Quick Start Guides -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">全平台指南</span>：各操作系统主流客户端配置指引</span></h2>
+        <div class="os-guides-grid">
+          <div class="os-card">
+            <div class="os-header">
+              <span class="os-icon">🪟</span>
+              <div>
+                <h3>Windows 平台配置方案</h3>
+                <span class="rec-software">首选软件: Clash Verge Rev</span>
+              </div>
+            </div>
+            <ol class="os-steps">
+              <li>前往 <a href="/clients/">客户端中心</a> 下载安装最新版 <code>Clash.Verge_x64.exe</code>；</li>
+              <li>点击左侧导航栏 <strong>订阅 (Profiles)</strong>，顶部输入框粘贴订阅 URL，点击“导入”；</li>
+              <li>在右侧选中该配置文件，切换至 <strong>代理 (Proxies)</strong> 页面测试节点连通性；</li>
+              <li>回到 <strong>设置 (Settings)</strong> 勾选 <strong>系统代理 (System Proxy)</strong> 即可上网。</li>
+            </ol>
+            <div class="os-foot">
+              <a href="/clients/#clash-verge-rev" class="btn-os-link">下载 Windows 客户端 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="os-card">
+            <div class="os-header">
+              <span class="os-icon">🍏</span>
+              <div>
+                <h3>macOS 平台配置方案</h3>
+                <span class="rec-software">首选软件: Clash Verge Rev (ARM/Intel)</span>
+              </div>
+            </div>
+            <ol class="os-steps">
+              <li>M1/M2/M3/M4 芯片下载 <code>aarch64.dmg</code>，Intel 芯片下载 <code>x64.dmg</code>；</li>
+              <li>拖拽至“应用程序”文件夹，首次打开如提示无法验证开发者，在“系统偏好设置-安全性”中允许；</li>
+              <li>在“订阅”标签粘贴机场订阅地址并保存；</li>
+              <li>在顶部菜单栏图标中勾选“系统代理”，模式保持为“规则 (Rule)”。</li>
+            </ol>
+            <div class="os-foot">
+              <a href="/clients/#macos-clients" class="btn-os-link">下载 macOS 客户端 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="os-card">
+            <div class="os-header">
+              <span class="os-icon">📱</span>
+              <div>
+                <h3>iOS / iPadOS 平台配置方案</h3>
+                <span class="rec-software">首选软件: Shadowrocket (小火箭)</span>
+              </div>
+            </div>
+            <ol class="os-steps">
+              <li>需登录海外 Apple ID（美区/港区）在 App Store 购买下载 Shadowrocket；</li>
+              <li>打开 App，点击右上角 <strong>“+”</strong> 按钮，类型选择 <strong>Subscribe</strong>；</li>
+              <li>在 URL 处粘贴机场订阅链接，点击右上角“完成”，系统将自动拉取所有节点；</li>
+              <li>全局路由保持 <strong>“配置 (Config)”</strong>，开启顶部连接开关，首次弹出允许添加 VPN 配置。</li>
+            </ol>
+            <div class="os-foot">
+              <a href="/clients/#shadowrocket" class="btn-os-link">查看 iOS 软件指引 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="os-card">
+            <div class="os-header">
+              <span class="os-icon">🤖</span>
+              <div>
+                <h3>Android 平台配置方案</h3>
+                <span class="rec-software">首选软件: Clash Meta for Android / Sing-box</span>
+              </div>
+            </div>
+            <ol class="os-steps">
+              <li>下载并安装 <code>Clash.Meta.Android.apk</code>；</li>
+              <li>点击 <strong>配置 (Profiles)</strong>，点击右上角“+”号选择“从 URL 导入”；</li>
+              <li>输入配置名称与订阅 URL，设置自动更新间隔为 1440 分钟，点击右上角保存；</li>
+              <li>回到主界面点击“已停止”按钮启动 VPN，模式设为“规则”，允许系统 VPN 权限。</li>
+            </ol>
+            <div class="os-foot">
+              <a href="/clients/#clash-meta-android" class="btn-os-link">下载 Android 客户端 &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Troubleshooting FAQ -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">排错百科</span>：高频故障诊断与解决方案</span></h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>
+              <span class="q-badge">Q1</span>
+              <span class="q-title">为什么节点延迟测试全部显示“超时 (Timeout)”或连接失败？</span>
+            </summary>
+            <div class="faq-ans">
+              <p>节点全红超时的核心原因通常为以下三点：</p>
+              <ul>
+                <li><strong>本地系统时间不准确：</strong> VMess、VLESS 协议要求本地时间与服务器误差在 90 秒内，若 Windows/Mac 系统时间未开启自动同步，握手将全部被拒；</li>
+                <li><strong>订阅流量耗尽或套餐已过期：</strong> 请登录服务商后台检查流量是否用尽；</li>
+                <li><strong>本地安全软件拦截：</strong> 某些杀毒软件或防火墙拦截了 Tun 虚拟网卡，请将 Clash 客户端加入信任名单。</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span class="q-badge">Q2</span>
+              <span class="q-title">为什么浏览器能正常访问 Google，但国内微信、网银提示异地登录或无法连网？</span>
+            </summary>
+            <div class="faq-ans">
+              <p>这是因为您误将代理模式设置成了<strong>“全局 (Global)”</strong>，导致所有国内应用的流量也强行走海外节点绕行。请在客户端主界面将模式切换回<strong>“规则 (Rule)”</strong>模式，国内流量将由系统直连通道发出，既保障速度又避免账户异地风控。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span class="q-badge">Q3</span>
+              <span class="q-title">访问 ChatGPT / Claude 提示 "Access Denied" 或 "Sorry, you have been blocked"？</span>
+            </summary>
+            <div class="faq-ans">
+              <p>AI 平台采用了极其严格的住宅 IP 纯净度检测机制。如果当前节点的出口 IP 为公有云机房（如 OVH、DigitalOcean），或者存在多账户同 IP 滥用，就会触发 Cloudflare 阻断。<strong>解决方法：</strong>在客户端策略组中切换为标记有“原生住宅 IP”或“ChatGPT专用”的美西、新加坡专线节点。详情可参阅我们的 <a href="/topics/ai-streaming/">《AI & 4K 流媒体专线指南》</a>。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span class="q-badge">Q4</span>
+              <span class="q-title">更新订阅时弹出 "Invalid Token" 或 "Network Error" 报错？</span>
+            </summary>
+            <div class="faq-ans">
+              <p>通常是因为订阅网址在复制时首尾包含了多余空格，或者服务商的 API 域名被本地 DNS 污染。建议：登录后台重新生成并复制订阅链接；在配置选项中开启“允许不安全证书 (Skip Cert Verify)”重新尝试拉取。</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Bottom Recommendations -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">好马配好鞍</span>：搭配高稳定低延迟专线机场</span></h2>
+        <p class="section-subtext">优秀的客户端需要可靠的物理内网专线才能发挥完整性能，以下为实验室晚高峰实测低丢包品牌推荐：</p>
+        <div class="top-brands-grid">
+          {topBrands.map((b) => (
+            <div class="t-brand-card">
+              <div class="tb-info">
+                <h4><a href={`/brands/${b.slug}/`}>{b.name}</a></h4>
+                <p>{b.tagline}</p>
+                <div class="tb-badges">
+                  <span>{b.lineType}</span>
+                  <span>{b.protocol}</span>
+                  <span class="price-pill">{b.startingPrice}</span>
+                </div>
+              </div>
+              <div class="tb-links">
+                <a href={`/brands/${b.slug}/`} class="btn-t-detail">深度评测</a>
+                <a href={b.url} target="_blank" rel="nofollow sponsored noopener" class="btn-t-go">直达官网</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--muted, #64748b);
+    margin-bottom: 20px;
+  }
+  .breadcrumb a {
+    color: var(--muted, #64748b);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--primary, #2563eb);
+  }
+  .breadcrumb span {
+    color: var(--dark, #0f172a);
+    font-weight: 500;
+  }
+
+  .channel-header {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 12px;
+    padding: 32px 28px;
+    margin-bottom: 32px;
+  }
+  .channel-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0284c7;
+    background: #f0f9ff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .channel-h1 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--dark, #0f172a);
+    margin: 0 0 14px 0;
+    line-height: 1.3;
+  }
+  .channel-lead {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .channel-section {
+    margin-bottom: 36px;
+  }
+  .channel-section h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--dark, #0f172a);
+    margin-bottom: 16px;
+    border-left: 4px solid var(--primary, #2563eb);
+    padding-left: 12px;
+  }
+  .channel-section h2 .highlight {
+    color: var(--primary, #2563eb);
+  }
+  .section-subtext {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 16px;
+  }
+
+  /* Workflow Grid */
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .wf-card {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+  }
+  .wf-num {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #e2e8f0;
+    display: block;
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+  .wf-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.05rem;
+    color: var(--dark, #0f172a);
+  }
+  .wf-card p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .wf-card p a {
+    color: var(--primary, #2563eb);
+    text-decoration: underline;
+  }
+
+  /* OS Guides */
+  .os-guides-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .os-card {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .os-header {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .os-icon {
+    font-size: 2rem;
+  }
+  .os-header h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.15rem;
+    color: var(--dark, #0f172a);
+  }
+  .rec-software {
+    font-size: 0.78rem;
+    color: #0284c7;
+    background: #f0f9ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .os-steps {
+    padding-left: 20px;
+    margin: 0 0 20px 0;
+    font-size: 0.9rem;
+    color: #334155;
+    line-height: 1.7;
+  }
+  .os-steps li {
+    margin-bottom: 8px;
+  }
+  .os-steps code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+  }
+  .btn-os-link {
+    display: inline-block;
+    background: #1e293b;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .btn-os-link:hover {
+    background: var(--primary, #2563eb);
+  }
+
+  /* FAQ List */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 16px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark, #0f172a);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+  }
+  .q-badge {
+    background: #eff6ff;
+    color: var(--primary, #2563eb);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .faq-ans {
+    padding: 0 20px 20px 48px;
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.7;
+  }
+  .faq-ans p {
+    margin: 0 0 10px 0;
+  }
+  .faq-ans ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .faq-ans li {
+    margin-bottom: 6px;
+  }
+  .faq-ans a {
+    color: var(--primary, #2563eb);
+    text-decoration: underline;
+  }
+
+  /* Top Brands */
+  .top-brands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .t-brand-card {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .tb-info h4 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+  }
+  .tb-info h4 a {
+    color: var(--dark, #0f172a);
+    text-decoration: none;
+  }
+  .tb-info h4 a:hover {
+    color: var(--primary, #2563eb);
+  }
+  .tb-info p {
+    margin: 0 0 12px 0;
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+  .tb-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .tb-badges span {
+    font-size: 0.72rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .price-pill {
+    background: #ecfdf5 !important;
+    color: #059669 !important;
+    font-weight: 600;
+  }
+  .tb-links {
+    display: flex;
+    gap: 8px;
+  }
+  .btn-t-detail {
+    flex: 1;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 0;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-t-detail:hover {
+    background: #e2e8f0;
+  }
+  .btn-t-go {
+    flex: 1;
+    text-align: center;
+    background: #1e293b;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 0;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-t-go:hover {
+    background: var(--primary, #2563eb);
+  }
+
+  @media (max-width: 860px) {
+    .workflow-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .os-guides-grid {
+      grid-template-columns: 1fr;
+    }
+    .top-brands-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .workflow-grid {
+      grid-template-columns: 1fr;
+    }
+    .channel-h1 {
+      font-size: 1.45rem;
+    }
+  }
+</style>

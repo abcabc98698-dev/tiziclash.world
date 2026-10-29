@@ -1,0 +1,661 @@
+---
+import '../../styles/global.css';
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+import { BRANDS_DATA } from '../../data/brands';
+
+const pageTitle = '2026免费节点与开源订阅推荐 · 免费梯子每日更新与安全指南 | 梯子网';
+const pageDescription = '梯子网免费资源中心汇总 2026 每日更新的免费 v2ray/clash 节点池、GitHub 开源订阅仓库与 Cloudflare WARP 免费配置教程。提供详细的安全防嗅探原则与避坑指南。';
+const canonicalUrl = 'https://tiziclash.world/free/';
+
+// Recommended low-cost or high-stability brands as backup
+const backupBrands = BRANDS_DATA.slice(0, 4);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#collection`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world/' },
+        { '@type': 'ListItem', 'position': 2, 'name': '免费资源中心', 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/free" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>免费资源中心</span>
+      </nav>
+
+      <header class="channel-header">
+        <span class="channel-tag">FREE & OPEN SOURCE</span>
+        <h1 class="channel-h1">2026 免费节点与开源订阅资源中心</h1>
+        <p class="channel-lead">
+          聚合 GitHub 活跃开源订阅仓库、公共公益节点池以及 Cloudflare 官方正规出海方案。为应急查资料、学术检索与临时连通提供零成本解决方案，并深度揭示公共节点的安全隐患与防护守则。
+        </p>
+      </header>
+
+      <!-- Answer-First / Core Notice -->
+      <section class="channel-section">
+        <div class="alert-banner">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-content">
+            <h3>免费节点的底层定位与不可逾越的局限</h3>
+            <p>
+              免费公共节点由海外志愿者或自动化爬虫抓取部署，服务器带宽通常受限，且 IP 大多被 Cloudflare、Google、OpenAI 标记为高风控黑名单。<strong>适合临时查阅维基百科或学术文献；严禁用于手机网银、商业支付或 ChatGPT 等强风控服务。</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: GitHub Open Source Pools -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">精选仓库</span>：GitHub 活跃开源订阅源推荐</span></h2>
+        <div class="repo-grid">
+          <div class="repo-card">
+            <div class="repo-header">
+              <span class="repo-badge">每日自动更新</span>
+              <h3>GitHub 公益聚合池</h3>
+            </div>
+            <p class="repo-desc">
+              海外开发者通过爬虫定时汇总全网公开的 V2Ray (vmess/vless)、Shadowsocks 节点，经连通性测试后自动合成 Base64 订阅。
+            </p>
+            <ul class="repo-meta-list">
+              <li><strong>协议支持:</strong> VLESS / VMess / SS / Trojan</li>
+              <li><strong>建议刷新频率:</strong> 每日 1 次（节点寿命通常为 6-24 小时）</li>
+              <li><strong>测速可用率:</strong> 约 35% ~ 60%</li>
+            </ul>
+            <div class="repo-actions">
+              <a href="/topics/free-nodes/#repo-list" class="btn-primary-sm">查看完整开源仓库清单 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="repo-card">
+            <div class="repo-header">
+              <span class="repo-badge official">官方正规免费</span>
+              <h3>Cloudflare WARP (1.1.1.1)</h3>
+            </div>
+            <p class="repo-desc">
+              Cloudflare 官方推出的基于 WireGuard 协议的安全网络通道。完全免费且无流量上限，连接 Cloudflare 边缘 Anycast 网络。
+            </p>
+            <ul class="repo-meta-list">
+              <li><strong>协议支持:</strong> WireGuard</li>
+              <li><strong>优选 IP:</strong> 支持使用 WARP 优选脚本测出本地最佳延迟 IP</li>
+              <li><strong>隐私级别:</strong> 最高（跨国上市公司合规运营）</li>
+            </ul>
+            <div class="repo-actions">
+              <a href="/topics/free-nodes/#warp-guide" class="btn-primary-sm">查看 WARP 零成本搭建指南 &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Subscription Conversion -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">工具教学</span>：第三方在线订阅转换工具使用指引</span></h2>
+        <div class="guide-box">
+          <p>
+            很多开源仓库仅提供单行 <code>vmess://</code> 或 <code>vless://</code> 链接，无法直接导入客户端。使用订阅转换工具可将多条单节点链接快速合成为 Clash / Mihomo / Sing-box 格式的 <code>yaml</code> 配置。
+          </p>
+          <div class="steps-container">
+            <div class="step-col">
+              <span class="step-num">1</span>
+              <h4>复制原始链接</h4>
+              <p>复制单条或多条节点链接，每行一个节点，确保包含完整节点参数。</p>
+            </div>
+            <div class="step-col">
+              <span class="step-num">2</span>
+              <h4>选用可信转换工具</h4>
+              <p>推荐使用开源本地部署或知名开发者运维的转换站点（如品果、肥羊），切勿使用含广告的未知镜像站。</p>
+            </div>
+            <div class="step-col">
+              <span class="step-num">3</span>
+              <h4>生成并导入</h4>
+              <p>选择客户端类型为 <strong>Clash</strong> 或 <strong>Sing-box</strong>，点击生成订阅链接并在客户端下载测试。</p>
+            </div>
+          </div>
+          <div class="safety-tip">
+            <strong>🔒 隐私警示：</strong> 商业付费机场的专属订阅链接含有个人 Token，<strong>严禁提交至公共第三方订阅转换工具</strong>，以防订阅泄露被蹭流量或封禁。
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Safety Principles -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">安全底线</span>：免费节点使用四大准则</span></h2>
+        <div class="rule-grid">
+          <div class="rule-card">
+            <span class="r-icon">🛡️</span>
+            <h4>1. 零商业机密传输</h4>
+            <p>绝不通过免费节点登录企业邮箱、内部工作系统或输入涉及知识产权的代码与文档。</p>
+          </div>
+          <div class="rule-card">
+            <span class="r-icon">💳</span>
+            <h4>2. 绝对隔离金融账户</h4>
+            <p>登录网银、PayPal、数字货币交易所或进行信用卡结算时，请务必关闭代理或使用直连。</p>
+          </div>
+          <div class="rule-card">
+            <span class="r-icon">🤖</span>
+            <h4>3. 警惕 OpenAI 封号</h4>
+            <p>公共节点的机房 IP 常被 OpenAI 风控系统列为滥用池，使用免费节点登录可能导致 ChatGPT 账号被封禁。</p>
+          </div>
+          <div class="rule-card">
+            <span class="r-icon">🔀</span>
+            <h4>4. 坚持规则分流模式</h4>
+            <p>在 Clash 中必须保持“规则 (Rule)”分流，严禁开启“全局 (Global)”，以免国内敏感数据旁路被嗅探。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Deep Dive Banner -->
+      <section class="channel-section">
+        <div class="topic-banner">
+          <div class="tb-text">
+            <span class="tb-tag">万字深度评测</span>
+            <h2>《2026免费翻墙节点测速与防封全景指南》</h2>
+            <p>全景覆盖 8 大开源 GitHub 活跃仓库实测、Cloudflare WARP 优选 IP 脚本使用、自建 Subconverter 订阅转换教程与风险规避白皮书。</p>
+          </div>
+          <div class="tb-action">
+            <a href="/topics/free-nodes/" class="btn-tb">阅读万字专栏 &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stable Backup Recommendation -->
+      <section class="channel-section">
+        <h2><span><span class="highlight">生产力备用</span>：预算有限下的高性价比专线推荐</span></h2>
+        <p class="section-subtext">如果您需要稳定开展外贸沟通、流畅观看 4K 视频或使用 ChatGPT 4o，微量预算的入门级专线比免费节点更可靠省心：</p>
+        <div class="backup-grid">
+          {backupBrands.map((b) => (
+            <div class="backup-card">
+              <div class="b-head">
+                <h4><a href={`/brands/${b.slug}/`}>{b.name}</a></h4>
+                <span class="b-price">{b.startingPrice}</span>
+              </div>
+              <p class="b-desc">{b.tagline}</p>
+              <div class="b-tags">
+                <span>{b.lineType}</span>
+                <span>{b.protocol}</span>
+              </div>
+              <div class="b-action">
+                <a href={`/brands/${b.slug}/`} class="btn-detail-sm">评测报告</a>
+                <a href={b.url} target="_blank" rel="nofollow sponsored noopener" class="btn-go-sm">官网开通</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--muted, #64748b);
+    margin-bottom: 20px;
+  }
+  .breadcrumb a {
+    color: var(--muted, #64748b);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--primary, #2563eb);
+  }
+  .breadcrumb span {
+    color: var(--dark, #0f172a);
+    font-weight: 500;
+  }
+
+  .channel-header {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 12px;
+    padding: 32px 28px;
+    margin-bottom: 32px;
+  }
+  .channel-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #16a34a;
+    background: #f0fdf4;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .channel-h1 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--dark, #0f172a);
+    margin: 0 0 14px 0;
+    line-height: 1.3;
+  }
+  .channel-lead {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .channel-section {
+    margin-bottom: 36px;
+  }
+  .channel-section h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--dark, #0f172a);
+    margin-bottom: 16px;
+    border-left: 4px solid var(--primary, #2563eb);
+    padding-left: 12px;
+  }
+  .channel-section h2 .highlight {
+    color: var(--primary, #2563eb);
+  }
+  .section-subtext {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 16px;
+  }
+
+  /* Alert Banner */
+  .alert-banner {
+    display: flex;
+    gap: 16px;
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .alert-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+  .alert-content h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.05rem;
+    color: #92400e;
+  }
+  .alert-content p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #78350f;
+    line-height: 1.6;
+  }
+
+  /* Repo Grid */
+  .repo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .repo-card {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .repo-header {
+    margin-bottom: 12px;
+  }
+  .repo-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .repo-badge.official {
+    color: #16a34a;
+    background: #f0fdf4;
+  }
+  .repo-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--dark, #0f172a);
+  }
+  .repo-desc {
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+  }
+  .repo-meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    font-size: 0.88rem;
+    color: #64748b;
+  }
+  .repo-meta-list li {
+    margin-bottom: 6px;
+    padding-left: 14px;
+    position: relative;
+  }
+  .repo-meta-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary, #2563eb);
+  }
+  .btn-primary-sm {
+    display: inline-block;
+    background: #1e293b;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .btn-primary-sm:hover {
+    background: var(--primary, #2563eb);
+  }
+
+  /* Guide Box */
+  .guide-box {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .guide-box p {
+    font-size: 0.95rem;
+    color: #334155;
+    line-height: 1.7;
+    margin: 0 0 20px 0;
+  }
+  .guide-box code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    color: #0f172a;
+  }
+  .steps-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .step-col {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--primary, #2563eb);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+  .step-col h4 {
+    margin: 0 0 6px 0;
+    font-size: 0.95rem;
+    color: var(--dark, #0f172a);
+  }
+  .step-col p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+  .safety-tip {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: #9a3412;
+  }
+
+  /* Rule Grid */
+  .rule-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .rule-card {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+  }
+  .r-icon {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .rule-card h4 {
+    font-size: 0.95rem;
+    margin: 0 0 8px 0;
+    color: var(--dark, #0f172a);
+  }
+  .rule-card p {
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Topic Banner */
+  .topic-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .tb-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.15);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .tb-text h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+    border-left: none;
+    padding-left: 0;
+  }
+  .tb-text p {
+    font-size: 0.92rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 680px;
+  }
+  .btn-tb {
+    display: inline-block;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .btn-tb:hover {
+    background: #1d4ed8;
+  }
+
+  /* Backup Grid */
+  .backup-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .backup-card {
+    background: #ffffff;
+    border: 1px solid var(--rule, #e2e8f0);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .b-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .b-head h4 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .b-head h4 a {
+    color: var(--dark, #0f172a);
+    text-decoration: none;
+  }
+  .b-head h4 a:hover {
+    color: var(--primary, #2563eb);
+  }
+  .b-price {
+    font-size: 0.8rem;
+    color: #16a34a;
+    font-weight: 600;
+  }
+  .b-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin: 0 0 10px 0;
+  }
+  .b-tags {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .b-tags span {
+    font-size: 0.72rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .b-action {
+    display: flex;
+    gap: 8px;
+  }
+  .btn-detail-sm {
+    flex: 1;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 0;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-detail-sm:hover {
+    background: #e2e8f0;
+  }
+  .btn-go-sm {
+    flex: 1;
+    text-align: center;
+    background: #1e293b;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 0;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .btn-go-sm:hover {
+    background: var(--primary, #2563eb);
+  }
+
+  @media (max-width: 860px) {
+    .repo-grid,
+    .backup-grid,
+    .steps-container {
+      grid-template-columns: 1fr 1fr;
+    }
+    .rule-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .topic-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .repo-grid,
+    .backup-grid,
+    .steps-container,
+    .rule-grid {
+      grid-template-columns: 1fr;
+    }
+    .channel-h1 {
+      font-size: 1.45rem;
+    }
+  }
+</style>

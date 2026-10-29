@@ -6,8 +6,18 @@ interface Props {
   description?: string;
   keywords?: string;
   canonicalUrl?: string;
+  robots?: string;
   ogType?: string;
   ogImage?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  category?: string;
+  tags?: string[];
+  googleVerification?: string;
+  bingVerification?: string;
+  baiduVerification?: string;
+  shenmaVerification?: string;
   structuredData?: object;
 }
 
@@ -16,10 +26,26 @@ const {
   description = '梯子网 (tiziclash.world) 是专业的全球跨境网络可观测性评测中心。收录42家IEPL/IPLC专线机场，提供晚高峰实测延迟、大带宽测速面板、流媒体与ChatGPT/Claude解锁矩阵，以及全平台Clash/Shadowrocket客户端下载教程。',
   keywords = '梯子网, 机场推荐, 2026机场推荐, 光速云, IPLC专线, IEPL专线, Clash客户端, 电脑翻墙软件, 科学上网, ChatGPT节点, Netflix解锁, 跨境电商专线, tiziclash',
   canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://tiziclash.world').toString(),
+  robots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
   ogType = 'website',
   ogImage = '/og-image.svg',
+  publishedTime,
+  modifiedTime = '2026-10-29T00:00:00Z',
+  author = '梯子网技术实验室',
+  category,
+  tags = [],
+  googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+  bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION || '',
+  baiduVerification = import.meta.env.PUBLIC_BAIDU_SITE_VERIFICATION || '',
+  shenmaVerification = import.meta.env.PUBLIC_SHENMA_SITE_VERIFICATION || '',
   structuredData,
 } = Astro.props;
+
+// Ensure clean canonical URL with trailing slash consistency (if not a static file)
+let cleanCanonical = canonicalUrl;
+if (!cleanCanonical.endsWith('/') && !cleanCanonical.split('/').pop()?.includes('.')) {
+  cleanCanonical += '/';
+}
 
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://tiziclash.world';
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
@@ -31,7 +57,7 @@ const defaultStructuredData = {
     {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
-      'url': siteUrl,
+      'url': `${siteUrl}/`,
       'name': '梯子网 - 跨境网络观测实验室',
       'alternateName': 'TiziClash World',
       'description': description,
@@ -39,8 +65,8 @@ const defaultStructuredData = {
     },
     {
       '@type': 'WebPage',
-      '@id': `${canonicalUrl}#webpage`,
-      'url': canonicalUrl,
+      '@id': `${cleanCanonical}#webpage`,
+      'url': cleanCanonical,
       'name': title,
       'isPartOf': { '@id': `${siteUrl}/#website` },
       'description': description,
@@ -56,20 +82,26 @@ const finalSchema = structuredData || defaultStructuredData;
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Search Engine Webmaster Verification Hooks (Direct in HTML source) -->
+{googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+{bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+{baiduVerification && <meta name="baidu-site-verification" content={baiduVerification} />}
+{shenmaVerification && <meta name="shenma-site-verification" content={shenmaVerification} />}
+
 <!-- Primary Meta -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="keywords" content={keywords} />
-<meta name="author" content="梯子网技术实验室" />
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="author" content={author} />
+<meta name="robots" content={robots} />
 <meta name="theme-color" content="#dc3522" />
-<link rel="canonical" href={canonicalUrl} />
+<link rel="canonical" href={cleanCanonical} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={ogType} />
 <meta property="og:site_name" content="梯子网 · tiziclash.world" />
-<meta property="og:url" content={canonicalUrl} />
+<meta property="og:url" content={cleanCanonical} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={fullOgImage} />
@@ -78,9 +110,25 @@ const finalSchema = structuredData || defaultStructuredData;
 <meta property="og:image:alt" content={title} />
 <meta property="og:locale" content="zh_CN" />
 
+{ogType === 'article' && publishedTime && (
+  <meta property="article:published_time" content={publishedTime} />
+)}
+{ogType === 'article' && modifiedTime && (
+  <meta property="article:modified_time" content={modifiedTime} />
+)}
+{ogType === 'article' && author && (
+  <meta property="article:author" content={author} />
+)}
+{ogType === 'article' && category && (
+  <meta property="article:section" content={category} />
+)}
+{ogType === 'article' && tags.map(tag => (
+  <meta property="article:tag" content={tag} />
+))}
+
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:url" content={cleanCanonical} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={fullOgImage} />

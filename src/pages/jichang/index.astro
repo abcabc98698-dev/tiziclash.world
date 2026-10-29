@@ -1,0 +1,301 @@
+---
+import '../../styles/global.css';
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+
+const pageTitle = '2026 机场推荐与选型评测中心 · 42家主流机场晚高峰测速对比 | 梯子网';
+const pageDescription = '专业的 2026 机场推荐与跨境专线测评中心。汇总 42 家主流机场晚高峰实测延迟、丢包率与套餐资费，按价格与线路类型分类，助您避开跑路与虚标陷阱。';
+const canonicalUrl = 'https://tiziclash.world/jichang/';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#collection`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world/' },
+        { '@type': 'ListItem', 'position': 2, 'name': '机场推荐中心', 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/jichang" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>机场推荐中心</span>
+      </nav>
+
+      <header class="channel-header">
+        <span class="channel-tag">AIRPORT REVIEWS & BENCHMARK</span>
+        <h1 class="channel-h1">2026 机场推荐与晚高峰抗拥堵选型中心</h1>
+        <p class="channel-lead">
+          拒绝虚标跑分与跑路风险。梯子网实验室持续跟踪 42 家主流机场品牌，基于真实 1000M 物理专线与晚高峰实测数据，为您呈现最客观的机场选型梯队与防坑指南。
+        </p>
+      </header>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">三大</span>梯队：2026 机场分类决策树</span></h2>
+        
+        <div class="tier-grid">
+          <div class="tier-card featured">
+            <span class="tier-badge">第一梯队 · 旗舰专线</span>
+            <h3>企业级 IEPL / IPLC 物理双专线</h3>
+            <p><strong>代表品牌：</strong> 光速云、微风网络、星岛梦</p>
+            <p><strong>适合场景：</strong> 远程办公、跨境电商、ChatGPT / Claude 重度依赖、4K 流媒体秒开。</p>
+            <p><strong>核心特征：</strong> 全天 0% 丢包，原生纯净落地，不限速不挤占，年付折合约 ¥8~¥25/月。</p>
+            <a href="/brands/guangshuyun/" class="tier-link">查看光速云深度实测 &rarr;</a>
+          </div>
+
+          <div class="tier-card">
+            <span class="tier-badge">第二梯队 · 小白福音</span>
+            <h3>自研免配置客户端开箱即用型</h3>
+            <p><strong>代表品牌：</strong> 飞猫云 (feimao)、二猫云</p>
+            <p><strong>适合场景：</strong> 零技术基础、不愿学习复杂 Clash 订阅转换与规则配置的新手小白。</p>
+            <p><strong>核心特征：</strong> 下载官方专属客户端，输入账号密码一键连接，支持手机电脑全端。</p>
+            <a href="/brands/feimaoyun/" class="tier-link">查看飞猫云深度实测 &rarr;</a>
+          </div>
+
+          <div class="tier-card">
+            <span class="tier-badge">第三梯队 · 极致平价</span>
+            <h3>大流量低成本学生党备用型</h3>
+            <p><strong>代表品牌：</strong> 大佬云、唯兔云、闪电鼠</p>
+            <p><strong>适合场景：</strong> 预算极其敏感、仅偶尔查阅文献资料或用作主力断网备用的轻度用户。</p>
+            <p><strong>核心特征：</strong> 月付门槛低至 ¥5.6 起，提供超大流量包，性价比较高。</p>
+            <a href="/brands/dalaoyun/" class="tier-link">查看大佬云深度实测 &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">避坑</span>指北：挑选机场的四大黄金防雷法则</span></h2>
+        <div class="anti-scam-box">
+          <div class="scam-rule">
+            <strong>1. 坚决不买“超长年限低价一次性打包卡”</strong>
+            <p>市面上宣称“¥30 买断三年/五年”的劣质小机场往往是圈钱跑路重灾区。真正租用物理跨境内网专线的数据中心成本每个月都是固定的，极低价格必然伴随严重超售或随时跑路。</p>
+          </div>
+          <div class="scam-rule">
+            <strong>2. 认准运营年限 ≥ 3 年以上的老牌综合厂商</strong>
+            <p>如光速云（2020 年上线稳定运营超 6 年），经历了历次重要敏感时期与网络风暴检验，运维团队成熟，客服工单响应及时。</p>
+          </div>
+          <div class="scam-rule">
+            <strong>3. 先月付或试用，实测晚高峰后再决定长期方案</strong>
+            <p>新用户建议先购买单月基础套餐或利用免费试用，在晚上 20:30 至 22:30 的黄金拥堵期实测你本地宽带（电信/联通/移动）的连通率，切忌盲目冲动消费。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">完整</span>品牌检索：直通 42 家独立测评库</span></h2>
+        <div class="browse-brands-box">
+          <p>梯子网独立收录 42 家机场品牌，每一家均配备硬件规格表、晚高峰测速图表、流媒体与 AI 解锁能力矩阵：</p>
+          <div class="quick-links-row">
+            <a href="/brands/" class="btn-all-brands">浏览全部 42 家机场品牌测速库 &rarr;</a>
+            <a href="/observatory/" class="btn-obs-link">查阅晚高峰实时性能观测看板</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .channel-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .channel-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #0369a1;
+    background: #e0f2fe;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .channel-h1 {
+    font-size: clamp(1.45rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .channel-lead {
+    font-size: 0.86rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .channel-section {
+    margin-bottom: 28px;
+  }
+
+  .channel-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 12px;
+  }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .tier-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tier-card.featured {
+    background: #fffefe;
+    border-color: #fca5a5;
+    border-top: 3px solid var(--accent, #dc3522);
+  }
+
+  .tier-badge {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    margin-bottom: 6px;
+  }
+
+  .tier-card h3 {
+    font-size: 0.98rem;
+    color: #111827;
+    margin: 0 0 8px;
+  }
+
+  .tier-card p {
+    font-size: 0.78rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0 0 6px;
+  }
+
+  .tier-link {
+    font-size: 0.76rem;
+    color: var(--accent, #dc3522);
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  .anti-scam-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .scam-rule strong {
+    font-size: 0.86rem;
+    color: #111827;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .scam-rule p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .browse-brands-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .browse-brands-box p {
+    font-size: 0.84rem;
+    color: #334155;
+    margin: 0 0 12px;
+  }
+
+  .quick-links-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-all-brands {
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .btn-obs-link {
+    background: #1e293b;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .tier-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,314 @@
+---
+import '../../styles/global.css';
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+
+const pageTitle = '全球跨境节点与网络拓扑 · 香港/日本/新加坡/美西低延迟节点选型 | 梯子网';
+const pageDescription = '全球跨境节点选型与网络拓扑观测中心。深入解析香港、日本、新加坡、美国等主流落地节点延迟、抖动特性与跨境海底光缆路由（TPE/SJC2/APG），提供最优节点搭配策略。';
+const canonicalUrl = 'https://tiziclash.world/nodes/';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonicalUrl}#collection`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world/' },
+        { '@type': 'ListItem', 'position': 2, 'name': '全球节点中心', 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/nodes" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>全球节点中心</span>
+      </nav>
+
+      <header class="channel-header">
+        <span class="channel-tag">GLOBAL NODES & TOPOLOGY</span>
+        <h1 class="channel-h1">全球跨境节点分布与路由拓扑选型中心</h1>
+        <p class="channel-lead">
+          国际海底光缆布局与运营商互联策略决定了节点的物理延迟与稳定性。本频道深度拆解香港、日本、新加坡、美国及欧洲核心节点的网络拓扑特性，指导您搭建科学的高可用分流策略组。
+        </p>
+      </header>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">四大</span>主力地区节点特性深度剖析</span></h2>
+        
+        <div class="node-regions-grid">
+          <div class="region-card">
+            <div class="region-head">
+              <span class="region-flag">🇭🇰</span>
+              <h3>香港节点 (Hong Kong)</h3>
+              <span class="r-latency">实测延迟: 18ms ~ 35ms</span>
+            </div>
+            <p><strong>网络定位：</strong> 距离中国大陆物理距离最近的国际枢纽，拥有极高的直连光纤密度。</p>
+            <p><strong>优势场景：</strong> 跨境电商后台管理、网页高速浏览、微信/国内办公混用分流。</p>
+            <p><strong>注意事项：</strong> 香港 IP 因大量服务商扎堆，某些大模型平台（如 Claude）有时存在小范围区域限制，通常需搭配新加坡或美日节点协同使用。</p>
+          </div>
+
+          <div class="region-card">
+            <div class="region-head">
+              <span class="region-flag">🇸🇬</span>
+              <h3>新加坡节点 (Singapore)</h3>
+              <span class="r-latency">实测延迟: 42ms ~ 58ms</span>
+            </div>
+            <p><strong>网络定位：</strong> 东南亚数字经济核心中枢，拥有顶级的数据中心与亚太互联带宽。</p>
+            <p><strong>优势场景：</strong> <strong>AI 生产力首选！</strong> ChatGPT 4o 与 Claude 3.5 对新加坡 IP 极度友好，风控拦截率全网最低。</p>
+            <p><strong>注意事项：</strong> 晚高峰需确保走专线直连海缆（如 APG/SJC2），避免公网绕行欧美造成延迟翻倍。</p>
+          </div>
+
+          <div class="region-card">
+            <div class="region-head">
+              <span class="region-flag">🇯🇵</span>
+              <h3>日本节点 (Japan)</h3>
+              <span class="r-latency">实测延迟: 45ms ~ 65ms</span>
+            </div>
+            <p><strong>网络定位：</strong> 东亚老牌网络强国，电信软银 (SoftBank)、NTT 与 KDDI 骨干网冗余极大。</p>
+            <p><strong>优势场景：</strong> 外服网络游戏、二次元动漫版权库 (DMM / AbemaTV)、学术检索与高并发推理。</p>
+            <p><strong>注意事项：</strong> 优先选择原生机房住宅 IP，避开已被标记为公共广播的数据中心段。</p>
+          </div>
+
+          <div class="region-card">
+            <div class="region-head">
+              <span class="region-flag">🇺🇸</span>
+              <h3>美国西海岸节点 (US West)</h3>
+              <span class="r-latency">实测延迟: 135ms ~ 165ms</span>
+            </div>
+            <p><strong>网络定位：</strong> 全球互联网发源地与最大的数据中心聚集地，跨太平洋直达海缆出口。</p>
+            <p><strong>优势场景：</strong> 带宽容量极高（支持 10Gbps+ 爆发）、全版权 Netflix/HBO 片库、美区 Apple ID 与 PayPal 注册。</p>
+            <p><strong>注意事项：</strong> 由于物理光速在太平洋光纤中的传输极限，延迟无法低于 120ms，不适合即时对战游戏。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">策略组</span>设计：出海网络高可用节点搭配指南</span></h2>
+        <div class="topo-tips-box">
+          <div class="topo-tip-item">
+            <strong>💡 建议一：设置【自动故障转移 (Fallback)】策略组</strong>
+            <p>将新加坡作为主力节点，当发生网络闪断或探针超时（> 2000ms）时，客户端自动无缝顺位切换至香港或日本节点，保证远程会议与终端不掉线。</p>
+          </div>
+          <div class="topo-tip-item">
+            <strong>💡 建议二：为 AI 工具设置【固定地区分流 (Direct Routing)】</strong>
+            <p>在 Clash 规则中单独配置 <code>DOMAIN-SUFFIX,openai.com,新加坡专线</code> 和 <code>DOMAIN-SUFFIX,anthropic.com,新加坡专线</code>，确保大模型请求始终锁定固定 IP，彻底杜绝异地盗号风控。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="channel-section">
+        <h2><span><span class="highlight">实测</span>验证：直通晚高峰性能可观测性看板</span></h2>
+        <div class="node-cta-box">
+          <p>想了解您所在省份运营商（电信/联通/移动）到上述各节点的真实延迟？</p>
+          <a href="/observatory/" class="btn-node-obs">查阅晚高峰实时丢包与抖动实测数据 &rarr;</a>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .channel-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .channel-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .channel-h1 {
+    font-size: clamp(1.45rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .channel-lead {
+    font-size: 0.86rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .channel-section {
+    margin-bottom: 28px;
+  }
+
+  .channel-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 12px;
+  }
+
+  .node-regions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .region-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .region-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .region-flag {
+    font-size: 1.3rem;
+  }
+
+  .region-head h3 {
+    font-size: 0.98rem;
+    color: #111827;
+    margin: 0;
+  }
+
+  .r-latency {
+    font-size: 0.7rem;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    margin-left: auto;
+  }
+
+  .region-card p {
+    font-size: 0.78rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0 0 6px;
+  }
+
+  .region-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .topo-tips-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .topo-tip-item strong {
+    font-size: 0.86rem;
+    color: #111827;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .topo-tip-item p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .node-cta-box {
+    background: #1e293b;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .node-cta-box p {
+    font-size: 0.84rem;
+    color: #cbd5e1;
+    margin: 0;
+  }
+
+  .btn-node-obs {
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .btn-node-obs:hover {
+    background: #b91c1c;
+  }
+
+  @media (max-width: 640px) {
+    .node-regions-grid {
+      grid-template-columns: 1fr;
+    }
+    .node-cta-box {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+  }
+</style>

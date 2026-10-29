@@ -1,0 +1,182 @@
+---
+import '../styles/global.css';
+import HeaderNav from '../components/HeaderNav.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+
+const pageTitle = '404 页面未找到 · 梯子网 | tiziclash.world';
+const pageDescription = '抱歉，您访问的页面不存在或已被移除。您可以返回首页、查阅42家机场品牌库或免费节点测速专题。';
+const canonicalUrl = 'https://tiziclash.world/404/';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      robots="noindex, follow"
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/404" />
+
+    <main class="page" id="main-content">
+      <div class="error-container">
+        <span class="error-badge">ERROR 404</span>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">抱歉，您访问的页面不存在或已被迁移</h2>
+        <p class="error-desc">
+          您输入的 URL 可能有拼写错误，或者该页面已被梯子网实验室重新归档整合。建议通过以下核心入口继续探索：
+        </p>
+
+        <div class="error-nav-grid">
+          <a href="/" class="nav-card">
+            <span class="nav-icon">🏠</span>
+            <div class="nav-info">
+              <strong>网站首页</strong>
+              <p>精选梯子专线与测速总览</p>
+            </div>
+          </a>
+
+          <a href="/brands/" class="nav-card">
+            <span class="nav-icon">📚</span>
+            <div class="nav-info">
+              <strong>42家机场品牌库</strong>
+              <p>完整参数与晚高峰测速对照</p>
+            </div>
+          </a>
+
+          <a href="/topics/free-nodes/" class="nav-card">
+            <span class="nav-icon">⚡</span>
+            <div class="nav-info">
+              <strong>免费资源专题</strong>
+              <p>万字节点获取与配置教程</p>
+            </div>
+          </a>
+
+          <a href="/clients/" class="nav-card">
+            <span class="nav-icon">💻</span>
+            <div class="nav-info">
+              <strong>全平台客户端</strong>
+              <p>Clash / v2rayN 官方原版下载</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="error-back-home">
+          <a href="/" class="btn-home">&larr; 返回梯子网首页</a>
+        </div>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .error-container {
+    max-width: 640px;
+    margin: 40px auto;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .error-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    background: #fef2f2;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+  }
+
+  .error-code {
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    color: var(--dark, #111827);
+    line-height: 1;
+    margin: 10px 0 6px;
+    letter-spacing: -0.04em;
+  }
+
+  .error-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 0 0 10px;
+  }
+
+  .error-desc {
+    font-size: 0.86rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+
+  .error-nav-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  .nav-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .nav-card:hover {
+    border-color: var(--accent, #dc3522);
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .nav-icon {
+    font-size: 1.4rem;
+  }
+
+  .nav-info strong {
+    font-size: 0.84rem;
+    color: #111827;
+    display: block;
+  }
+
+  .nav-info p {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin: 2px 0 0;
+  }
+
+  .btn-home {
+    display: inline-block;
+    background: var(--dark, #111827);
+    color: #ffffff;
+    font-size: 0.84rem;
+    font-weight: 700;
+    padding: 8px 22px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .btn-home:hover {
+    background: #334155;
+  }
+
+  @media (max-width: 540px) {
+    .error-nav-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

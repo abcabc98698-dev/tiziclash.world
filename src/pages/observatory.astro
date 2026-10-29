@@ -9,6 +9,7 @@ import { BRANDS_DATA } from '../data/brands';
 
 const pageTitle = '网络可观测性实验室 · 2026晚高峰丢包与下行测速监控中心 | 梯子网';
 const pageDescription = '梯子网自主搭建的网络可观测性监控中心。严谨记录主流机场在晚高峰时段的真实延迟、丢包率、TLS RTT 及 4K 吞吐带宽，公开测试环境与拓扑结构，杜绝虚假跑分。';
+const canonicalUrl = 'https://tiziclash.world/observatory/';
 
 const topTestedBrands = BRANDS_DATA.filter(b => b.speedTestData && b.speedTestData.length > 0);
 
@@ -17,7 +18,7 @@ const structuredData = {
   '@type': 'TechArticle',
   'headline': pageTitle,
   'description': pageDescription,
-  'url': 'https://tiziclash.world/observatory',
+  'url': canonicalUrl,
   'inLanguage': 'zh-CN'
 };
 ---
@@ -28,6 +29,7 @@ const structuredData = {
     <SEOHead
       title={pageTitle}
       description={pageDescription}
+      canonicalUrl={canonicalUrl}
       structuredData={structuredData}
     />
   </head>
