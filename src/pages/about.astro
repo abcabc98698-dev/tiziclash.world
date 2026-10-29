@@ -1,0 +1,312 @@
+---
+import '../styles/global.css';
+import HeaderNav from '../components/HeaderNav.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+
+const pageTitle = '关于梯子网 · 2026全球跨境网络可观测性与专线技术实验室 | tiziclash.world';
+const pageDescription = '了解梯子网 (tiziclash.world) 独立网络观测实验室的技术底座、评测理念与硬件基础设施。坚持“先实测后评价，无数据不妄言”的客观原则，专注于跨境 IEPL 专线抗封锁、大模型 AI 与流媒体解锁测试。';
+const canonicalUrl = 'https://tiziclash.world/about';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'AboutPage',
+      '@id': `${canonicalUrl}#webpage`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://tiziclash.world/#organization',
+      'name': '梯子网网络实验室',
+      'alternateName': 'TiziClash World Lab',
+      'url': 'https://tiziclash.world',
+      'logo': 'https://tiziclash.world/avatar.jpg',
+      'description': '专注于跨境网络可观测性、IEPL物理专线稳定性与海外AI/流媒体解锁能力的第三方独立评测实验室。'
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/about" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>关于实验室</span>
+      </nav>
+
+      <header class="about-header">
+        <div class="about-tag">LABORATORY PROFILE</div>
+        <h1 class="about-h1">关于梯子网 (tiziclash.world)</h1>
+        <p class="about-subtitle">
+          全网领先的第三方跨境网络可观测性评测中心 · 坚守“先实测后评价，无数据不妄言”
+        </p>
+      </header>
+
+      <section class="about-section">
+        <h2><span><span class="highlight">成立</span>初衷与使命宣言</span></h2>
+        <p>
+          在中文互联网上，跨境网络与科学上网领域长期充斥着大量虚假信息、机器抓取的劣质内容农场、以及缺乏任何实测依据的跑分骗局。许多用户购买了号称“千兆专线”的劣质机场，在晚高峰却遭遇严重丢包断流；或是因使用了被污染的机房 IP，导致高价值的 ChatGPT Plus 或 Claude 账号被无故风控封禁。
+        </p>
+        <p>
+          <strong>梯子网 (tiziclash.world)</strong> 由一群热爱计算机网络通信协议、分布式架构与网络安全的研究者发起成立。我们的使命极其纯粹：<strong>搭建专业、透明、物理硬件级的网络监测探针，用严谨的可复现数据打破行业信息不对称，为出海开发者、跨境电商从业者、留学生及学术科研人员提供最靠谱的专线选型指南。</strong>
+        </p>
+      </section>
+
+      <section class="about-section">
+        <h2><span><span class="highlight">硬件</span>基础设施与实测环境透明化披露</span></h2>
+        <p>
+          任何脱离实际网络环境的测速跑分都是毫无意义的“空中楼阁”。梯子网独立实验室配备了真实物理级硬件网络压测平台，所有收录的 42 家机场品牌测速均来自以下严格标准：
+        </p>
+
+        <div class="infra-grid">
+          <div class="infra-card">
+            <span class="infra-icon">🌐</span>
+            <h3>物理带宽基准</h3>
+            <p>采用中国联通 <strong>1000M 物理光纤独立专线</strong> 对等接入，配备企业级千兆软路由硬件（Intel x86 架构多核硬件加速），彻底消除本地设备网络瓶颈。</p>
+          </div>
+
+          <div class="infra-card">
+            <span class="infra-icon">⏱️</span>
+            <h3>晚高峰极限定压</h3>
+            <p>日常测速毫无参考价值。我们严选每日 <strong>晚高峰黄金时段 (20:30 - 22:30)</strong>，在全国国际出口骨干网最拥堵的窗口期发起多线程吞吐压测。</p>
+          </div>
+
+          <div class="infra-card">
+            <span class="infra-icon">🛡️</span>
+            <h3>现代内核协议集</h3>
+            <p>全平台实测环境基于最新 <strong>Mihomo (Clash.Meta) 内核</strong> 与 <strong>Sing-box 内核</strong>，覆盖 VLESS Reality、Shadowsocks 2022、Hysteria2 及 TUIC 等现代前沿协议。</p>
+          </div>
+
+          <div class="infra-card">
+            <span class="infra-icon">🤖</span>
+            <h3>AI 与流媒体仿真探针</h3>
+            <p>通过部署自研探针，每日定时自动化探测 OpenAI (ChatGPT 4o)、Anthropic (Claude 3.5 Sonnet)、Netflix 及 YouTube 4K 的连接延迟与 IP 欺诈分值。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <h2><span><span class="highlight">三大</span>独立评测铁律</span></h2>
+        <div class="iron-rules-box">
+          <div class="rule-row">
+            <span class="rule-num">01</span>
+            <div class="rule-content">
+              <strong>拒绝未经压测的虚假收录</strong>
+              <p>收录库内的 42 家品牌中，所有标记为【实测数据】的机场均经过实验室工程师亲自开通真实套餐并完成压测，绝不抄录商户单方面的宣传口号。</p>
+            </div>
+          </div>
+
+          <div class="rule-row">
+            <span class="rule-num">02</span>
+            <div class="rule-content">
+              <strong>客观揭露短板与避坑要点</strong>
+              <p>在所有品牌评测报告中，我们不仅陈列优势（Pros），更用专门版块严苛指出其缺陷（Cons），如退款政策严苛、节点倍率高、或某些节点无法解锁 AI 等事实。</p>
+            </div>
+          </div>
+
+          <div class="rule-row">
+            <span class="rule-num">03</span>
+            <div class="rule-content">
+              <strong>商业合作永不干涉评测数据</strong>
+              <p>本站严格遵守赞助透明化原则。部分外链虽然包含带有特定识别码的推广赞助链接，但赞助商绝无权利修改任何晚高峰实测延迟或丢包率数据。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <h2><span><span class="highlight">联系</span>与学术交流</span></h2>
+        <p>
+          如果您是网络协议开发者、海外服务器基础设施供应商，或是对本站评测数据有任何疑问或复现建议，欢迎与我们的实验室工程团队建立联系：
+        </p>
+        <div class="contact-box">
+          <div class="contact-item"><strong>官方反馈邮箱：</strong> <code>contact@tiziclash.world</code></div>
+          <div class="contact-item"><strong>评测方法学白皮书：</strong> <a href="/methodology">查阅《梯子网评测方法学与测速基准》 &rarr;</a></div>
+          <div class="contact-item"><strong>合规与赞助透明披露：</strong> <a href="/privacy">查阅《隐私政策与赞助披露》 &rarr;</a></div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .about-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .about-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    background: #fef2f2;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .about-h1 {
+    font-size: clamp(1.5rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .about-subtitle {
+    font-size: 0.88rem;
+    color: var(--gray, #4b5563);
+    margin: 0;
+  }
+
+  .about-section {
+    margin-bottom: 28px;
+  }
+
+  .about-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 10px;
+  }
+
+  .about-section p {
+    font-size: 0.86rem;
+    color: #374151;
+    line-height: 1.65;
+    margin: 0 0 10px;
+  }
+
+  .infra-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .infra-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .infra-icon {
+    font-size: 1.3rem;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .infra-card h3 {
+    font-size: 0.92rem;
+    color: #111827;
+    margin: 0 0 4px;
+  }
+
+  .infra-card p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .iron-rules-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rule-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .rule-num {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--accent, #dc3522);
+    font-family: monospace;
+    flex-shrink: 0;
+  }
+
+  .rule-content strong {
+    font-size: 0.86rem;
+    color: #111827;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .rule-content p {
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .contact-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contact-item {
+    font-size: 0.84rem;
+    color: #334155;
+  }
+
+  .contact-item a {
+    color: var(--accent, #dc3522);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .contact-item a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .infra-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

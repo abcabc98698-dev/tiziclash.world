@@ -1,0 +1,189 @@
+---
+import '../styles/global.css';
+import HeaderNav from '../components/HeaderNav.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+
+const pageTitle = '隐私政策与商业赞助透明化披露 (Affiliate Disclosure) | 梯子网';
+const pageDescription = '梯子网 (tiziclash.world) 的用户隐私保护原则与联盟营销赞助合规声明。我们严格遵守零日志政策，绝不收集用户真实 IP 与网络请求，并完全透明披露推广赞助佣金机制。';
+const canonicalUrl = 'https://tiziclash.world/privacy';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      'url': canonicalUrl,
+      'name': pageTitle,
+      'description': pageDescription,
+      'inLanguage': 'zh-CN'
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/privacy" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>隐私政策与赞助披露</span>
+      </nav>
+
+      <header class="privacy-header">
+        <div class="privacy-tag">PRIVACY & AFFILIATE DISCLOSURE</div>
+        <h1 class="privacy-h1">隐私政策与商业赞助透明化披露</h1>
+        <p class="privacy-subtitle">
+          本站坚守透明合规底线，为您提供清晰明确的数据隐私承诺与商业联盟运作说明。
+        </p>
+      </header>
+
+      <section class="privacy-section">
+        <h2><span><span class="highlight">零用户</span>追踪与隐私保护政策</span></h2>
+        <p>
+          梯子网 (tiziclash.world) 尊重并保护每一位访问者的隐私权。作为一家专注于网络底层协议的技术测评站点，我们在系统设计之初就确立了极简纯净的架构原则：
+        </p>
+        <ul class="privacy-list">
+          <li><strong>不收集个人敏感数据：</strong> 我们不设立用户注册系统，不收集您的姓名、电话、通讯录或支付卡信息；</li>
+          <li><strong>无跨站跟踪 Cookies：</strong> 本站未嵌入任何 Google Analytics 跨域画像追踪、未接入第三方广告联盟追踪代码；</li>
+          <li><strong>零代理流量日志：</strong> 本站仅为静态资讯与技术测试看板，我们本身不提供代理中继传输，无法获知亦绝不记录您的任何跨境上网浏览内容与目标域名。</li>
+        </ul>
+      </section>
+
+      <section class="privacy-section">
+        <h2><span><span class="highlight">联盟</span>营销赞助合规声明 (Affiliate Disclosure)</span></h2>
+        <p>
+          根据美国联邦贸易委员会 (FTC) 及国际通用互联网广告披露规范，我们在此向所有访问者完全透明化披露本站的运营与资金模式：
+        </p>
+        <div class="disclosure-card">
+          <p>
+            <strong>关于赞助推广外链：</strong> 本站部分指向第三方服务商（如光速云、飞猫云等）的跳转链接包含带有特定推广识别码的赞助链接（Affiliate Links）。当您通过这些链接访问并最终决定开通服务时，服务商可能会向本站支付一定比例的推广佣金支持。
+          </p>
+          <p>
+            <strong>对您结算价格的承诺：</strong> 通过本站赞助链接访问并使用独家优惠码（如 <code>AMM</code>），<strong>绝不会导致您支付高于服务商官方标准的费用</strong>。相反，由于我们与品牌方争取了专属优惠，您通常能享受到官方常规渠道无法获得的专属折扣。
+          </p>
+          <p>
+            <strong>资金用途公示：</strong> 获得的所有赞助支持均全额用于支付本站服务器托管开销、中国联通 1000M 物理光纤测试专线租用费、以及购买各大主流品牌真实套餐进行持续定压监测的硬件成本。
+          </p>
+        </div>
+      </section>
+
+      <section class="privacy-section">
+        <h2><span><span class="highlight">测评</span>独立性与免责声明</span></h2>
+        <p>
+          <strong>客观独立性：</strong> 商业赞助绝不影响本站的任何测试数据。我们始终坚持按晚高峰真实丢包率、实测吞吐量和客观工单体验进行评级。如果某家赞助品牌在线路出现故障、跑路预警或服务缩水，我们将第一时间在看板中下调评级并向用户预警。
+        </p>
+        <p>
+          <strong>出海合规提示：</strong> 本站所有关于跨境网络、专线协议及客户端的评测文章仅供计算机网络通信学术探讨、正规出海跨国贸易、学术资料检索与远程办公参考。请广大用户自觉遵守所在国家和地区的相关法律法规，文明合规使用互联网。
+        </p>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .privacy-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .privacy-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .privacy-h1 {
+    font-size: clamp(1.5rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .privacy-subtitle {
+    font-size: 0.88rem;
+    color: var(--gray, #4b5563);
+    margin: 0;
+  }
+
+  .privacy-section {
+    margin-bottom: 28px;
+  }
+
+  .privacy-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 10px;
+  }
+
+  .privacy-section p {
+    font-size: 0.86rem;
+    color: #374151;
+    line-height: 1.65;
+    margin: 0 0 10px;
+  }
+
+  .privacy-list {
+    padding-left: 20px;
+    margin: 0 0 10px;
+    font-size: 0.84rem;
+    color: #475569;
+    line-height: 1.65;
+  }
+
+  .privacy-list li + li {
+    margin-top: 6px;
+  }
+
+  .disclosure-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #059669;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 10px 0;
+  }
+
+  .disclosure-card p {
+    margin: 0 0 8px;
+    font-size: 0.82rem;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .disclosure-card p:last-child {
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,282 @@
+---
+import '../styles/global.css';
+import HeaderNav from '../components/HeaderNav.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+
+const pageTitle = '评测方法学与测速基准 · 梯子网实验室晚高峰实测技术白皮书 | tiziclash.world';
+const pageDescription = '梯子网 (tiziclash.world) 实验室公布的 2026 跨境网络与机场评测技术白皮书。详细公开晚高峰丢包率计算、单节点吞吐量压测、IPQS 欺诈评分检测及 AI/流媒体解锁判定算法。';
+const canonicalUrl = 'https://tiziclash.world/methodology';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'TechArticle',
+      '@id': `${canonicalUrl}#article`,
+      'headline': pageTitle,
+      'description': pageDescription,
+      'url': canonicalUrl,
+      'inLanguage': 'zh-CN',
+      'author': {
+        '@type': 'Organization',
+        'name': '梯子网技术实验室',
+        'url': 'https://tiziclash.world'
+      }
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/methodology" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <span>评测方法学</span>
+      </nav>
+
+      <header class="method-header">
+        <div class="method-tag">BENCHMARK METHODOLOGY</div>
+        <h1 class="method-h1">评测方法学与实测技术白皮书</h1>
+        <p class="method-subtitle">
+          公开、透明、可复现的跨境网络质量多维度量化评估标准 (2026 版)
+        </p>
+      </header>
+
+      <section class="method-section">
+        <h2><span><span class="highlight">为什么</span>需要严苛的评测方法学？</span></h2>
+        <p>
+          当前网络代理与机场评测领域最大的痛点是<strong>“跑分虚标”与“信息黑盒”</strong>。部分测评者使用本地千兆局域网测速、或者在凌晨 4 点骨干网极度空闲时抓取单次峰值，截图宣称“节点高达 1000Mbps”。然而当普通用户在晚上 9 点观看视频时，却频繁遭遇 40% 以上的丢包与断流。
+        </p>
+        <p>
+          梯子网实验室认为：<strong>只有在全网最高压力时段、采用多维度的综合指标连续抽样，才能反映一条物理跨境线路的真实水准。</strong>为此，我们确立了以下五大硬核评测维度。
+        </p>
+      </section>
+
+      <section class="method-section">
+        <h2><span><span class="highlight">五大</span>核心评测维度与判定阈值</span></h2>
+        
+        <div class="dimension-table-wrap">
+          <table class="dimension-table">
+            <thead>
+              <tr>
+                <th>测试维度</th>
+                <th>测试工具与方法</th>
+                <th>极佳标准 (Excellent)</th>
+                <th>合格标准 (Pass)</th>
+                <th>严重不合格 (Fail)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. 晚高峰丢包率</strong></td>
+                <td>连续发送 500 个 ICMP/TCP 探测包（20:30-22:30 黄金拥堵段）</td>
+                <td><strong>0.0% ~ 0.5%</strong> (IEPL双专线)</td>
+                <td>1.0% ~ 3.5% (BGP中转)</td>
+                <td>&gt; 8.0% (公网直连/严重超售)</td>
+              </tr>
+              <tr>
+                <td><strong>2. 国际下行吞吐</strong></td>
+                <td>Speedtest.net 多线程压测 + 4K 60FPS 视频实际拖拽加载延迟</td>
+                <td><strong>&gt; 300 Mbps</strong> (拖拽秒开)</td>
+                <td>50 ~ 150 Mbps (稳定缓冲)</td>
+                <td>&lt; 20 Mbps (频繁转圈)</td>
+              </tr>
+              <tr>
+                <td><strong>3. 网络抖动 (Jitter)</strong></td>
+                <td>对新加坡、香港、东京落地节点进行 10 分钟连续方差采样</td>
+                <td><strong>&lt; 3.0 ms</strong> (物理同相)</td>
+                <td>4.0 ~ 15.0 ms</td>
+                <td>&gt; 35.0 ms (跳跃式丢包)</td>
+              </tr>
+              <tr>
+                <td><strong>4. IP 欺诈度评分</strong></td>
+                <td>IPQS (IP Quality Score) 数据库扫描 + MaxMind 库属性核验</td>
+                <td><strong>Fraud Score &lt; 20</strong> (纯净住宅)</td>
+                <td>20 ~ 60 (商业机房)</td>
+                <td>&gt; 85 (已被 AI / 银行拉黑)</td>
+              </tr>
+              <tr>
+                <td><strong>5. AI 与流媒体解锁</strong></td>
+                <td>对 ChatGPT 4o、Claude 3.5、Netflix、Disney+ 实施真实会话请求</td>
+                <td><strong>全绿 100% 直连可用</strong></td>
+                <td>需手动换节点后可用</td>
+                <td>Access Denied / 仅自制剧</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="method-section">
+        <h2><span><span class="highlight">星级</span>综合评分算法模型</span></h2>
+        <p>
+          在各品牌详情页中展示的综合评分（例如 4.9 分或 4.6 分），是由实验室加权算法自动计算得出，绝非主观随意给出：
+        </p>
+
+        <div class="formula-card">
+          <div class="formula-title">📐 综合得分计算权重公式：</div>
+          <p class="formula-code">
+            <code>综合得分 = (晚高峰抗丢包率 × 35%) + (下行吞吐与抖动 × 25%) + (AI与流媒体解锁度 × 20%) + (资费性价比与套餐机制 × 10%) + (客户端生态与易用性 × 10%)</code>
+          </p>
+          <ul class="formula-notes">
+            <li><strong>4.8 ~ 5.0 分（编辑部首推专线旗舰）：</strong> 必须具备 IEPL/IPLC 物理级专线架构，晚高峰丢包率严格保持在 0.5% 以下，且 ChatGPT/Claude 原生完美解锁（如光速云）。</li>
+            <li><strong>4.5 ~ 4.7 分（实验室优质推荐）：</strong> 线路质量优秀，中转带宽充裕，流媒体解锁良好，偶尔需要手动换节点或晚高峰偶发微量抖动。</li>
+            <li><strong>4.0 ~ 4.4 分（基础入门收录）：</strong> 价格极低或适合轻量预算敏感用户，但在极端晚高峰有一定丢包概率。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="method-section">
+        <h2><span><span class="highlight">数据</span>复现与同行监督</span></h2>
+        <p>
+          科学的真谛在于“可重复检验”。梯子网实验室欢迎所有网络工程师与订阅用户对我们的评测数据进行验证。若您在相同网络环境下测得的数据与我们公布的看板存在重大出入，请附带 MTR 路由追踪日志与 Speedtest 测速 ID 发送至 <code>contact@tiziclash.world</code>，我们将在 48 小时内核实并更新看板。
+        </p>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .method-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .method-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #0369a1;
+    background: #e0f2fe;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .method-h1 {
+    font-size: clamp(1.5rem, 3.2vw, 1.85rem);
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 4px 0 6px;
+  }
+
+  .method-subtitle {
+    font-size: 0.88rem;
+    color: var(--gray, #4b5563);
+    margin: 0;
+  }
+
+  .method-section {
+    margin-bottom: 28px;
+  }
+
+  .method-section h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 10px;
+  }
+
+  .method-section p {
+    font-size: 0.86rem;
+    color: #374151;
+    line-height: 1.65;
+    margin: 0 0 10px;
+  }
+
+  .dimension-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #ffffff;
+    margin: 12px 0;
+  }
+
+  .dimension-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .dimension-table th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .dimension-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+  }
+
+  .formula-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--accent, #dc3522);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .formula-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+
+  .formula-code {
+    background: #1e293b;
+    color: #38bdf8;
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    margin: 0 0 10px;
+    overflow-x: auto;
+  }
+
+  .formula-notes {
+    padding-left: 18px;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .formula-notes li + li {
+    margin-top: 4px;
+  }
+</style>

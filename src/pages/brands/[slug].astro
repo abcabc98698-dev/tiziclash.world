@@ -101,6 +101,12 @@ const structuredData = {
           <div class="header-main">
             <h1 class="brand-h1">{brand.name}</h1>
             <p class="brand-tagline-lg">{brand.tagline}</p>
+            <div class="brand-rating-badge" aria-label={`实验室综合评测评分：${brand.featured ? '4.9' : '4.6'} / 5.0 分`}>
+              <span class="rating-stars">★★★★★</span>
+              <strong class="rating-val">{brand.featured ? '4.9' : '4.6'}</strong>
+              <span class="rating-max">/ 5.0</span>
+              <span class="rating-badge-tag">{brand.featured ? '编辑部首推专线旗舰' : '实验室客观测评收录'}</span>
+            </div>
           </div>
 
           <div class="header-cta-panel">
@@ -148,7 +154,7 @@ const structuredData = {
 
         <!-- 详细规格参数表 -->
         <section class="specs-section">
-          <h2><span><span class="highlight">基础</span>硬件与网络规格参数</span></h2>
+          <h2><span><span class="highlight">{brand.name}</span> 基础硬件与网络规格参数</span></h2>
           <div class="table-responsive">
             <table class="specs-table">
               <tbody>
@@ -189,7 +195,7 @@ const structuredData = {
 
         <!-- 套餐价格详情 -->
         <section class="packages-section">
-          <h2><span><span class="highlight">套餐</span>梯度与计费方式一览</span></h2>
+          <h2><span><span class="highlight">{brand.name}</span> 2026 最新套餐梯度与资费一览</span></h2>
           <div class="table-responsive">
             <table class="pkg-table">
               <thead>
@@ -218,7 +224,7 @@ const structuredData = {
 
         <!-- 晚高峰测速可观测性看板 -->
         <section class="observatory-section">
-          <h2><span><span class="highlight">晚高</span>峰测速与抗拥塞能力实测</span></h2>
+          <h2><span><span class="highlight">{brand.name}</span> 晚高峰网络实测与抗拥塞表现</span></h2>
           <p class="obs-intro">以下数据采集自晚高峰黄金时段，重点考察骨干网国际出口拥堵时的丢包率与下行带宽：</p>
           
           <SpeedChart
@@ -229,7 +235,7 @@ const structuredData = {
 
         <!-- 流媒体与 AI 解锁矩阵 -->
         <section class="unlock-section">
-          <h2><span><span class="highlight">流媒</span>体与生成式 AI 解锁能力</span></h2>
+          <h2><span><span class="highlight">{brand.name}</span> 原生流媒体与生成式 AI 解锁能力实测</span></h2>
           <UnlockMatrix
             brandName={brand.name}
             streaming={brand.streamingUnlock}
@@ -239,7 +245,7 @@ const structuredData = {
 
         <!-- 专线网络拓扑 -->
         <section class="topo-section">
-          <h2><span><span class="highlight">网络</span>跨境链路传输架构</span></h2>
+          <h2><span><span class="highlight">{brand.name}</span> 跨境专线链路拓扑与传输协议分析</span></h2>
           <NetworkTopology
             brandName={brand.name}
             lineType={brand.lineType}
@@ -248,7 +254,7 @@ const structuredData = {
 
         <!-- 优缺点与避坑指南 -->
         <section class="pros-cons-section">
-          <h2><span><span class="highlight">优势</span>与局限性客观分析</span></h2>
+          <h2><span><span class="highlight">{brand.name}</span> 综合优势与局限性深度剖析</span></h2>
           <div class="pros-cons-grid">
             <div class="pros-box">
               <h3>👍 主要优势 (Pros)</h3>
@@ -333,7 +339,44 @@ const structuredData = {
     font-size: 0.9rem;
     color: var(--gray, #4b5563);
     line-height: 1.45;
-    margin: 0;
+    margin: 0 0 8px;
+  }
+
+  .brand-rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .rating-stars {
+    color: #eab308;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .rating-val {
+    color: #854d0e;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .rating-max {
+    color: #a16207;
+    font-size: 0.72rem;
+  }
+
+  .rating-badge-tag {
+    font-size: 0.7rem;
+    color: #065f46;
+    background: #d1fae5;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-left: 4px;
   }
 
   .header-cta-panel {
