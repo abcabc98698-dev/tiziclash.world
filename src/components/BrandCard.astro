@@ -249,8 +249,8 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
 
   .specs-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    grid-template-columns: 1.3fr 0.8fr 1fr 1.6fr;
+    gap: 10px;
     background: #f8fafc;
     border: 1px solid #edf2f7;
     padding: 8px 12px;
@@ -408,11 +408,41 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
 
   @media (max-width: 640px) {
     .brand-card {
-      padding: 12px 14px;
+      padding: 14px 16px;
     }
     .specs-grid {
-      grid-template-columns: 1fr 1fr;
-      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 12px;
+    }
+    .spec-cell {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 4px;
+    }
+    .spec-cell:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .spec-label {
+      flex-shrink: 0;
+      color: #64748b;
+      font-size: 0.72rem;
+    }
+    .spec-value {
+      text-align: right;
+      white-space: normal;
+      word-break: break-word;
+      font-size: 0.78rem;
+    }
+    .text-ellipsis {
+      white-space: normal;
+      text-overflow: unset;
+      overflow: visible;
     }
     .card-actions {
       flex-direction: column;
@@ -421,13 +451,13 @@ const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? bra
     }
     .btn-group {
       width: 100%;
-      gap: 6px;
+      gap: 8px;
     }
     .btn-detail, .btn-register {
       flex: 1;
       text-align: center;
-      padding: 7px 10px;
-      font-size: 0.8rem;
+      padding: 8px 12px;
+      font-size: 0.82rem;
     }
   }
 </style>
