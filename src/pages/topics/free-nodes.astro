@@ -24,6 +24,14 @@ const faqItems = [
     a: '主要存在四大风险：1. 中间人窃密（节点搭建者可记录明文 DNS 请求与未经加密的传输数据）；2. 蜜罐节点（黑产团伙用于捕获访问记录并刻画用户画像）；3. 脚本与广告注入（在未启用全站 HTTPS 的页面中强行插入弹窗甚至挖矿脚本）；4. 虚假客户端投毒（带有后门的魔改 Clash 客户端盗取本地剪贴板及加密货币私钥）。严禁使用免费节点登录网银、交易所及重要个人账户。'
   },
   {
+    q: '如何把抓取到的单个 vmess:// 或 vless:// 节点链接合成可在 Clash 中运行的订阅？',
+    a: '单节点 URI 链接必须通过 Subconverter 订阅转换工具编译为 Clash 专用的 YAML 配置文件。小白用户可使用知名公开转换平台（如 ACL4SSR 或肥羊 sub.v1.mk），将零散链接粘贴进订阅栏，客户端类型选择 Clash.Meta，远程规则集选择 ACL4SSR_Online 极简版，点击“生成订阅链接”后导入 Clash Verge Rev 即可下载分流。但注意：商业付费机场专线严禁经过第三方转换站，以防凭据被截获。'
+  },
+  {
+    q: 'GitHub 上的免费订阅 Raw 链接经常在客户端提示连接超时或拉取失败怎么解决？',
+    a: '这是国内运营商对 raw.githubusercontent.com 进行 DNS 污染和阻断导致的。解决方法是在原始 Raw 链接前拼接开源反代加速前缀（例如 https://ghproxy.link/ 或 https://gh-proxy.com/），形成形如 https://ghproxy.link/https://raw.githubusercontent.com/... 的加速链接，再复制到 Clash 中即可秒级下载。'
+  },
+  {
     q: '为什么免费节点访问 ChatGPT 总是报错“Access Denied”或陷入验证码死循环？',
     a: 'OpenAI 与 Cloudflare 联合部署了严密的反欺诈与 ASN 风险画像系统。免费节点通常来自廉价公有云（如 Oracle、Linode、DigitalOcean）或被滥用的公共代理，成千上万个账户在同一出口 IP 发起高并发请求，触发了 IPQS 欺诈拦截（Fraud Score > 85），导致无论怎么刷新都无法正常登录。'
   },
@@ -162,12 +170,12 @@ const freeNodeSpeedData: SpeedTestNode[] = [
       <nav class="toc-container screen-only" aria-label="文章快速目录">
         <div class="toc-title">📑 本文深度结构大纲 (TABLE OF CONTENTS)</div>
         <div class="toc-grid">
-          <a href="#ch1" class="toc-link">1. 免费梯子与节点的 5 大主流来源技术解析</a>
+          <a href="#ch1" class="toc-link">1. 免费梯子来源解析 & 今日活跃 GitHub 仓库榜单</a>
           <a href="#ch2" class="toc-link">2. 实验室实测：免费节点晚高峰丢包与下行对比</a>
           <a href="#ch3" class="toc-link">3. 安全红线：公共节点的 4 大致命安全隐患</a>
           <a href="#ch4" class="toc-link">4. 为什么免费节点 100% 无法稳定使用 ChatGPT 与 Claude？</a>
-          <a href="#ch5" class="toc-link">5. 2026 全平台客户端免费节点安全配置实战</a>
-          <a href="#ch6" class="toc-link">6. 降维打击：从“每天折腾免费”到“低成本专线”平替决策树</a>
+          <a href="#ch5" class="toc-link">5. 客户端安全配置 & 第三方在线订阅转换小白指南</a>
+          <a href="#ch6" class="toc-link">6. 降维打击：光速云 / 飞猫云 / 大佬云 商业平替推荐</a>
           <a href="#ch7" class="toc-link">7. 梯子网专家答疑：常见疑难 FAQ 知识库</a>
         </div>
       </nav>
@@ -194,6 +202,108 @@ const freeNodeSpeedData: SpeedTestNode[] = [
               <strong>技术底层机制：</strong> 爬虫将抓取到的 <code>vmess://</code>、<code>vless://</code>、<code>ssr://</code> 字符串进行格式解码，用程序发起最基础的 ICMP Ping 或 TCP 握手测速，存活的就被 Base64 编码并打包输出为所谓的“每日免费订阅链接”。
               由于所有使用者都在拉取同一个订阅链接，一个节点在放出后的 15 分钟内就会涌入数千并发连接，导致目标服务器 CPU 瞬间拉满、带宽耗尽并触发运营商黑洞路由（Null Routing），迅速瘫痪。
             </p>
+
+            <!-- 动态更新：今日活跃开源订阅 GitHub 仓库精选 -->
+            <div class="repo-showcase-box">
+              <div class="repo-box-header">
+                <span class="repo-pulse-badge">LIVE REPOSITORIES</span>
+                <h4>⚡ 2026 持续活跃的优质开源免费订阅 GitHub 仓库精选（Actions 自动构建）</h4>
+              </div>
+              <p class="repo-desc">
+                以下为全网知名度最高、每日通过 GitHub Actions 自动化定时运行爬虫清洗并推送到公开分支的订阅源仓库。尽管免费节点有极高断流概率，但在紧急查阅资料时仍可作为临时应急源：
+              </p>
+
+              <div class="repo-table-wrap">
+                <table class="repo-table">
+                  <thead>
+                    <tr>
+                      <th>开源项目标识</th>
+                      <th>覆盖协议</th>
+                      <th>更新频率</th>
+                      <th>格式支持</th>
+                      <th>构建状态</th>
+                      <th>仓库地址 / 订阅方式</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>freefq/free</strong>
+                        <span class="repo-sub-tag">全网标杆级爬虫源</span>
+                      </td>
+                      <td><span class="proto-tag">Vmess</span> <span class="proto-tag">Vless</span> <span class="proto-tag">Trojan</span></td>
+                      <td>每 6 小时自动构建</td>
+                      <td>Base64 / Clash YAML</td>
+                      <td><span class="badge-status-live"><span class="dot-live"></span> 每日定时推送</span></td>
+                      <td>
+                        <a href="https://github.com/freefq/free" target="_blank" rel="noopener noreferrer" class="repo-link">访问 GitHub &rarr;</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>barrenblacks/v2ray-free-node</strong>
+                        <span class="repo-sub-tag">带延迟过滤与自动剔除</span>
+                      </td>
+                      <td><span class="proto-tag">Vmess</span> <span class="proto-tag">SS</span> <span class="proto-tag">Trojan</span></td>
+                      <td>每日 00:00 & 12:00</td>
+                      <td>Base64 / Sing-box</td>
+                      <td><span class="badge-status-live"><span class="dot-live"></span> 每日定时推送</span></td>
+                      <td>
+                        <a href="https://github.com/barrenblacks/v2ray-free-node" target="_blank" rel="noopener noreferrer" class="repo-link">访问 GitHub &rarr;</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Pawdroid/Free-servers</strong>
+                        <span class="repo-sub-tag">全球多国家节点自动化池</span>
+                      </td>
+                      <td><span class="proto-tag">Vmess</span> <span class="proto-tag">Shadowsocks</span></td>
+                      <td>每 4 小时高频刷新</td>
+                      <td>Clash 节点池</td>
+                      <td><span class="badge-status-live"><span class="dot-live"></span> 每日定时推送</span></td>
+                      <td>
+                        <a href="https://github.com/Pawdroid/Free-servers" target="_blank" rel="noopener noreferrer" class="repo-link">访问 GitHub &rarr;</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>peass/v2ray-free</strong>
+                        <span class="repo-sub-tag">Telegram公开群/论坛聚合</span>
+                      </td>
+                      <td><span class="proto-tag">Vmess</span> <span class="proto-tag">Vless</span></td>
+                      <td>每日自动清洗</td>
+                      <td>Base64 聚合源</td>
+                      <td><span class="badge-status-live"><span class="dot-live"></span> 每日定时推送</span></td>
+                      <td>
+                        <a href="https://github.com/peass/v2ray-free" target="_blank" rel="noopener noreferrer" class="repo-link">访问 GitHub &rarr;</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>mianfeifq/share</strong>
+                        <span class="repo-sub-tag">老牌长青节点分享池</span>
+                      </td>
+                      <td><span class="proto-tag">全协议混合</span></td>
+                      <td>每日凌晨自动更新</td>
+                      <td>Base64 / 节点明文</td>
+                      <td><span class="badge-status-live"><span class="dot-live"></span> 每日定时推送</span></td>
+                      <td>
+                        <a href="https://github.com/mianfeifq/share" target="_blank" rel="noopener noreferrer" class="repo-link">访问 GitHub &rarr;</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="repo-mirror-tip">
+                <span class="tip-icon">💡</span>
+                <div class="tip-text">
+                  <strong>国内网络环境 GitHub Raw 订阅拉取加速小技巧：</strong><br />
+                  由于 <code>raw.githubusercontent.com</code> 在国内经常遭遇 DNS 污染与连接阻断，直接在 Clash 中添加 Raw 链接容易提示 <code>Request Timeout</code>。您可以在原始 Raw 地址前直接拼接开源加速镜像前缀，例如：<br />
+                  <code>https://ghproxy.link/https://raw.githubusercontent.com/...</code> 或 <code>https://gh-proxy.com/...</code>，即可在国内直连快速拉取最新节点配置！
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="source-card">
@@ -498,6 +608,140 @@ const freeNodeSpeedData: SpeedTestNode[] = [
             </div>
           </div>
         </div>
+
+        <!-- 小白进阶必修：第三方在线订阅转换工具推荐与单节点合成 Clash 订阅教程 -->
+        <div class="subconverter-guide-box">
+          <div class="converter-box-header">
+            <span class="converter-badge">SUBSCRIPTION CONVERTER</span>
+            <h3>🔄 【小白必修】单节点 (vmess / vless / ss) 如何合成 Clash 订阅？第三方转换工具测评与 4 步实操指南</h3>
+          </div>
+          
+          <p class="converter-intro">
+            很多新手在开源社区、Telegram 频道或技术论坛中收集到的是一串串散装链接（形如 <code>vmess://...</code>、<code>vless://...</code> 或 <code>ss://...</code>）。直接把它们粘贴进 Clash Verge Rev 会提示格式错误。本节彻底解决<strong>“如何把零散单节点合成标准化 Clash YAML 订阅文件”</strong>这一最核心痛点。
+          </p>
+
+          <div class="converter-principle-card">
+            <h4>💡 核心认知：为什么单节点 URI 链接无法直接在 Clash 中运行？</h4>
+            <p>
+              <code>vmess://</code> 或 <code>vless://</code> 本质上只是一段经过 Base64 编码的单个服务器网络凭证（包含服务器 IP、端口、UUID、传输协议）。而 <strong>Clash / Mihomo 是一款规则分流引擎</strong>，它依赖的是一套严密复杂的 YAML 格式配置文件（包含 <code>proxies</code> 代理列表、<code>proxy-groups</code> 策略组、以及成千上万条国内直接直连/海外走节点的 <code>rules</code> 分流规则）。<br />
+              <strong>Subconverter（订阅转换器）</strong> 的作用就像一名同声传译官，它抓取散装单节点，自动套上国内顶级分流策略模板（如 ACL4SSR），一键编译成 Clash 能直接读取的规则文件。
+            </p>
+          </div>
+
+          <div class="converter-tools-section">
+            <h4>🛠️ 2026 常用安全订阅转换平台深度横评与链接推荐</h4>
+            <div class="converter-tools-grid">
+              <div class="conv-tool-card">
+                <div class="tool-head">
+                  <h5>方案一：ACL4SSR 在线订阅转换平台</h5>
+                  <span class="tool-tag classic">最权威分流规则集</span>
+                </div>
+                <p class="tool-desc">
+                  国内知名度最高、使用范围最广的经典转换台。由 ACL4SSR 规则维护者社区提供，内置最精准的国内直连、海外代理、微软/苹果直连、常见广告拦截规则集。
+                </p>
+                <div class="tool-meta">
+                  <span><strong>前端地址:</strong> <a href="https://acl4ssr-sub.github.io/" target="_blank" rel="noopener noreferrer">acl4ssr-sub.github.io &rarr;</a></span>
+                  <span><strong>适用场景:</strong> 绝大多数日常网页与视频分流</span>
+                </div>
+              </div>
+
+              <div class="conv-tool-card">
+                <div class="tool-head">
+                  <h5>方案二：肥羊增强版 Subconverter</h5>
+                  <span class="tool-tag modern">支持最新 Meta / Mihomo 协议</span>
+                </div>
+                <p class="tool-desc">
+                  界面极度现代化，支持自由切换多个后端 API。完美支持新一代 <code>VLESS Reality</code>、<code>Hysteria2</code>、<code>TUIC</code> 等前沿协议转换，生成速度快，防丢包处理好。
+                </p>
+                <div class="tool-meta">
+                  <span><strong>前端地址:</strong> <a href="https://sub.v1.mk/" target="_blank" rel="noopener noreferrer">sub.v1.mk &rarr;</a></span>
+                  <span><strong>适用场景:</strong> 包含 VLESS / Hysteria2 等新协议的节点</span>
+                </div>
+              </div>
+
+              <div class="conv-tool-card">
+                <div class="tool-head">
+                  <h5>方案三：品云 Subconverter 服务</h5>
+                  <span class="tool-tag stable">稳定高可用备选</span>
+                </div>
+                <p class="tool-desc">
+                  老牌高可用转换服务，支持自定义节点重命名、Emoji 国旗添加、正则关键词过滤（剔除包含“官网”、“到期”等无用节点名）。
+                </p>
+                <div class="tool-meta">
+                  <span><strong>前端地址:</strong> <a href="https://sub.xeton.dev/" target="_blank" rel="noopener noreferrer">sub.xeton.dev &rarr;</a></span>
+                  <span><strong>适用场景:</strong> 多订阅源合并与节点节点清洗</span>
+                </div>
+              </div>
+
+              <div class="conv-tool-card">
+                <div class="tool-head">
+                  <h5>方案四：本地 Docker / 本地 CLI 自建转换</h5>
+                  <span class="tool-tag safe">⭐⭐⭐⭐⭐ 绝对安全 0 泄露</span>
+                </div>
+                <p class="tool-desc">
+                  极客与企业首选。在本地电脑运行 Subconverter 可执行文件或 Docker 容器（监听 <code>127.0.0.1:25500</code>），所有节点信息和连接密钥绝对不离开本机内存。
+                </p>
+                <div class="tool-meta">
+                  <span><strong>项目源码:</strong> <a href="https://github.com/tindy2013/subconverter" target="_blank" rel="noopener noreferrer">tindy2013/subconverter &rarr;</a></span>
+                  <span><strong>适用场景:</strong> 涉及公司内网、敏感测试及高隐私需求</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 步极速合成图文流程 -->
+          <div class="conversion-steps-wrap">
+            <h4>📋 小白零基础 4 步合成 Clash 订阅实操流程（手把手教学）</h4>
+            <div class="c-step-flow">
+              <div class="c-step">
+                <div class="c-step-num">1</div>
+                <div class="c-step-body">
+                  <strong>整理单节点链接</strong>
+                  <p>将你在各大开源论坛收集到的 <code>vmess://...</code>、<code>vless://...</code> 粘贴到记事本文档中。确保<strong>一行一个节点</strong>，中间不要有空行或多余文字说明，全选复制。</p>
+                </div>
+              </div>
+
+              <div class="c-step">
+                <div class="c-step-num">2</div>
+                <div class="c-step-body">
+                  <strong>粘贴到转换前端</strong>
+                  <p>打开如 <code>https://sub.v1.mk/</code> 或 <code>https://acl4ssr-sub.github.io/</code>，切换为“进阶模式”。在“订阅链接”大文本框中直接粘贴第一步整理好的多行节点链接。</p>
+                </div>
+              </div>
+
+              <div class="c-step">
+                <div class="c-step-num">3</div>
+                <div class="c-step-body">
+                  <strong>关键参数精准选择（关键避坑）</strong>
+                  <p>
+                    - <strong>客户端类型:</strong> 若节点包含 VLESS / Hysteria2，务必选择 <code>Clash.Meta</code>；若为普通 SS/Vmess 选 <code>Clash</code>；<br />
+                    - <strong>远程配置:</strong> 下拉选择 <code>ACL4SSR_Online 极简版</code> 或 <code>ACL4SSR_Online 去广告版</code>（确保国内流量不绕路走节点）。
+                  </p>
+                </div>
+              </div>
+
+              <div class="c-step">
+                <div class="c-step-num">4</div>
+                <div class="c-step-body">
+                  <strong>生成并导入客户端</strong>
+                  <p>点击页面下方的【生成订阅链接】按钮，复制生成的 <code>https://.../sub?target=clash...</code> 地址。打开 Clash Verge Rev，在“订阅 (Profiles)”中粘贴并点击下载，即可一键拉取全部节点与完整分流规则！</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 致命安全防踩坑警示 -->
+          <div class="security-red-line-alert">
+            <div class="red-line-header">
+              <span class="red-line-icon">🚨</span>
+              <strong>安全红线警告：公共转换台能嗅探节点密码，付费敏感账号切勿上传！</strong>
+            </div>
+            <p>
+              请所有用户牢记计算机安全基本准则：<strong>任何第三方公开在线转换台的服务器运营者，在技术层面上都有能力完整记录并解密您提交的节点服务器 IP、端口及加密密钥（密码）！</strong><br />
+              对于网上的“公开免费白嫖节点”，由于本来就是公共资源，使用公开转换台没有任何后顾之忧；但如果您购买了<strong>光速云、飞猫云等商业正规专线</strong>，或者使用单位内网跨境服务器，<strong>绝对禁止通过任何第三方公共转换台转换！</strong> 正规机场后台均提供直接原生 Clash 订阅直链或自研免配置客户端，直接导入即可，绝不可外泄给第三方网站！
+            </p>
+          </div>
+        </div>
       </section>
 
       <!-- 第六章：商业平替与降维打击（自然转化） -->
@@ -531,6 +775,56 @@ const freeNodeSpeedData: SpeedTestNode[] = [
           </div>
         </div>
 
+        <!-- 详细 ROI 投入产出比对照表 -->
+        <div class="roi-table-wrap">
+          <table class="roi-table">
+            <thead>
+              <tr>
+                <th>对比维度</th>
+                <th>到处搜刮的“公共免费节点”</th>
+                <th>光速云 (IEPL 企业物理双专线)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>资金成本</strong></td>
+                <td>看似 ¥0 元（实则暗藏被窃密/封号隐形成本）</td>
+                <td><strong>¥8 /月起</strong>（或 ¥147 买断永久不过期版）</td>
+              </tr>
+              <tr>
+                <td><strong>时间精力消耗</strong></td>
+                <td>每天需耗费 20~40 分钟找源、测活、换订阅</td>
+                <td><strong>0 分钟</strong>，一键开机即连，全年无感稳定运行</td>
+              </tr>
+              <tr>
+                <td><strong>晚高峰 4K 视频</strong></td>
+                <td>频繁缓冲转圈，常降质到 360P / 480P</td>
+                <td><strong>4K 拖拽秒开</strong>，单节点最高 2.5Gbps 带宽</td>
+              </tr>
+              <tr>
+                <td><strong>ChatGPT / Claude</strong></td>
+                <td>&gt; 98% 拦截报错 <code>Access Denied</code></td>
+                <td><strong>100% 极速解锁</strong>，原生 IP 抗风锁封控</td>
+              </tr>
+              <tr>
+                <td><strong>资金与隐私安全</strong></td>
+                <td>极高风险（公共蜜罐、明文嗅探、后门投毒）</td>
+                <td><strong>企业级数据隔离</strong>，内网专线物理防抓包</td>
+              </tr>
+              <tr>
+                <td><strong>多端与小白上手</strong></td>
+                <td>需复杂手动抓单节点并使用转换器合成</td>
+                <td><strong>提供官方自研客户端</strong> + 支持全套 Clash / 小火箭</td>
+              </tr>
+              <tr>
+                <td><strong>综合推荐度</strong></td>
+                <td>仅限临时学术查阅应急使用</td>
+                <td>⭐⭐⭐⭐⭐ <strong>全网最强高性价比平替首推</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <!-- 核心推荐落地卡片 -->
         <div class="solution-recommend-card">
           <div class="sol-badge-bar">
@@ -543,23 +837,67 @@ const freeNodeSpeedData: SpeedTestNode[] = [
               <h3><a href="/brands/guangshuyun">{FEATURED_BRAND.name} (GuangShuYun)</a> · 老牌综合专线旗舰</h3>
               <p class="sol-tagline">{FEATURED_BRAND.tagline}</p>
               <p class="sol-desc">
-                光速云是目前市面上极少数同时具备“极致低门槛（¥8/月起）”与“高端物理专线架构”的老牌大厂。单节点提供最高 2.5Gbps 大带宽。不论您是偶尔查阅资料的轻度用户，还是高强度使用 AI 大模型的出海开发者，其独家【致敬斯诺克147永久不过期套餐】（¥147 买断 247GB 永久不过期）都能彻底终结您到处找节点的精力内耗。
+                光速云自 2020 年上线运营至今已超过 6 年，是目前市面上极少数同时具备“极致低门槛（年付折合约 ¥8/月起）”与“企业物理专线架构”的老牌大厂。单节点提供最高 2.5Gbps 大带宽。针对经常受够了订阅过期与断流的白嫖群体，其独家推出的【致敬斯诺克147永久套餐】（¥147 买断 247GB 永久不过期），成为全网极客公认的“终极退烧方案”。
               </p>
 
+              <!-- 光速云套餐价格明细表 -->
+              <div class="brand-plan-grid">
+                <div class="plan-card highlight">
+                  <div class="plan-tag">编辑部强烈推荐</div>
+                  <div class="plan-name">致敬斯诺克147永久套餐</div>
+                  <div class="plan-price">¥147 <span>/ 一次性买断</span></div>
+                  <div class="plan-traffic"><strong>247GB</strong> 永久不过期</div>
+                  <ul class="plan-features">
+                    <li>一次性付费，终身有效不过期</li>
+                    <li>全节点 ×1 倍率，单节点最高 2.5Gbps</li>
+                    <li>不限客户端设备数量，多端同时在线</li>
+                    <li>原生稳定落地，办公/资料/聊天神器</li>
+                  </ul>
+                </div>
+
+                <div class="plan-card">
+                  <div class="plan-tag">超低成本入门</div>
+                  <div class="plan-name">轻量版 (年付超值)</div>
+                  <div class="plan-price">¥99 <span>/ 年 (折合 ~¥8/月)</span></div>
+                  <div class="plan-traffic"><strong>69GB</strong> / 每月</div>
+                  <ul class="plan-features">
+                    <li>极低年付上车门槛，学生党无压力</li>
+                    <li>原生稳定节点覆盖 11+ 国家地区</li>
+                    <li>支持 ChatGPT / Claude 与主流海外流媒体</li>
+                    <li>赠送自研一键登录客户端</li>
+                  </ul>
+                </div>
+
+                <div class="plan-card">
+                  <div class="plan-tag">高频出海旗舰</div>
+                  <div class="plan-name">极速版 (IPLC 高速)</div>
+                  <div class="plan-price">¥25 <span>/ 月 (年付享 8 折)</span></div>
+                  <div class="plan-traffic"><strong>168GB</strong> / 每月</div>
+                  <ul class="plan-features">
+                    <li>全球 IPLC 物理专线，超低时延</li>
+                    <li>跨境电商 / TikTok 直播 / 社媒推广专供</li>
+                    <li>7×24 小时实时网络运维监控保障</li>
+                    <li>输入优惠码 <code>AMM</code> 享专属折扣</li>
+                  </ul>
+                </div>
+              </div>
+
               <div class="sol-specs-row">
-                <div class="spec-pill"><strong>起步资费:</strong> {FEATURED_BRAND.startingPrice}</div>
-                <div class="spec-pill"><strong>线路架构:</strong> {FEATURED_BRAND.lineType}</div>
-                <div class="spec-pill"><strong>节点覆盖:</strong> 11个国家和地区超60节点</div>
-                <div class="spec-pill"><strong>开业资历:</strong> 2020年稳定运营超6年</div>
+                <div class="spec-pill"><strong>起步资费:</strong> 年付折合约 ¥8/月 (99元/年)</div>
+                <div class="spec-pill"><strong>线路架构:</strong> IEPL 专线 + 企业级内网专线 (VLESS)</div>
+                <div class="spec-pill"><strong>节点覆盖:</strong> 香港×20、台湾×5、日本×10、新加坡×10、美国×10等</div>
+                <div class="spec-pill"><strong>开业资历:</strong> 2020 年稳定运营超 6 年</div>
+                <div class="spec-pill"><strong>客户端:</strong> 官方自研客户端 (免配置) + Clash/小火箭</div>
               </div>
             </div>
 
             <div class="sol-action-panel">
               <div class="sol-price-box">
-                <span class="sol-p-label">新用户立减专属优惠码</span>
+                <span class="sol-p-label">新人专享立减优惠码</span>
                 <div class="sol-coupon-wrap">
                   <CopyButton text="AMM" />
                 </div>
+                <span class="sol-coupon-hint">*结账输入 <code>AMM</code> 享专属优惠</span>
               </div>
 
               <div class="sol-buttons">
@@ -583,15 +921,37 @@ const freeNodeSpeedData: SpeedTestNode[] = [
         <!-- 备选平替阶梯 -->
         <div class="alternative-tiers-grid">
           <div class="alt-card">
-            <h4>💡 预算极致敏感型备选：大佬云 / 闪电鼠</h4>
-            <p>月付门槛低至 <strong>¥5.6 ~ ¥6.5/月</strong>，提供大流量基础节点。虽为优化中转线路但在非极端晚高峰表现依然远超公共免费节点，极其适合预算受限的学生群体。</p>
-            <a href="/brands/dalaoyun" class="alt-link">查看大佬云评测 &rarr;</a>
+            <div class="alt-head">
+              <span class="alt-badge">小白福音</span>
+              <h4>飞猫云 (FeiMao) · 专属自研客户端</h4>
+            </div>
+            <p>月付门槛低至 <strong>¥7/月起</strong>。特别针对对 Clash 订阅感到繁琐的纯小白用户，提供<strong>官方自研 Windows / Android 客户端</strong>，下载安装后登录账号即可一键出海，彻底省去复制订阅与转换配置的学习成本。</p>
+            <div class="alt-footer">
+              <a href="https://guangs.flycataff.com/#/?code=6uq0Xe9y" target="_blank" rel="nofollow sponsored noopener" class="alt-btn-go">直达飞猫云官网 &rarr;</a>
+              <a href="/brands/feimaoyun" class="alt-link">查看实验室评测</a>
+            </div>
           </div>
 
           <div class="alt-card">
-            <h4>💡 零技术纯小白备选：飞猫云 (FeiMao)</h4>
-            <p>月付 <strong>¥7/月起</strong>，提供官方自研专属 Windows/Android 客户端，下载登录账号即可一键出海，免去手动复制订阅链接与配置 Clash 的繁琐学习成本。</p>
-            <a href="/brands/feimaoyun" class="alt-link">查看飞猫云评测 &rarr;</a>
+            <div class="alt-head">
+              <span class="alt-badge">均衡实用</span>
+              <h4>微风网络 (WeiFeng) · 多设备均衡专线</h4>
+            </div>
+            <p>综合线路性价比优秀，采用优质 BGP 入口与高速内网隧道，晚高峰并发带宽冗余充足。支持多设备同时在线，非常适合外贸办公及多终端家庭协同使用。</p>
+            <div class="alt-footer">
+              <a href="/brands/weifeng" class="alt-link">查看微风网络评测 &rarr;</a>
+            </div>
+          </div>
+
+          <div class="alt-card">
+            <div class="alt-head">
+              <span class="alt-badge">极致低价</span>
+              <h4>大佬云 (DaLaoYun) · 学生党极致平替</h4>
+            </div>
+            <p>月付门槛低至 <strong>¥5.6/月（88GB/月）</strong>，提供多节点大流量基础接入。虽为优化中转线路但在非极端晚高峰表现依然远超公共免费节点，极其适合预算受限的在校学生。</p>
+            <div class="alt-footer">
+              <a href="/brands/dalaoyun" class="alt-link">查看大佬云评测 &rarr;</a>
+            </div>
           </div>
         </div>
       </section>
@@ -1434,6 +1794,533 @@ const freeNodeSpeedData: SpeedTestNode[] = [
     background: #b91c1c;
   }
 
+  /* Repo Showcase Box (Chapter 1) */
+  .repo-showcase-box {
+    margin-top: 14px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .repo-box-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .repo-pulse-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #0369a1;
+    background: #e0f2fe;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .repo-box-header h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0;
+  }
+
+  .repo-desc {
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0 0 10px;
+  }
+
+  .repo-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    background: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .repo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .repo-table th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .repo-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+  }
+
+  .repo-sub-tag {
+    display: block;
+    font-size: 0.68rem;
+    color: #64748b;
+    margin-top: 2px;
+  }
+
+  .proto-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid #e2e8f0;
+    margin-right: 2px;
+  }
+
+  .badge-status-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    color: #059669;
+    font-weight: 600;
+  }
+
+  .dot-live {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .repo-link {
+    display: inline-block;
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.76rem;
+  }
+
+  .repo-link:hover {
+    text-decoration: underline;
+  }
+
+  .repo-mirror-tip {
+    display: flex;
+    gap: 8px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.76rem;
+    color: #1e3a8a;
+    line-height: 1.5;
+  }
+
+  .tip-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Subconverter Guide Box (Chapter 5) */
+  .subconverter-guide-box {
+    margin-top: 20px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .converter-box-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .converter-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #4338ca;
+    background: #e0e7ff;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .converter-box-header h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0;
+  }
+
+  .converter-intro {
+    font-size: 0.84rem;
+    color: #334155;
+    line-height: 1.55;
+    margin: 0 0 14px;
+  }
+
+  .converter-principle-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #3b82f6;
+    border-radius: 5px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+
+  .converter-principle-card h4 {
+    font-size: 0.88rem;
+    color: #1e293b;
+    margin: 0 0 6px;
+  }
+
+  .converter-principle-card p {
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .converter-tools-section {
+    margin-bottom: 18px;
+  }
+
+  .converter-tools-section h4 {
+    font-size: 0.92rem;
+    color: #1e293b;
+    margin: 0 0 10px;
+  }
+
+  .converter-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .conv-tool-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .tool-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tool-head h5 {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+  }
+
+  .tool-tag {
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+
+  .tool-tag.classic { background: #e0f2fe; color: #0369a1; }
+  .tool-tag.modern { background: #fef3c7; color: #b45309; }
+  .tool-tag.stable { background: #f1f5f9; color: #475569; }
+  .tool-tag.safe { background: #ecfdf5; color: #047857; }
+
+  .tool-desc {
+    font-size: 0.78rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .tool-meta {
+    font-size: 0.74rem;
+    color: #64748b;
+    border-top: 1px dashed #f1f5f9;
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .tool-meta a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .conversion-steps-wrap {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+
+  .conversion-steps-wrap h4 {
+    font-size: 0.92rem;
+    color: #111827;
+    margin: 0 0 10px;
+  }
+
+  .c-step-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .c-step {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 10px 12px;
+    position: relative;
+  }
+
+  .c-step-num {
+    width: 22px;
+    height: 22px;
+    background: #3b82f6;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .c-step-body strong {
+    font-size: 0.8rem;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .c-step-body p {
+    font-size: 0.74rem;
+    color: #475569;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .security-red-line-alert {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-left: 4px solid #e11d48;
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+
+  .red-line-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #be123c;
+    font-size: 0.84rem;
+    margin-bottom: 4px;
+  }
+
+  .security-red-line-alert p {
+    font-size: 0.78rem;
+    color: #881337;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ROI Table (Chapter 6) */
+  .roi-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #ffffff;
+    margin: 14px 0 18px;
+  }
+
+  .roi-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .roi-table th {
+    background: #1e293b;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-bottom: 1px solid #334155;
+  }
+
+  .roi-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+  }
+
+  .roi-table tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  /* Brand Plan Grid (Guangshuyun) */
+  .brand-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 12px 0 14px;
+  }
+
+  .plan-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .plan-card.highlight {
+    border-color: #f87171;
+    background: #fffefe;
+    box-shadow: 0 2px 8px rgba(220, 53, 34, 0.08);
+  }
+
+  .plan-tag {
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: var(--accent, #dc3522);
+    background: #fef2f2;
+    padding: 1px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    align-self: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .plan-name {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 4px;
+  }
+
+  .plan-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    margin-bottom: 2px;
+  }
+
+  .plan-price span {
+    font-size: 0.68rem;
+    color: #64748b;
+    font-weight: 400;
+  }
+
+  .plan-traffic {
+    font-size: 0.74rem;
+    color: #475569;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed #f1f5f9;
+  }
+
+  .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.72rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+
+  .plan-features li {
+    position: relative;
+    padding-left: 12px;
+    margin-bottom: 3px;
+  }
+
+  .plan-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-size: 0.7rem;
+    font-weight: 800;
+  }
+
+  .sol-coupon-hint {
+    font-size: 0.65rem;
+    color: #64748b;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .alt-head {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .alt-badge {
+    font-size: 0.64rem;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: #334155;
+    padding: 1px 5px;
+    border-radius: 3px;
+    align-self: flex-start;
+  }
+
+  .alt-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .alt-btn-go {
+    font-size: 0.74rem;
+    font-weight: 700;
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .alt-btn-go:hover {
+    background: #b91c1c;
+  }
+
   @media (max-width: 768px) {
     .geo-summary-matrix {
       grid-template-columns: 1fr 1fr;
@@ -1448,6 +2335,15 @@ const freeNodeSpeedData: SpeedTestNode[] = [
       grid-template-columns: 1fr;
     }
     .roi-compare-box {
+      grid-template-columns: 1fr;
+    }
+    .converter-tools-grid {
+      grid-template-columns: 1fr;
+    }
+    .c-step-flow {
+      grid-template-columns: 1fr;
+    }
+    .brand-plan-grid {
       grid-template-columns: 1fr;
     }
     .alternative-tiers-grid {
