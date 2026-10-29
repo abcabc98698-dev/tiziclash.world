@@ -686,20 +686,42 @@ const structuredData = {
   }
 
   @media (max-width: 640px) {
+    .featured-banner-box {
+      padding: 18px 16px;
+    }
     .featured-head {
       flex-direction: column;
       align-items: flex-start;
-      gap: 4px;
+      gap: 6px;
+    }
+    .featured-packages-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
     .featured-bottom-bar {
       flex-direction: column;
       align-items: stretch;
+      gap: 12px;
     }
     .cta-actions {
       flex-direction: column;
+      width: 100%;
+      gap: 8px;
     }
     .btn-sub, .btn-main {
       text-align: center;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+    }
+    .header-action-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .download, .view-all-link {
+      display: block;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
     }
   }
 </style>

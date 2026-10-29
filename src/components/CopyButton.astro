@@ -82,7 +82,7 @@ const { text, label = '复制', class: className = '' } = Astro.props;
           temp.value = text;
           document.body.appendChild(temp);
           temp.select();
-          document.execCommand('copy');
+          (document as any).execCommand('copy');
           document.body.removeChild(temp);
         }
       });

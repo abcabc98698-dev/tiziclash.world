@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { brand, rank = brand.rank } = Astro.props;
+const topSpeedNode = brand.speedTestData && brand.speedTestData.length > 0 ? brand.speedTestData[0] : null;
 ---
 
 <article class:list={['brand-card', { 'is-featured': brand.featured }]}>
@@ -23,12 +24,18 @@ const { brand, rank = brand.rank } = Astro.props;
           <a href={`/brands/${brand.slug}`} class="brand-title-link">{brand.name}</a>
         </h3>
         <span class="founded-tag">{brand.founded}运营</span>
+        {topSpeedNode && (
+          <span class="latency-tag">⚡ {topSpeedNode.region.split(' ')[0]} {topSpeedNode.latency}</span>
+        )}
       </div>
     </div>
 
-    {brand.discountBadge && (
-      <span class="discount-pill">{brand.discountBadge}</span>
-    )}
+    <div class="price-header-callout">
+      <span class="price-lead">{brand.startingPrice}</span>
+      {brand.discountBadge && (
+        <span class="discount-pill">{brand.discountBadge}</span>
+      )}
+    </div>
   </div>
 
   <p class="brand-tagline">{brand.tagline}</p>
@@ -39,8 +46,8 @@ const { brand, rank = brand.rank } = Astro.props;
       <span class="spec-value">{brand.lineType}</span>
     </div>
     <div class="spec-cell">
-      <span class="spec-label">起步价格</span>
-      <span class="spec-value highlight-price">{brand.startingPrice}</span>
+      <span class="spec-label">起步流量</span>
+      <span class="spec-value">{brand.startingTraffic}</span>
     </div>
     <div class="spec-cell">
       <span class="spec-label">协议类型</span>
@@ -54,18 +61,21 @@ const { brand, rank = brand.rank } = Astro.props;
 
   <div class="capabilities-bar">
     <div class="cap-group">
-      <span class="cap-title">流媒体:</span>
+      <span class="cap-title">流媒体支持:</span>
       <span class="cap-badge ok">Netflix 4K</span>
       <span class="cap-badge ok">Disney+</span>
       <span class="cap-badge ok">TikTok</span>
     </div>
     <div class="cap-group">
-      <span class="cap-title">AI模型:</span>
+      <span class="cap-title">AI模型支持:</span>
       <span class:list={['cap-badge', brand.aiUnlock.chatgpt === 'supported' ? 'ok' : 'warn']}>
         ChatGPT
       </span>
       <span class:list={['cap-badge', brand.aiUnlock.claude === 'supported' ? 'ok' : 'warn']}>
         Claude
+      </span>
+      <span class:list={['cap-badge', brand.aiUnlock.gemini === 'supported' ? 'ok' : 'neutral']}>
+        Gemini
       </span>
     </div>
   </div>
@@ -83,12 +93,15 @@ const { brand, rank = brand.rank } = Astro.props;
     </div>
 
     <div class="btn-group">
-      <a href={`/brands/${brand.slug}`} class="btn-detail">查看实测评测</a>
+      <a href={`/brands/${brand.slug}`} class="btn-detail" title={`查看 ${brand.name} 详细评测与测速`}>
+        查看评测报告
+      </a>
       <a
         href={brand.url}
         target="_blank"
         rel="nofollow sponsored noopener"
         class="btn-register"
+        title={`直达 ${brand.name} 官网开通`}
       >
         直达官网开通 &rarr;
       </a>
@@ -96,7 +109,7 @@ const { brand, rank = brand.rank } = Astro.props;
   </div>
 
   <div class="compliance-note">
-    *含推广赞助链接，本站独立测评，不影响您的结算价。数据状态: {brand.dataStatus === 'measured' ? '实验室实测' : '官方发布资料'}
+    *含推广赞助链接，本站独立实测，不影响您的结算价。数据状态: {brand.dataStatus === 'measured' ? '实验室实测 (Measured)' : '品牌资料核验 (Vendor Data)'}
   </div>
 </article>
 
@@ -104,22 +117,23 @@ const { brand, rank = brand.rank } = Astro.props;
   .brand-card {
     background: #ffffff;
     border: 1px solid var(--rule, #e5e7eb);
-    border-radius: 8px;
-    padding: 20px 22px;
+    border-radius: 10px;
+    padding: 22px 24px;
     margin-bottom: 20px;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   .brand-card:hover {
     border-color: #cbd5e1;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    transform: translateY(-1px);
   }
 
   .brand-card.is-featured {
     border: 2px solid var(--accent, #dc3522);
     background: #fffdfd;
-    box-shadow: 0 4px 20px rgba(220, 53, 34, 0.08);
+    box-shadow: 0 4px 24px rgba(220, 53, 34, 0.08);
   }
 
   .card-top {
@@ -127,14 +141,15 @@ const { brand, rank = brand.rank } = Astro.props;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: 12px;
+    margin-bottom: 10px;
   }
 
   .card-identity {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   .rank-badge {
@@ -145,7 +160,7 @@ const { brand, rank = brand.rank } = Astro.props;
     font-weight: 800;
     padding: 3px 8px;
     border-radius: 4px;
-    background: #e2e8f0;
+    background: #f1f5f9;
     color: #475569;
     letter-spacing: -0.02em;
   }
@@ -158,17 +173,19 @@ const { brand, rank = brand.rank } = Astro.props;
   .rank-badge.top-1 {
     background: var(--accent, #dc3522);
     color: #ffffff;
+    box-shadow: 0 2px 6px rgba(220, 53, 34, 0.3);
   }
 
   .brand-name-wrap {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .brand-title {
     font-size: 1.25rem;
-    font-weight: 700;
+    font-weight: 800;
     margin: 0;
     color: var(--dark, #111827);
   }
@@ -190,21 +207,44 @@ const { brand, rank = brand.rank } = Astro.props;
     border-radius: 4px;
   }
 
+  .latency-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #0284c7;
+    background: #f0f9ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e0f2fe;
+  }
+
+  .price-header-callout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .price-lead {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    letter-spacing: -0.02em;
+  }
+
   .discount-pill {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--accent, #dc3522);
     background: #fef2f2;
-    padding: 3px 10px;
-    border-radius: 20px;
+    padding: 2px 8px;
+    border-radius: 12px;
     border: 1px solid #fecaca;
   }
 
   .brand-tagline {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     color: var(--gray, #4b5563);
-    margin: 6px 0 14px;
-    line-height: 1.5;
+    margin: 4px 0 14px;
+    line-height: 1.6;
   }
 
   .specs-grid {
@@ -212,8 +252,8 @@ const { brand, rank = brand.rank } = Astro.props;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     background: #f8fafc;
-    border: 1px solid #f1f5f9;
-    padding: 10px 14px;
+    border: 1px solid #edf2f7;
+    padding: 12px 16px;
     border-radius: 6px;
     margin-bottom: 12px;
   }
@@ -229,17 +269,13 @@ const { brand, rank = brand.rank } = Astro.props;
     color: #64748b;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    font-weight: 600;
   }
 
   .spec-value {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     font-weight: 600;
     color: var(--dark, #1e293b);
-  }
-
-  .highlight-price {
-    color: var(--accent, #dc3522);
-    font-weight: 700;
   }
 
   .text-ellipsis {
@@ -263,11 +299,13 @@ const { brand, rank = brand.rank } = Astro.props;
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
   }
 
   .cap-title {
     color: #64748b;
     font-size: 0.72rem;
+    font-weight: 600;
   }
 
   .cap-badge {
@@ -285,6 +323,11 @@ const { brand, rank = brand.rank } = Astro.props;
   .cap-badge.warn {
     background: #fefce8;
     color: #ca8a04;
+  }
+
+  .cap-badge.neutral {
+    background: #f1f5f9;
+    color: #64748b;
   }
 
   .card-actions {
@@ -325,32 +368,35 @@ const { brand, rank = brand.rank } = Astro.props;
   .btn-detail {
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--dark, #334155);
-    padding: 6px 14px;
+    color: #334155;
+    padding: 7px 16px;
     border: 1px solid #cbd5e1;
-    border-radius: 5px;
+    border-radius: 6px;
     text-decoration: none;
     transition: all 0.15s ease;
+    background: #ffffff;
   }
 
   .btn-detail:hover {
     background: #f1f5f9;
+    border-color: #94a3b8;
   }
 
   .btn-register {
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #ffffff;
     background: var(--accent, #dc3522);
-    padding: 6px 16px;
-    border-radius: 5px;
+    padding: 7px 18px;
+    border-radius: 6px;
     text-decoration: none;
     transition: all 0.15s ease;
+    box-shadow: 0 1px 4px rgba(220, 53, 34, 0.2);
   }
 
   .btn-register:hover {
     background: #b91c1c;
-    box-shadow: 0 2px 8px rgba(220, 53, 34, 0.25);
+    box-shadow: 0 2px 8px rgba(220, 53, 34, 0.35);
   }
 
   .compliance-note {
@@ -361,20 +407,26 @@ const { brand, rank = brand.rank } = Astro.props;
   }
 
   @media (max-width: 640px) {
+    .brand-card {
+      padding: 16px 18px;
+    }
     .specs-grid {
       grid-template-columns: 1fr 1fr;
     }
     .card-actions {
       flex-direction: column;
       align-items: stretch;
+      gap: 10px;
     }
     .btn-group {
       width: 100%;
-      justify-content: space-between;
+      gap: 8px;
     }
     .btn-detail, .btn-register {
       flex: 1;
       text-align: center;
+      padding: 9px 12px;
+      font-size: 0.85rem;
     }
   }
 </style>
