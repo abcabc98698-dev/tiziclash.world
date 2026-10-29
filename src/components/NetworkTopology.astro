@@ -1,0 +1,243 @@
+---
+interface Props {
+  brandName?: string;
+  lineType?: string;
+}
+
+const {
+  brandName = '光速云',
+  lineType = 'IEPL 物理双内网专线',
+} = Astro.props;
+---
+
+<div class="topo-card">
+  <div class="topo-header">
+    <span class="topo-badge">INFRASTRUCTURE PATH OBSERVATORY</span>
+    <h4 class="topo-title">🗺️ {brandName} {lineType}网络穿透拓扑架构</h4>
+  </div>
+
+  <div class="topo-flow">
+    <!-- Step 1: Client -->
+    <div class="flow-node">
+      <div class="node-box client-box">
+        <span class="box-icon">💻</span>
+        <div class="box-title">用户本地终端</div>
+        <div class="box-desc">Windows / Mac / iOS / Android / 软路由</div>
+      </div>
+    </div>
+
+    <div class="flow-connector">
+      <div class="line"></div>
+      <span class="connector-label">VLESS / Trojan 强混淆加密</span>
+    </div>
+
+    <!-- Step 2: Ingress -->
+    <div class="flow-node">
+      <div class="node-box ingress-box">
+        <span class="box-icon">🛡️</span>
+        <div class="box-title">国内 BGP 入口集群</div>
+        <div class="box-desc">广州 / 上海 / 深圳 BGP 多线智能调度</div>
+        <div class="box-tag">隐藏本地真实 IP · 抗 QoS 限速</div>
+      </div>
+    </div>
+
+    <div class="flow-connector dedicated-connector">
+      <div class="line dedicated-line"></div>
+      <span class="connector-label dedicated-label">⚡ IEPL / IPLC 内网物理专线直连 (零公网 GFW 接触)</span>
+    </div>
+
+    <!-- Step 3: Egress -->
+    <div class="flow-node">
+      <div class="node-box egress-box">
+        <span class="box-icon">🌐</span>
+        <div class="box-title">海外多地原生落地机房</div>
+        <div class="box-desc">香港 (22ms) · 新加坡 (46ms) · 日本 (57ms) · 美国</div>
+        <div class="box-tag ok-tag">原生住宅 / 双 ISP 纯净 IP 库</div>
+      </div>
+    </div>
+
+    <div class="flow-connector">
+      <div class="line"></div>
+      <span class="connector-label">目标平台直通响应</span>
+    </div>
+
+    <!-- Step 4: Target Services -->
+    <div class="flow-node">
+      <div class="node-box service-box">
+        <div class="target-grid">
+          <span class="target-item">OpenAI ChatGPT</span>
+          <span class="target-item">Claude 3.5</span>
+          <span class="target-item">Netflix 4K</span>
+          <span class="target-item">TikTok 运营</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topo-footer">
+    <span>🔒 <strong>架构安全优势:</strong> 专线跨境流量全程走企业物理海底光缆内网传输，彻底隔绝公共互联网丢包与 GFW 流量特征嗅探。</span>
+  </div>
+</div>
+
+<style>
+  .topo-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 20px;
+    color: #f1f5f9;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    margin: 16px 0;
+  }
+
+  .topo-header {
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topo-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .topo-title {
+    font-size: 0.98rem;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .topo-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .flow-node {
+    width: 100%;
+  }
+
+  .node-box {
+    background: #162032;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+    position: relative;
+    transition: border-color 0.2s ease;
+  }
+
+  .node-box:hover {
+    border-color: #38bdf8;
+  }
+
+  .box-icon {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+
+  .box-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #f8fafc;
+  }
+
+  .box-desc {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .box-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    border-radius: 4px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+  }
+
+  .box-tag.ok-tag {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.2);
+  }
+
+  .flow-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 4px 0;
+  }
+
+  .line {
+    width: 2px;
+    height: 14px;
+    background: #334155;
+  }
+
+  .connector-label {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin: 2px 0;
+  }
+
+  .dedicated-line {
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(180deg, #38bdf8 0%, #10b981 100%);
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+  }
+
+  .dedicated-label {
+    color: #34d399;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px dashed rgba(16, 185, 129, 0.3);
+  }
+
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .target-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 4px;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .topo-footer {
+    border-top: 1px solid #1e293b;
+    margin-top: 16px;
+    padding-top: 10px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .target-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

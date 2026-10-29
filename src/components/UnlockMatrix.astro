@@ -1,0 +1,205 @@
+---
+interface Props {
+  brandName: string;
+  streaming: {
+    netflix: boolean;
+    disney: boolean;
+    youtube: boolean;
+    tiktok: boolean;
+  };
+  ai: {
+    chatgpt: 'supported' | 'partial' | 'unsupported';
+    claude: 'supported' | 'partial' | 'unsupported';
+    gemini: 'supported' | 'partial' | 'unsupported';
+  };
+}
+
+const { brandName, streaming, ai } = Astro.props;
+
+const getStatusBadge = (status: boolean | string) => {
+  if (status === true || status === 'supported') {
+    return { text: '全解锁 / 支持', class: 'status-ok' };
+  }
+  if (status === 'partial') {
+    return { text: '部分节点可用', class: 'status-warn' };
+  }
+  return { text: '不支持', class: 'status-fail' };
+};
+---
+
+<div class="matrix-card">
+  <div class="matrix-header">
+    <span class="matrix-badge">SERVICE AVAILABILITY MATRIX</span>
+    <h4 class="matrix-title">🎬 {brandName} 跨境流媒体 & AI 大模型解锁矩阵</h4>
+  </div>
+
+  <div class="matrix-section">
+    <div class="section-label">🤖 生成式 AI 生产力服务</div>
+    <div class="grid-services">
+      <div class="service-item">
+        <div class="service-name">ChatGPT (OpenAI)</div>
+        <span class:list={['service-status', getStatusBadge(ai.chatgpt).class]}>
+          {getStatusBadge(ai.chatgpt).text}
+        </span>
+        <span class="service-tip">GPT-4o / Plus / Web端</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-name">Claude (Anthropic)</div>
+        <span class:list={['service-status', getStatusBadge(ai.claude).class]}>
+          {getStatusBadge(ai.claude).text}
+        </span>
+        <span class="service-tip">Claude 3.5 Sonnet / 原生IP</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-name">Google Gemini</div>
+        <span class:list={['service-status', getStatusBadge(ai.gemini).class]}>
+          {getStatusBadge(ai.gemini).text}
+        </span>
+        <span class="service-tip">需选日/新/美指定节点</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="matrix-section">
+    <div class="section-label">📺 4K 国际主流流媒体与社交平台</div>
+    <div class="grid-services">
+      <div class="service-item">
+        <div class="service-name">Netflix 网飞</div>
+        <span class:list={['service-status', getStatusBadge(streaming.netflix).class]}>
+          {getStatusBadge(streaming.netflix).text}
+        </span>
+        <span class="service-tip">非仅自制剧 / 原生解锁</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-name">Disney+ 迪士尼</div>
+        <span class:list={['service-status', getStatusBadge(streaming.disney).class]}>
+          {getStatusBadge(streaming.disney).text}
+        </span>
+        <span class="service-tip">全区漫威/星战片库</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-name">YouTube Premium</div>
+        <span class:list={['service-status', getStatusBadge(streaming.youtube).class]}>
+          {getStatusBadge(streaming.youtube).text}
+        </span>
+        <span class="service-tip">4K 60FPS 极速缓冲</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-name">TikTok 国际版</div>
+        <span class:list={['service-status', getStatusBadge(streaming.tiktok).class]}>
+          {getStatusBadge(streaming.tiktok).text}
+        </span>
+        <span class="service-tip">跨区免拔卡 / 直播推流</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .matrix-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 18px 20px;
+    color: #f1f5f9;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    margin: 16px 0;
+  }
+
+  .matrix-header {
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+
+  .matrix-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .matrix-title {
+    font-size: 0.98rem;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .matrix-section + .matrix-section {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed #1e293b;
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .grid-services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .service-item {
+    background: #162032;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .service-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .service-status {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .status-ok {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .status-warn {
+    background: rgba(234, 179, 8, 0.15);
+    color: #facc15;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+  }
+
+  .status-fail {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .service-tip {
+    font-size: 0.7rem;
+    color: #64748b;
+  }
+</style>

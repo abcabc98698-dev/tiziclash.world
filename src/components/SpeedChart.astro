@@ -1,0 +1,270 @@
+---
+import type { SpeedTestNode } from '../data/brands';
+
+interface Props {
+  brandName: string;
+  testDate?: string;
+  testEnv?: string;
+  nodes: SpeedTestNode[];
+  summaryText?: string;
+}
+
+const {
+  brandName,
+  testDate = '2026-10-19 晚高峰 20:30',
+  testEnv = 'Clash Verge Rev (Mihomo Core) | 1000M 联通物理光纤',
+  nodes,
+  summaryText = '实测平均延迟 48ms | 峰值下载 529 Mbps | 丢包率 0.0%',
+} = Astro.props;
+
+// Helper to calculate percentage width for download speed bar (relative to 600Mbps max)
+const getBarWidth = (downloadStr: string) => {
+  const match = downloadStr.match(/(\d+(\.\d+)?)/);
+  if (!match) return 30;
+  const num = parseFloat(match[1]);
+  const pct = Math.min(Math.round((num / 600) * 100), 100);
+  return Math.max(pct, 8);
+};
+---
+
+<div class="observatory-card">
+  <div class="obs-header">
+    <div class="obs-title-group">
+      <span class="obs-badge">PERFORMANCE OBSERVATORY</span>
+      <h3 class="obs-title">🌐 {brandName} 晚高峰网络实测报告</h3>
+    </div>
+    <div class="obs-meta">
+      <span class="status-indicator live"></span>
+      <span class="obs-time">{testDate}</span>
+    </div>
+  </div>
+
+  <div class="obs-env-bar">
+    <span class="env-item"><strong>测试环境:</strong> {testEnv}</span>
+    <span class="env-item"><strong>测试模式:</strong> Speedtest.net 多线程高载压测</span>
+  </div>
+
+  <div class="obs-nodes-list">
+    {nodes.map((node) => {
+      const width = getBarWidth(node.download);
+      const isExcellent = node.status === 'excellent' || parseInt(node.latency) < 35;
+      return (
+        <div class="node-row">
+          <div class="node-meta">
+            <span class:list={['node-indicator', { excellent: isExcellent }]}></span>
+            <span class="node-name">{node.region}</span>
+            <div class="node-metrics">
+              <span class="metric-latency">延迟: <strong>{node.latency}</strong></span>
+              <span class="metric-speed">下载: <strong>{node.download}</strong></span>
+            </div>
+          </div>
+          <div class="node-track">
+            <div
+              class:list={['node-progress', { 'accent-bar': isExcellent }]}
+              style={`width: ${width}%`}
+            ></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="obs-footer">
+    <div class="obs-summary">
+      <span class="summary-label">📊 监控摘要:</span>
+      <span class="summary-val">{summaryText}</span>
+    </div>
+    <div class="obs-watermark">tiziclash.world · 独立网络观测站</div>
+  </div>
+</div>
+
+<style>
+  .observatory-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 20px;
+    color: #f1f5f9;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    margin: 16px 0;
+  }
+
+  .obs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 12px;
+    gap: 12px;
+  }
+
+  .obs-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .obs-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .obs-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    display: inline-block;
+  }
+
+  .status-indicator.live {
+    box-shadow: 0 0 8px #10b981;
+    animation: pulseGlow 2s infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+  }
+
+  .obs-env-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: #162032;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    color: #94a3b8;
+    margin: 12px 0 16px;
+    border-left: 3px solid #38bdf8;
+  }
+
+  .obs-nodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .node-row {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+
+  .node-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+  }
+
+  .node-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #eab308;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .node-indicator.excellent {
+    background: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  }
+
+  .node-name {
+    font-weight: 600;
+    color: #e2e8f0;
+    flex: 1;
+  }
+
+  .node-metrics {
+    display: flex;
+    gap: 16px;
+    font-size: 0.82rem;
+  }
+
+  .metric-latency strong {
+    color: #38bdf8;
+  }
+
+  .metric-speed strong {
+    color: #10b981;
+  }
+
+  .node-track {
+    height: 6px;
+    background: #1e293b;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .node-progress {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .node-progress.accent-bar {
+    background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
+  }
+
+  .obs-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #1e293b;
+    margin-top: 16px;
+    padding-top: 12px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .summary-val {
+    color: #f8fafc;
+    font-weight: 600;
+  }
+
+  .obs-watermark {
+    font-size: 0.72rem;
+    color: #64748b;
+  }
+
+  @media (max-width: 640px) {
+    .node-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .node-metrics {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+</style>

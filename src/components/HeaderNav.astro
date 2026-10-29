@@ -1,0 +1,194 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navItems = [
+  { label: '首页精选', href: '/' },
+  { label: '42家品牌库', href: '/brands' },
+  { label: '客户端中心', href: '/clients' },
+  { label: 'AI & 流媒体专题', href: '/topics/ai-streaming' },
+  { label: '测速实验室', href: '/observatory' },
+];
+---
+
+<header class="site-nav-container screen-only">
+  <div class="site-nav-inner">
+    <a href="/" class="brand-logo" aria-label="梯子网 TiziClash.world 首页">
+      <span class="logo-mark">TC</span>
+      <span class="logo-text"><strong>梯子网</strong><span class="domain-sub">tiziclash.world</span></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="全站主导航">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        return (
+          <a
+            href={item.href}
+            class:list={['nav-link', { active: isActive }]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <div class="nav-actions">
+      <a
+        href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+        target="_blank"
+        rel="nofollow sponsored noopener"
+        class="nav-cta-btn"
+        title="直达2026年度旗舰光速云官网"
+      >
+        <span class="live-dot"></span>
+        <span>主推: 光速云特惠</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-nav-container {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+  }
+
+  .site-nav-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--dark, #111827);
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #111827;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    font-size: 1.05rem;
+  }
+
+  .domain-sub {
+    font-size: 0.72rem;
+    color: var(--light, #888);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--gray, #4b5563);
+    border-radius: 6px;
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: var(--dark, #111827);
+    background: #f3f4f6;
+  }
+
+  .nav-link.active {
+    color: var(--accent, #dc3522);
+    background: #fef2f2;
+    font-weight: 600;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--accent, #dc3522);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 4px rgba(220, 53, 34, 0.25);
+  }
+
+  .nav-cta-btn:hover {
+    background: #b91c1c;
+    box-shadow: 0 2px 8px rgba(220, 53, 34, 0.35);
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  @media (max-width: 860px) {
+    .site-nav-inner {
+      flex-wrap: wrap;
+      padding: 10px 16px;
+    }
+    .desktop-nav {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-top: 6px;
+      padding-bottom: 2px;
+    }
+    .nav-link {
+      font-size: 0.82rem;
+      padding: 5px 8px;
+    }
+  }
+</style>

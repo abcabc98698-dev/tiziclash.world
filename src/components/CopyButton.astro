@@ -1,0 +1,94 @@
+---
+interface Props {
+  text: string;
+  label?: string;
+  class?: string;
+}
+
+const { text, label = '复制', class: className = '' } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={['copy-btn', className]}
+  data-copy-text={text}
+  aria-label={`复制优惠码 ${text}`}
+>
+  <span class="copy-text-display">{text}</span>
+  <span class="copy-action-label">{label}</span>
+</button>
+
+<style>
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--accent, #dc3522);
+    background: #fef2f2;
+    border: 1px dashed var(--accent, #dc3522);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .copy-btn:hover {
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+  }
+
+  .copy-action-label {
+    font-size: 0.7rem;
+    opacity: 0.85;
+    padding-left: 2px;
+    border-left: 1px solid currentColor;
+  }
+
+  .copy-btn.copied {
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+    color: #ffffff !important;
+  }
+</style>
+
+<script>
+  function setupCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = e.currentTarget as HTMLButtonElement;
+        const text = target.getAttribute('data-copy-text');
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const originalLabel = target.querySelector('.copy-action-label');
+          if (originalLabel) {
+            const oldText = originalLabel.textContent;
+            originalLabel.textContent = '已复制!';
+            target.classList.add('copied');
+            setTimeout(() => {
+              originalLabel.textContent = oldText;
+              target.classList.remove('copied');
+            }, 2000);
+          }
+        } catch {
+          // Fallback if clipboard API blocked
+          const temp = document.createElement('textarea');
+          temp.value = text;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+        }
+      });
+    });
+  }
+
+  setupCopyButtons();
+  document.addEventListener('astro:page-load', setupCopyButtons);
+</script>

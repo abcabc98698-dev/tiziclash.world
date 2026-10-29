@@ -1,0 +1,313 @@
+---
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+import BrandCard from '../../components/BrandCard.astro';
+import { BRANDS_DATA } from '../../data/brands';
+
+const pageTitle = '42家机场品牌数据库 · 全网IEPL/IPLC专线梯子对比与测速大全 | 梯子网';
+const pageDescription = '收录并持续追踪42家主流科学上网机场品牌。包含光速云、飞猫云、微风网络、暮光加速、大佬云等品牌套餐价格、线路类型(IEPL/IPLC/中转)、协议、优惠码与晚高峰测速，支持快速多维检索。';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  'name': pageTitle,
+  'description': pageDescription,
+  'url': 'https://tiziclash.world/brands',
+  'mainEntity': {
+    '@type': 'ItemList',
+    'itemListElement': BRANDS_DATA.map((brand, i) => ({
+      '@type': 'ListItem',
+      'position': i + 1,
+      'item': {
+        '@type': 'Product',
+        'name': brand.name,
+        'description': brand.tagline,
+        'url': `https://tiziclash.world/brands/${brand.slug}`
+      }
+    }))
+  }
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/brands" />
+
+    <main class="page" id="main-content">
+      <header class="database-header">
+        <div class="breadcrumb">
+          <a href="/">首页</a> &gt; <span>42家机场品牌数据库</span>
+        </div>
+        <h1>42 家机场品牌综合数据库</h1>
+        <p class="database-desc">
+          基于网络实验室实测与品牌方公开资料整理。涵盖入门平价档（5.6元/月起）、主流专线档（18~25元/月）及企业高端大带宽专线。
+        </p>
+
+        <div class="audit-badge-row">
+          <span class="audit-badge">📅 数据核验更新: 2026年10月</span>
+          <span class="audit-badge">🛡️ 全量链接严格遵守 nofollow sponsored</span>
+          <span class="audit-badge">⚡ 绝不编造虚假参数，未核实统一标注</span>
+        </div>
+      </header>
+
+      <!-- 快速多维筛选工具栏 -->
+      <section class="filter-toolbar screen-only" aria-label="品牌分类检索">
+        <div class="filter-group">
+          <span class="filter-label">分类快捷筛选:</span>
+          <button type="button" class="filter-btn active" data-filter="all">全部品牌 ({BRANDS_DATA.length})</button>
+          <button type="button" class="filter-btn" data-filter="iepl">IEPL/IPLC 物理专线</button>
+          <button type="button" class="filter-btn" data-filter="cheap">平价高性比 (≤10元/月)</button>
+          <button type="button" class="filter-btn" data-filter="client">自研免配置客户端</button>
+          <button type="button" class="filter-btn" data-filter="ai">AI 深度适配</button>
+        </div>
+
+        <div class="search-box-wrap">
+          <input
+            type="search"
+            id="brand-search"
+            placeholder="搜索品牌名称、协议、线路或优惠码..."
+            aria-label="搜索品牌"
+          />
+        </div>
+      </section>
+
+      <!-- 品牌列表 -->
+      <section class="brands-grid-section" aria-label="品牌卡片列表">
+        <div id="brands-container">
+          {BRANDS_DATA.map((brand, idx) => {
+            const isCheap = brand.startingPrice.includes('5.6') || brand.startingPrice.includes('6.5') || brand.startingPrice.includes('7') || brand.startingPrice.includes('8');
+            const hasApp = brand.clientSupport.includes('专属') || brand.clientSupport.includes('自研');
+            const isDedicated = brand.lineType.includes('专线') || brand.lineType.includes('IPLC') || brand.lineType.includes('IEPL');
+            const isAi = brand.aiUnlock.chatgpt === 'supported' || brand.aiUnlock.claude === 'supported';
+
+            return (
+              <div
+                class="brand-item-wrapper"
+                data-name={brand.name.toLowerCase()}
+                data-tagline={brand.tagline.toLowerCase()}
+                data-cheap={isCheap ? 'true' : 'false'}
+                data-app={hasApp ? 'true' : 'false'}
+                data-dedicated={isDedicated ? 'true' : 'false'}
+                data-ai={isAi ? 'true' : 'false'}
+              >
+                <BrandCard brand={brand} rank={brand.rank || (idx < 10 ? idx + 1 : undefined)} />
+              </div>
+            );
+          })}
+        </div>
+
+        <div id="no-results" class="no-results-box" style="display: none;">
+          <p>🔍 没有匹配到符合条件的机场品牌，请尝试更换关键词。</p>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .database-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .database-header h1 {
+    font-size: 1.85rem;
+    color: var(--dark, #111827);
+    margin: 4px 0 8px;
+  }
+
+  .database-desc {
+    font-size: 0.92rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.6;
+    margin: 0 0 14px;
+  }
+
+  .audit-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .audit-badge {
+    font-size: 0.72rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Filter toolbar */
+  .filter-toolbar {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .filter-btn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+  }
+
+  .filter-btn.active {
+    background: var(--accent, #dc3522);
+    border-color: var(--accent, #dc3522);
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .search-box-wrap input {
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    width: 240px;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .search-box-wrap input:focus {
+    border-color: var(--accent, #dc3522);
+  }
+
+  .no-results-box {
+    text-align: center;
+    padding: 48px 20px;
+    color: #64748b;
+    font-size: 0.95rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px dashed #cbd5e1;
+  }
+
+  @media (max-width: 768px) {
+    .filter-toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .search-box-wrap input {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  function setupFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('brand-search') as HTMLInputElement | null;
+    const items = document.querySelectorAll('.brand-item-wrapper') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('no-results');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function applyFilter() {
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        let matchesFilter = true;
+        if (currentFilter === 'iepl') {
+          matchesFilter = item.getAttribute('data-dedicated') === 'true';
+        } else if (currentFilter === 'cheap') {
+          matchesFilter = item.getAttribute('data-cheap') === 'true';
+        } else if (currentFilter === 'client') {
+          matchesFilter = item.getAttribute('data-app') === 'true';
+        } else if (currentFilter === 'ai') {
+          matchesFilter = item.getAttribute('data-ai') === 'true';
+        }
+
+        const name = item.getAttribute('data-name') || '';
+        const tagline = item.getAttribute('data-tagline') || '';
+        const matchesSearch = !searchQuery || name.includes(searchQuery) || tagline.includes(searchQuery);
+
+        if (matchesFilter && matchesSearch) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        applyFilter();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = (e.target as HTMLInputElement).value.toLowerCase().trim();
+        applyFilter();
+      });
+    }
+  }
+
+  setupFilters();
+  document.addEventListener('astro:page-load', setupFilters);
+</script>

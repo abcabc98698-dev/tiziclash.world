@@ -1,82 +1,53 @@
 ---
-import type { CV } from '../types';
-
 interface Props {
-  cv: CV;
-  pageTitle: string;
+  title?: string;
+  description?: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  ogType?: string;
+  ogImage?: string;
+  structuredData?: object;
 }
 
-const { cv, pageTitle } = Astro.props;
+const {
+  title = '梯子网 · 2026专业机场推荐与网络实测实验室 | tiziclash.world',
+  description = '梯子网 (tiziclash.world) 是专业的全球跨境网络可观测性评测中心。收录42家IEPL/IPLC专线机场，提供晚高峰实测延迟、大带宽测速面板、流媒体与ChatGPT/Claude解锁矩阵，以及全平台Clash/Shadowrocket客户端下载教程。',
+  keywords = '梯子网, 机场推荐, 2026机场推荐, 光速云, IPLC专线, IEPL专线, Clash客户端, 电脑翻墙软件, 科学上网, ChatGPT节点, Netflix解锁, 跨境电商专线, tiziclash',
+  canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://tiziclash.world').toString(),
+  ogType = 'website',
+  ogImage = '/og-image.svg',
+  structuredData,
+} = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://tiziclash.world';
-const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const ogImage = `${siteUrl}/og-image.svg`;
-const [firstName, ...lastNames] = cv.name.split(' ');
-const lastName = lastNames.join(' ');
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 
-// Extract skills as keywords
-const keywords = [
-  cv.name,
-  cv.role,
-  'Curriculum Vitae',
-  'Resume',
-  'Portfolio',
-  'Platform Engineer',
-  'Software Engineer',
-  ...cv.skills.flatMap(s => s.items.split(' · '))
-].join(', ');
-
-// Schema.org JSON-LD structured data for ProfilePage and Person
-const structuredData = {
+// Default WebSite + WebPage schema
+const defaultStructuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
       'url': siteUrl,
-      'name': 'TiziClash World',
-      'description': `${cv.name} - ${cv.role}`,
-      'inLanguage': 'en'
+      'name': '梯子网 - 跨境网络观测实验室',
+      'alternateName': 'TiziClash World',
+      'description': description,
+      'inLanguage': 'zh-CN'
     },
     {
-      '@type': 'ProfilePage',
+      '@type': 'WebPage',
       '@id': `${canonicalUrl}#webpage`,
       'url': canonicalUrl,
-      'name': pageTitle,
+      'name': title,
       'isPartOf': { '@id': `${siteUrl}/#website` },
-      'about': { '@id': `${siteUrl}/#person` },
-      'mainEntity': { '@id': `${siteUrl}/#person` }
-    },
-    {
-      '@type': 'Person',
-      '@id': `${siteUrl}/#person`,
-      'name': cv.name,
-      'givenName': firstName,
-      'familyName': lastName,
-      'jobTitle': cv.role,
-      'description': cv.summary,
-      'url': siteUrl,
-      'email': `mailto:${cv.contact.email}`,
-      'address': {
-        '@type': 'PostalAddress',
-        'addressLocality': cv.location
-      },
-      'sameAs': [
-        cv.contact.linkedin,
-        cv.contact.github
-      ],
-      'knowsAbout': cv.skills.flatMap(s => s.items.split(' · ')),
-      'alumniOf': cv.education.map(e => ({
-        '@type': 'EducationalOrganization',
-        'name': e.institution
-      })),
-      'worksFor': cv.experience.map(exp => ({
-        '@type': 'Organization',
-        'name': exp.company
-      }))
+      'description': description,
+      'inLanguage': 'zh-CN'
     }
   ]
 };
+
+const finalSchema = structuredData || defaultStructuredData;
 ---
 
 <meta charset="UTF-8" />
@@ -84,42 +55,38 @@ const structuredData = {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta -->
-<title>{pageTitle}</title>
-<meta name="title" content={pageTitle} />
-<meta name="description" content={cv.summary} />
-<meta name="author" content={cv.name} />
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
 <meta name="keywords" content={keywords} />
+<meta name="author" content="梯子网技术实验室" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-<meta name="theme-color" content="#ffffff" />
+<meta name="theme-color" content="#dc3522" />
 <link rel="canonical" href={canonicalUrl} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="profile" />
-<meta property="og:site_name" content="TiziClash World" />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="梯子网 · tiziclash.world" />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:title" content={pageTitle} />
-<meta property="og:description" content={cv.summary} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullOgImage} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content={`${cv.name} - ${cv.role}`} />
-<meta property="og:locale" content="en_US" />
-<meta property="profile:first_name" content={firstName} />
-<meta property="profile:last_name" content={lastName} />
-<meta property="profile:username" content={firstName.toLowerCase()} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:locale" content="zh_CN" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalUrl} />
-<meta name="twitter:title" content={pageTitle} />
-<meta name="twitter:description" content={cv.summary} />
-<meta name="twitter:image" content={ogImage} />
-<meta name="twitter:image:alt" content={`${cv.name} - ${cv.role}`} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={fullOgImage} />
 
 <!-- Icons & Manifest -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/favicon.svg" />
 <link rel="manifest" href="/site.webmanifest" />
 
-<!-- Structured Data (JSON-LD) -->
-<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+<!-- JSON-LD Structured Data for Google & AI Engines (GEO) -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(finalSchema)} />

@@ -1,0 +1,244 @@
+---
+import HeaderNav from '../components/HeaderNav.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+import SpeedChart from '../components/SpeedChart.astro';
+import NetworkTopology from '../components/NetworkTopology.astro';
+import { BRANDS_DATA } from '../data/brands';
+
+const pageTitle = '网络可观测性实验室 · 2026晚高峰丢包与下行测速监控中心 | 梯子网';
+const pageDescription = '梯子网自主搭建的网络可观测性监控中心。严谨记录主流机场在晚高峰时段的真实延迟、丢包率、TLS RTT 及 4K 吞吐带宽，公开测试环境与拓扑结构，杜绝虚假跑分。';
+
+const topTestedBrands = BRANDS_DATA.filter(b => b.speedTestData && b.speedTestData.length > 0);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': pageTitle,
+  'description': pageDescription,
+  'url': 'https://tiziclash.world/observatory',
+  'inLanguage': 'zh-CN'
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/observatory" />
+
+    <main class="page" id="main-content">
+      <header class="obs-page-header">
+        <div class="breadcrumb">
+          <a href="/">首页</a> &gt; <span>网络测速实验室</span>
+        </div>
+        <div class="obs-status-pill">
+          <span class="live-dot"></span>
+          <span>NOC MONITORING SYSTEM ACTIVE · 2026-10 实测报告</span>
+        </div>
+        <h1>网络可观测性评测实验室看板</h1>
+        <p class="obs-page-desc">
+          我们拒绝脱离实际场景的“闲时虚标跑分”。本实验室的所有数据均在<strong>晚间 20:00 至 22:30 的骨干网拥堵高峰期</strong>采集，通过千兆物理专线高载并发，真实还原普通用户在观看 4K 视频、远程办公与代码编译时的网络体感。
+        </p>
+
+        <div class="obs-methodology-box">
+          <div class="meth-col">
+            <span class="meth-label">物理测试环境</span>
+            <span class="meth-val">中国联通 1000M FTTH 独立光纤接入</span>
+          </div>
+          <div class="meth-col">
+            <span class="meth-label">客户端内核</span>
+            <span class="meth-val">Mihomo Core v1.18+ (TUN 增强虚拟网卡)</span>
+          </div>
+          <div class="meth-col">
+            <span class="meth-label">测速服务器</span>
+            <span class="meth-val">Ookla Speedtest / Fast.com 亚太官方锚点</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- 重点品牌测速看板轮播/罗列 -->
+      <section class="obs-charts-section">
+        <h2><span><span class="highlight">重点</span>品牌晚高峰实测数据报告</span></h2>
+
+        {topTestedBrands.slice(0, 4).map((brand) => (
+          <div class="brand-chart-block">
+            <SpeedChart
+              brandName={brand.name}
+              testDate={`${brand.verifiedDate} 晚高峰 20:30`}
+              nodes={brand.speedTestData}
+              summaryText={`节点数: ${brand.nodeCount} | 起步价: ${brand.startingPrice} | 协议: ${brand.protocol}`}
+            />
+          </div>
+        ))}
+      </section>
+
+      <!-- 专线网络拓扑深度拆解 -->
+      <section class="obs-topo-section">
+        <h2><span><span class="highlight">拓扑</span>解析：物理专线如何规避 GFW 封锁？</span></h2>
+        
+        <NetworkTopology
+          brandName="企业级 IEPL / IPLC 物理专线"
+          lineType="点对点海底光缆内网直连"
+        />
+      </section>
+
+      <!-- 常见疑问 FAQ -->
+      <section class="obs-faq-section">
+        <h2><span><span class="highlight">测速</span>指标与网络参数权威解读</span></h2>
+
+        <div class="obs-faq-grid">
+          <div class="obs-faq-item">
+            <h3>什么是 TLS RTT 与 Ping 延迟？</h3>
+            <p>
+              Ping 仅代表 ICMP 协议的数据包往返时间，极易被节点做伪造欺骗。而 TLS RTT 是建立真正的 HTTPS 加密会话所需时间，更能真实反映刷网页和调用 ChatGPT 时的首包响应速度。
+            </p>
+          </div>
+
+          <div class="obs-faq-item">
+            <h3>为什么白天测速几百兆，晚高峰就会断流卡顿？</h3>
+            <p>
+              绝大多数低价机场走的是公共骨干网（163网络或普通公网中转）。到了晚高峰，出口总带宽被严重超售抢占，触发国际出口的 QoS 限速弃包；只有具备专属内网通道的 IEPL/IPLC 物理专线才能保障晚高峰平滑传输。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .obs-page-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 24px;
+    margin-bottom: 30px;
+  }
+
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 12px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .obs-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #059669;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: livePulse 1.5s infinite;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .obs-page-header h1 {
+    font-size: 1.85rem;
+    color: var(--dark, #111827);
+    margin: 4px 0 10px;
+  }
+
+  .obs-page-desc {
+    font-size: 0.92rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.65;
+    margin: 0 0 18px;
+  }
+
+  .obs-methodology-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+
+  .meth-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meth-label {
+    font-size: 0.7rem;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+
+  .meth-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .obs-charts-section, .obs-topo-section, .obs-faq-section {
+    margin-bottom: 40px;
+  }
+
+  .brand-chart-block {
+    margin-bottom: 24px;
+  }
+
+  .obs-faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .obs-faq-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .obs-faq-item h3 {
+    font-size: 0.95rem;
+    color: var(--dark, #111827);
+    margin: 0 0 8px;
+  }
+
+  .obs-faq-item p {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .obs-faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

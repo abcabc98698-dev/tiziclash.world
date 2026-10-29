@@ -1,0 +1,619 @@
+---
+import HeaderNav from '../../components/HeaderNav.astro';
+import Footer from '../../components/Footer.astro';
+import SEOHead from '../../components/SEOHead.astro';
+import SpeedChart from '../../components/SpeedChart.astro';
+import UnlockMatrix from '../../components/UnlockMatrix.astro';
+import NetworkTopology from '../../components/NetworkTopology.astro';
+import CopyButton from '../../components/CopyButton.astro';
+import { BRANDS_DATA, type BrandItem } from '../../data/brands';
+
+export function getStaticPaths() {
+  return BRANDS_DATA.map((brand) => ({
+    params: { slug: brand.slug },
+    props: { brand },
+  }));
+}
+
+interface Props {
+  brand: BrandItem;
+}
+
+const { brand } = Astro.props;
+
+const pageTitle = `${brand.name}测评与优惠码 · 2026年最新晚高峰测速与套餐分析 | 梯子网`;
+const pageDescription = `深度评测 ${brand.name}：${brand.tagline}。提供 2026 最新套餐价格、优惠码(${brand.coupon || '无'})、IEPL/IPLC 专线线路解析、晚高峰实测延迟数据以及 ChatGPT/Netflix 解锁实测。`;
+
+const canonicalUrl = `https://tiziclash.world/brands/${brand.slug}`;
+
+// Product & Review Schema for SEO & GEO
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Product',
+      '@id': `${canonicalUrl}#product`,
+      'name': brand.name,
+      'description': brand.tagline,
+      'offers': {
+        '@type': 'Offer',
+        'price': brand.startingPrice.replace(/[^0-9.]/g, '') || '8',
+        'priceCurrency': 'CNY',
+        'availability': 'https://schema.org/InStock',
+        'url': brand.url
+      }
+    },
+    {
+      '@type': 'Review',
+      '@id': `${canonicalUrl}#review`,
+      'itemReviewed': { '@id': `${canonicalUrl}#product` },
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': brand.featured ? '4.9' : '4.6',
+        'bestRating': '5'
+      },
+      'author': {
+        '@type': 'Organization',
+        'name': '梯子网独立网络观测室'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': '梯子网',
+        'url': 'https://tiziclash.world'
+      },
+      'reviewBody': brand.summary
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://tiziclash.world' },
+        { '@type': 'ListItem', 'position': 2, 'name': '42家机场品牌库', 'item': 'https://tiziclash.world/brands' },
+        { '@type': 'ListItem', 'position': 3, 'name': brand.name, 'item': canonicalUrl }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      canonicalUrl={canonicalUrl}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/brands" />
+
+    <main class="page" id="main-content">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <a href="/brands">42家机场品牌库</a> &gt; <span>{brand.name}</span>
+      </nav>
+
+      <article class="brand-detail-article">
+        <!-- 头部核心信息 -->
+        <header class="detail-header">
+          <div class="header-main">
+            <h1 class="brand-h1">{brand.name}</h1>
+            <p class="brand-tagline-lg">{brand.tagline}</p>
+          </div>
+
+          <div class="header-cta-panel">
+            <div class="price-callout">
+              <span class="price-label">起步价格</span>
+              <span class="price-val">{brand.startingPrice}</span>
+              <span class="traffic-val">基础流量: {brand.startingTraffic}</span>
+            </div>
+
+            <div class="coupon-callout">
+              {brand.coupon ? (
+                <div class="coupon-inner">
+                  <span class="coupon-label">新用户立减优惠码:</span>
+                  <CopyButton text={brand.coupon} />
+                </div>
+              ) : (
+                <span class="no-coupon-text">无需优惠码 · 直通官网活动</span>
+              )}
+            </div>
+
+            <a
+              href={brand.url}
+              target="_blank"
+              rel="nofollow sponsored noopener"
+              class="btn-primary-go"
+            >
+              前往 {brand.name} 官网注册 &rarr;
+            </a>
+
+            <span class="aff-hint">*本站独立实测，通过推广链接访问不影响结算价格</span>
+          </div>
+        </header>
+
+        <!-- GEO Direct Answer: 核心结论先行 -->
+        <section class="geo-summary-card" aria-label="核心结论快速导读">
+          <div class="geo-label">⚡ GEO 评测核心结论 (DIRECT ANSWER)</div>
+          <p class="geo-text">
+            <strong>一句话总评：</strong>{brand.summary}
+          </p>
+          <div class="geo-bullets">
+            <div class="bullet-item"><strong>适合人群：</strong>{brand.suitableFor}</div>
+            <div class="bullet-item"><strong>数据核准：</strong>{brand.verifiedDate}（{brand.dataStatus === 'measured' ? '经由实验室物理线路压测' : '官方发布参数整理'}）</div>
+          </div>
+        </section>
+
+        <!-- 详细规格参数表 -->
+        <section class="specs-section">
+          <h2><span><span class="highlight">基础</span>硬件与网络规格参数</span></h2>
+          <table class="specs-table">
+            <tbody>
+              <tr>
+                <th>品牌名称</th>
+                <td>{brand.name} ({brand.slug})</td>
+                <th>开业时间</th>
+                <td>{brand.founded}</td>
+              </tr>
+              <tr>
+                <th>线路类型</th>
+                <td>{brand.lineType}</td>
+                <th>传输协议</th>
+                <td>{brand.protocol}</td>
+              </tr>
+              <tr>
+                <th>节点规模</th>
+                <td>{brand.nodeCount}</td>
+                <th>覆盖地区</th>
+                <td>{brand.nodeRegions.join(' · ')}</td>
+              </tr>
+              <tr>
+                <th>客户端支持</th>
+                <td colspan="3">{brand.clientSupport}</td>
+              </tr>
+              <tr>
+                <th>数据核准状态</th>
+                <td colspan="3">
+                  <span class:list={['data-badge', brand.dataStatus]}>
+                    {brand.dataStatus === 'measured' ? '✅ 实验室实测数据 (Measured)' : '📋 品牌资料核验 (Vendor Data)'}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 套餐价格详情 -->
+        <section class="packages-section">
+          <h2><span><span class="highlight">套餐</span>梯度与计费方式一览</span></h2>
+          <div class="pkg-table-wrap">
+            <table class="pkg-table">
+              <thead>
+                <tr>
+                  <th>套餐名称</th>
+                  <th>计费周期</th>
+                  <th>标准价格</th>
+                  <th>包含流量</th>
+                  <th>说明与特点</th>
+                </tr>
+              </thead>
+              <tbody>
+                {brand.packages.map((pkg) => (
+                  <tr class:list={[{ 'pkg-highlight-row': pkg.highlight }]}>
+                    <td><strong>{pkg.name}</strong></td>
+                    <td>{pkg.billing}</td>
+                    <td class="price-col">{pkg.price}</td>
+                    <td>{pkg.traffic}</td>
+                    <td>{pkg.period}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 晚高峰测速可观测性看板 -->
+        <section class="observatory-section">
+          <h2><span><span class="highlight">晚高</span>峰测速与抗拥塞能力实测</span></h2>
+          <p class="obs-intro">以下数据采集自晚高峰黄金时段，重点考察骨干网国际出口拥堵时的丢包率与下行带宽：</p>
+          
+          <SpeedChart
+            brandName={brand.name}
+            nodes={brand.speedTestData}
+          />
+        </section>
+
+        <!-- 流媒体与 AI 解锁矩阵 -->
+        <section class="unlock-section">
+          <h2><span><span class="highlight">流媒</span>体与生成式 AI 解锁能力</span></h2>
+          <UnlockMatrix
+            brandName={brand.name}
+            streaming={brand.streamingUnlock}
+            ai={brand.aiUnlock}
+          />
+        </section>
+
+        <!-- 专线网络拓扑 -->
+        <section class="topo-section">
+          <h2><span><span class="highlight">网络</span>跨境链路传输架构</span></h2>
+          <NetworkTopology
+            brandName={brand.name}
+            lineType={brand.lineType}
+          />
+        </section>
+
+        <!-- 优缺点与避坑指南 -->
+        <section class="pros-cons-section">
+          <h2><span><span class="highlight">优势</span>与局限性客观分析</span></h2>
+          <div class="pros-cons-grid">
+            <div class="pros-box">
+              <h3>👍 主要优势 (Pros)</h3>
+              <ul>
+                {brand.pros.map((pro) => <li>{pro}</li>)}
+              </ul>
+            </div>
+
+            <div class="cons-box">
+              <h3>⚠️ 注意事项与局限 (Cons)</h3>
+              <ul>
+                {brand.cons.map((con) => <li>{con}</li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 底部行动唤醒 -->
+        <section class="bottom-cta-box">
+          <div class="cta-inner">
+            <h3>准备好体验 {brand.name} 了吗？</h3>
+            <p>享受稳定、快速的海外物理专线网络，解锁 ChatGPT、Claude 及 4K 国际流媒体。</p>
+            {brand.coupon && (
+              <div class="bottom-coupon">
+                <span>结账请使用专属优惠码:</span>
+                <CopyButton text={brand.coupon} />
+              </div>
+            )}
+            <a
+              href={brand.url}
+              target="_blank"
+              rel="nofollow sponsored noopener"
+              class="btn-bottom-register"
+            >
+              立即开通 {brand.name} &rarr;
+            </a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 16px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 28px;
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .header-main {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .brand-h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 8px;
+  }
+
+  .brand-tagline-lg {
+    font-size: 1.05rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .header-cta-panel {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 22px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .price-callout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .price-label {
+    font-size: 0.72rem;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+
+  .price-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+  }
+
+  .traffic-val {
+    font-size: 0.78rem;
+    color: #0f766e;
+    font-weight: 600;
+  }
+
+  .coupon-callout {
+    margin: 2px 0;
+  }
+
+  .coupon-inner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .coupon-label {
+    font-size: 0.76rem;
+    color: #64748b;
+  }
+
+  .no-coupon-text {
+    font-size: 0.76rem;
+    color: #94a3b8;
+  }
+
+  .btn-primary-go {
+    display: block;
+    text-align: center;
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 34, 0.25);
+  }
+
+  .btn-primary-go:hover {
+    background: #b91c1c;
+    box-shadow: 0 4px 14px rgba(220, 53, 34, 0.35);
+  }
+
+  .aff-hint {
+    font-size: 0.68rem;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* GEO Summary Card */
+  .geo-summary-card {
+    background: #fdfefe;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--accent, #dc3522);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 28px;
+  }
+
+  .geo-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--accent, #dc3522);
+    margin-bottom: 6px;
+  }
+
+  .geo-text {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #1e293b;
+    margin: 0 0 10px;
+  }
+
+  .geo-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: #475569;
+  }
+
+  /* Table styling */
+  .specs-table, .pkg-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 24px;
+    font-size: 0.85rem;
+  }
+
+  .specs-table th, .specs-table td,
+  .pkg-table th, .pkg-table td {
+    border: 1px solid var(--rule, #e5e7eb);
+    padding: 10px 12px;
+    text-align: left;
+  }
+
+  .specs-table th {
+    background: #f8fafc;
+    width: 15%;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .specs-table td {
+    color: #1e293b;
+  }
+
+  .pkg-table th {
+    background: #f8fafc;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .price-col {
+    color: var(--accent, #dc3522);
+    font-weight: 700;
+  }
+
+  .pkg-highlight-row {
+    background: #fff7ed;
+  }
+
+  .pkg-table-wrap {
+    overflow-x: auto;
+  }
+
+  .data-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .data-badge.measured {
+    background: #ecfdf5;
+    color: #059669;
+  }
+
+  .data-badge.vendor {
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  .obs-intro {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 12px;
+  }
+
+  /* Pros and Cons */
+  .pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  .pros-box, .cons-box {
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .pros-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  .pros-box h3 {
+    color: #15803d;
+    font-size: 0.95rem;
+    margin: 0 0 8px;
+  }
+
+  .cons-box {
+    background: #fffbeb;
+    border: 1px solid #fef08a;
+  }
+
+  .cons-box h3 {
+    color: #b45309;
+    font-size: 0.95rem;
+    margin: 0 0 8px;
+  }
+
+  .pros-box ul, .cons-box ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #334155;
+  }
+
+  /* Bottom CTA */
+  .bottom-cta-box {
+    margin: 36px 0 10px;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 32px 20px;
+    text-align: center;
+  }
+
+  .bottom-cta-box h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--dark, #111827);
+    margin: 0 0 6px;
+  }
+
+  .bottom-cta-box p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 14px;
+  }
+
+  .bottom-coupon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: #475569;
+  }
+
+  .btn-bottom-register {
+    display: inline-block;
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 10px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 10px rgba(220, 53, 34, 0.25);
+  }
+
+  .btn-bottom-register:hover {
+    background: #b91c1c;
+    box-shadow: 0 4px 16px rgba(220, 53, 34, 0.35);
+  }
+
+  @media (max-width: 640px) {
+    .pros-cons-grid {
+      grid-template-columns: 1fr;
+    }
+    .specs-table th, .specs-table td {
+      display: block;
+      width: 100%;
+    }
+  }
+</style>

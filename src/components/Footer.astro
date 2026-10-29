@@ -1,0 +1,185 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-main-footer screen-only">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">TC</span>
+          <span class="logo-name">梯子网 · tiziclash.world</span>
+        </div>
+        <p class="footer-desc">
+          全球网络可观测性与跨境专线评估实验室。专注于 IEPL/IPLC 物理专线抗封锁实测、4K 流媒体与生成式 AI 工具解锁评测。
+        </p>
+      </div>
+
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <span class="col-title">导航目录</span>
+          <a href="/">首页精选</a>
+          <a href="/brands">42家机场品牌库</a>
+          <a href="/clients">全平台客户端大全</a>
+          <a href="/topics/ai-streaming">AI & 流媒体解锁专题</a>
+          <a href="/observatory">晚高峰测速实验室</a>
+        </div>
+
+        <div class="footer-col">
+          <span class="col-title">重点推荐</span>
+          <a href="/brands/guangshuyun">光速云深度实测</a>
+          <a href="/brands/feimaoyun">飞猫云新手测评</a>
+          <a href="/brands/weifeng">微风网络性价比方案</a>
+          <a href="/brands/xingdaomeng">星岛梦老牌专线</a>
+        </div>
+
+        <div class="footer-col">
+          <span class="col-title">合规与支持</span>
+          <a href="/sitemap-index.xml">XML 站点地图</a>
+          <a href="/robots.txt">Robots 爬虫协议</a>
+          <span class="col-text">数据核准：2026年10月</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <p>
+        <strong>⚠️ 赞助与合规透明声明：</strong>
+        本站为独立技术评测项目，部分外链包含带有特定识别码的推广赞助链接（Affiliate Links）。通过本站链接注册开通可能会为本站带来一定的服务器运维支持，但绝不会导致您支付高于官方标准的费用。我们坚持“先实测后评价、无数据不妄言”的客观原则，不承诺任何未经独立验证的商业宣传。
+      </p>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© {currentYear} tiziclash.world 梯子网 · 专注于高质量跨境网络基础设施评测 · All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-main-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    border-top: 1px solid #1e293b;
+    padding: 48px 20px 32px;
+    margin-top: 40px;
+    font-size: 0.85rem;
+  }
+
+  .footer-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 32px;
+  }
+
+  .footer-brand {
+    max-width: 380px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent, #dc3522);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    border-radius: 6px;
+  }
+
+  .logo-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .footer-desc {
+    line-height: 1.6;
+    color: #64748b;
+    font-size: 0.82rem;
+  }
+
+  .footer-links-grid {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .col-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-col a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-col a:hover {
+    color: var(--accent, #dc3522);
+  }
+
+  .col-text {
+    color: #64748b;
+    font-size: 0.78rem;
+  }
+
+  .footer-disclaimer {
+    margin: 24px 0;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed #334155;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    line-height: 1.6;
+    color: #64748b;
+  }
+
+  .footer-disclaimer strong {
+    color: #cbd5e1;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    font-size: 0.76rem;
+    color: #475569;
+    padding-top: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      flex-direction: column;
+      gap: 24px;
+    }
+    .footer-links-grid {
+      gap: 28px;
+    }
+  }
+</style>

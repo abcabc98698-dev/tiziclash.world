@@ -1,0 +1,336 @@
+---
+import HeaderNav from '../components/HeaderNav.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+import { CLIENT_DATA } from '../data/clients';
+
+const pageTitle = '2026机场代理客户端大全 · Windows/Mac/iOS/Android/软路由下载与配置教程 | 梯子网';
+const pageDescription = '系统整理2026全平台科学上网代理客户端下载指南。收录Clash Verge Rev、v2rayN、Shadowrocket (小火箭)、Stash、v2rayNG及OpenClash软路由插件，提供官方GitHub项目地址与避坑教程。';
+
+const categories = [
+  { key: 'windows', title: 'Windows 电脑客户端', icon: '🖥️' },
+  { key: 'android', title: 'Android 安卓客户端', icon: '📱' },
+  { key: 'ios', title: 'iOS (iPhone / iPad) 客户端', icon: '🍏' },
+  { key: 'macos', title: 'macOS 苹果电脑客户端', icon: '💻' },
+  { key: 'linux', title: 'Linux 桌面与服务器客户端', icon: '🐧' },
+  { key: 'openwrt', title: 'OpenWrt / 软路由客户端', icon: '📶' },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'name': pageTitle,
+  'description': pageDescription,
+  'url': 'https://tiziclash.world/clients',
+  'inLanguage': 'zh-CN'
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={pageTitle}
+      description={pageDescription}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <HeaderNav currentPath="/clients" />
+
+    <main class="page" id="main-content">
+      <header class="clients-header">
+        <div class="breadcrumb">
+          <a href="/">首页</a> &gt; <span>全平台代理客户端大全</span>
+        </div>
+        <h1>2026 机场代理客户端大全与下载指南</h1>
+        <p class="clients-desc">
+          机场代理客户端主要分为<strong>第三方通用客户端</strong>（如 Clash Verge Rev、v2rayN、Shadowrocket，支持导入通用机场订阅）与<strong>服务商专属客户端</strong>（如光速云、飞猫云专属 App，免去配置直接一键连接）。
+        </p>
+
+        <div class="quick-nav-bar screen-only">
+          <span class="quick-title">快速跳转平台:</span>
+          {categories.map((c) => (
+            <a href={`#${c.key}`} class="quick-link">
+              {c.icon} {c.title.split(' ')[0]}
+            </a>
+          ))}
+        </div>
+      </header>
+
+      <!-- 各平台展开 -->
+      {categories.map((cat) => {
+        const list = CLIENT_DATA.filter((item) => item.category === cat.key);
+        return (
+          <section class="platform-section" id={cat.key}>
+            <div class="platform-heading">
+              <h2><span><span class="highlight">{cat.icon} {cat.title.slice(0, 3)}</span>{cat.title.slice(3)}</span></h2>
+            </div>
+
+            <div class="client-table-wrap">
+              <table class="client-table">
+                <thead>
+                  <tr>
+                    <th>客户端名称</th>
+                    <th>核心内核与引擎</th>
+                    <th>功能定位与特点</th>
+                    <th>资费属性</th>
+                    <th>获取渠道</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {list.map((c) => (
+                    <tr class:list={[{ 'recommended-row': c.recommended }]}>
+                      <td class="name-col">
+                        <strong>{c.name}</strong>
+                        {c.recommended && <span class="rec-badge">首选推荐</span>}
+                        {c.notes && <div class="cell-notes">{c.notes}</div>}
+                      </td>
+                      <td><code>{c.coreEngine}</code></td>
+                      <td class="desc-col">{c.features}</td>
+                      <td>
+                        <span class:list={['fee-badge', c.isPaid ? 'paid' : 'free']}>
+                          {c.isPaid ? '付费应用' : '免费开源'}
+                        </span>
+                      </td>
+                      <td class="action-col">
+                        <a
+                          href={c.downloadUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="btn-client-dl"
+                        >
+                          {c.downloadSource} &rarr;
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        );
+      })}
+
+      <!-- 客户端使用指南与常见避坑 FAQ -->
+      <section class="client-faq-section">
+        <h2><span><span class="highlight">客户</span>端使用与配置避坑指南</span></h2>
+        
+        <div class="faq-card">
+          <h3>Q1: 为什么不建议再使用老旧的 Clash for Windows (CFW)？</h3>
+          <p>
+            Clash for Windows 原作者已于 2023 年停止维护并删库。目前主流全面转向维护活跃的 <strong>Clash Verge Rev</strong> 或 <strong>FlClash</strong>。它们基于更先进的 Mihomo (Clash.Meta) 内核，全面支持新一代 VLESS 协议、Reality 混淆以及高效的 TUN 虚拟网卡模式，稳定性与安全性远超老版。
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h3>Q2: iPhone / iPad 无法在国区 App Store 搜索到 Shadowrocket (小火箭) 怎么办？</h3>
+          <p>
+            受地区网络监管合规限制，科学上网类网络调试工具无法在国区上架。您需要准备一个非国区（例如美区、港区或日区）的 Apple ID，登录 App Store 即可正常购买并下载。
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h3>Q3: 软路由 OpenClash 如何避免 DNS 污染与网络回环？</h3>
+          <p>
+            建议在 OpenClash 模式中选择“Fake-IP (增强模式)”，并开启 DNS 转发优化。务必先确认您路由器的 CPU 架构（如 x86_64、aarch64 等），并确保 OpenWrt 固件保留了足够的软件包存储空间。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .clients-header {
+    border-bottom: 1px solid var(--rule, #e5e7eb);
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb a {
+    color: #475569;
+    text-decoration: underline;
+  }
+
+  .clients-header h1 {
+    font-size: 1.85rem;
+    color: var(--dark, #111827);
+    margin: 4px 0 8px;
+  }
+
+  .clients-desc {
+    font-size: 0.92rem;
+    color: var(--gray, #4b5563);
+    line-height: 1.6;
+    margin: 0 0 14px;
+  }
+
+  .quick-nav-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    border-radius: 6px;
+  }
+
+  .quick-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  .quick-link {
+    font-size: 0.78rem;
+    color: #334155;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .quick-link:hover {
+    color: var(--accent, #dc3522);
+    border-color: var(--accent, #dc3522);
+  }
+
+  .platform-section {
+    margin-bottom: 36px;
+  }
+
+  .platform-heading {
+    margin-bottom: 10px;
+  }
+
+  .client-table-wrap {
+    overflow-x: auto;
+  }
+
+  .client-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: #ffffff;
+  }
+
+  .client-table th, .client-table td {
+    border: 1px solid var(--rule, #e5e7eb);
+    padding: 10px 12px;
+    text-align: left;
+  }
+
+  .client-table th {
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 700;
+  }
+
+  .recommended-row {
+    background: #fefce8;
+  }
+
+  .name-col {
+    min-width: 150px;
+  }
+
+  .rec-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    background: #ca8a04;
+    color: #ffffff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-weight: 700;
+  }
+
+  .cell-notes {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .desc-col {
+    color: #4b5563;
+    line-height: 1.5;
+  }
+
+  .fee-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .fee-badge.free {
+    background: #ecfdf5;
+    color: #059669;
+  }
+
+  .fee-badge.paid {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+
+  .btn-client-dl {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #334155;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+
+  .btn-client-dl:hover {
+    background: #1e293b;
+    color: #ffffff;
+    border-color: #1e293b;
+  }
+
+  .client-faq-section {
+    margin-top: 40px;
+    border-top: 1px solid var(--rule, #e5e7eb);
+    padding-top: 20px;
+  }
+
+  .faq-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 12px;
+  }
+
+  .faq-card h3 {
+    font-size: 0.95rem;
+    color: var(--dark, #111827);
+    margin: 0 0 6px;
+  }
+
+  .faq-card p {
+    font-size: 0.88rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
